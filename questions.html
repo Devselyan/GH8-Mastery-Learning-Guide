@@ -808,26 +808,41 @@
       </div>
       <div class="quiz">
         <h4>📝 Quick Check — Market Mechanisms</h4>
-        <div class="question">1. What is the core argument of opponents of market mechanisms in health care?</div>
+        <div class="question">What is the core argument of opponents of market mechanisms in health care?</div>
         <div class="options">
-          <div class="option correct">Health care is not a typical commodity; massive information asymmetry and externalities violate solidarity principles</div>
-          <div class="option">Competition always reduces costs</div>
-          <div class="option">Markets are inefficient in all sectors</div>
-          <div class="option">Patients always make optimal choices</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q11-7')">Health care is not a typical commodity; massive information asymmetry and externalities violate solidarity principles</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-7')">Competition always reduces costs</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-7')">Markets are inefficient in all sectors</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-7')">Patients always make optimal choices</div>
         </div>
-        <div class="question">2. Why does the German hospital sector's DRG system incentivise volume?</div>
-        <div class="options">
-          <div class="option correct">Because DRGs pay per case — more cases = more revenue, regardless of population health needs</div>
-          <div class="option">Because DRGs are based on population capitation</div>
-          <div class="option">Because DRGs reward prevention rather than treatment</div>
-          <div class="option">Because DRGs penalise high-volume hospitals</div>
+        <div class="feedback" id="q11-7-feedback">
+          <strong>✓ Correct!</strong> Health care has massive information asymmetry and externalities that violate the conditions needed for pure markets. This is why health economists describe it as a "quasi-market" rather than a true market.
         </div>
-        <div class="question">3. What is the difference between GKV and PKV contribution systems?</div>
+      </div>
+      <div class="quiz">
+        <h4>📝 Quick Check — Market Mechanisms</h4>
+        <div class="question">Why does the German hospital sector's DRG system incentivise volume?</div>
         <div class="options">
-          <div class="option correct">GKV uses income-based solidarity pooling; PKV uses risk-based individual premiums</div>
-          <div class="option">GKV only covers emergencies; PKV covers everything</div>
-          <div class="option">GKV is for civil servants; PKV is for employees</div>
-          <div class="option">GKV is voluntary; PKV is mandatory</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q11-8')">Because DRGs pay per case — more cases = more revenue, regardless of population health needs</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-8')">Because DRGs are based on population capitation</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-8')">Because DRGs reward prevention rather than treatment</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-8')">Because DRGs penalise high-volume hospitals</div>
+        </div>
+        <div class="feedback" id="q11-8-feedback">
+          <strong>✓ Correct!</strong> DRGs create a per-case payment incentive: more admissions = more revenue. Hospitals respond by increasing case numbers, even when population health needs don't justify it — a classic "fixes that fail" dynamic.
+        </div>
+      </div>
+      <div class="quiz">
+        <h4>📝 Quick Check — Market Mechanisms</h4>
+        <div class="question">What is the difference between GKV and PKV contribution systems?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, true, 'q11-9')">GKV uses income-based solidarity pooling; PKV uses risk-based individual premiums</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-9')">GKV only covers emergencies; PKV covers everything</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-9')">GKV is for civil servants; PKV is for employees</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11-9')">GKV is voluntary; PKV is mandatory</div>
+        </div>
+        <div class="feedback" id="q11-9-feedback">
+          <strong>✓ Correct!</strong> The GKV is solidarity-based: contributions are a percentage of income, independent of risk. The PKV charges risk-based premiums depending on age, health status, and coverage level at entry.
         </div>
       </div>
 </div></div>
@@ -836,19 +851,28 @@
   <div class="module-content">
       <div class="quiz">
         <h4>📝 Quick Check — Economic Evaluation Methods</h4>
-        <div class="question">1. What is the key advantage of CUA over CEA?</div>
+        <div class="question">What is the key advantage of CUA over CEA?</div>
         <div class="options">
-          <div class="option correct">CUA uses QALYs which allow comparison across different diseases, while CEA uses disease-specific natural units</div>
-          <div class="option">CUA is cheaper to conduct than CEA</div>
-          <div class="option">CUA does not require cost data</div>
-          <div class="option">CUA only considers mortality, not morbidity</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q12-11')">CUA uses QALYs which allow comparison across different diseases, while CEA uses disease-specific natural units</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-11')">CUA is cheaper to conduct than CEA</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-11')">CUA does not require cost data</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-11')">CUA only considers mortality, not morbidity</div>
         </div>
-        <div class="question">2. If an intervention costs €50,000 per QALY gained and the threshold is €30,000/QALY, what is the recommendation?</div>
+        <div class="feedback" id="q12-11-feedback">
+          <strong>✓ Correct!</strong> CUA (Cost-Utility Analysis) uses QALYs as a common outcome measure, making it possible to compare cost-effectiveness across different diseases and interventions — something CEA cannot do with its condition-specific natural units.
+        </div>
+      </div>
+      <div class="quiz">
+        <h4>📝 Quick Check — Economic Evaluation Methods</h4>
+        <div class="question">If an intervention costs €50,000 per QALY gained and the threshold is €30,000/QALY, what is the recommendation?</div>
         <div class="options">
-          <div class="option correct">Generally not considered cost-effective; would require strong justification for adoption</div>
-          <div class="option">Highly cost-effective; should be adopted immediately</div>
-          <div class="option">Cost-effective; always adopted without question</div>
-          <div class="option">No change to usual care; ignore evidence</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q12-12')">Generally not considered cost-effective; would require strong justification for adoption</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-12')">Highly cost-effective; should be adopted immediately</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-12')">Cost-effective; always adopted without question</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q12-12')">No change to usual care; ignore evidence</div>
+        </div>
+        <div class="feedback" id="q12-12-feedback">
+          <strong>✓ Correct!</strong> €50,000/QALY exceeds the €30,000 threshold, meaning the intervention is not cost-effective by standard criteria. It would need strong justification (e.g., treating a rare disease with no alternative) for adoption.
         </div>
       </div>
       <div class="quiz">
