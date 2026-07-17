@@ -392,6 +392,9 @@ body.sidebar-hidden .main-content { margin-left: 0; }
 .option.wrong { background: var(--important); border-color: var(--secondary); text-decoration: line-through; }
 
 @media (max-width: 768px) {
+  .comparison-table {
+    display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .sidebar-close { display: block; }
