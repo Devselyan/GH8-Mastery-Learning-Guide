@@ -19,9 +19,19 @@ function checkAnswer(el, correct, questionId) {
     el.classList.add('correct');
   } else {
     el.classList.add('wrong');
+    for (var j = 0; j < options.length; j++) {
+      var onclickAttr = options[j].getAttribute('onclick');
+      if (onclickAttr && onclickAttr.indexOf(', true,') !== -1) {
+        options[j].classList.add('correct');
+      }
+    }
   }
   var feedback = document.getElementById(questionId + '-feedback');
   if (feedback) {
+    var strong = feedback.querySelector('strong');
+    if (strong && strong.textContent.indexOf('Correct') !== -1) {
+      strong.textContent = correct ? '✓ Correct!' : '✗ Incorrect!';
+    }
     feedback.classList.add('show');
   }
 }
