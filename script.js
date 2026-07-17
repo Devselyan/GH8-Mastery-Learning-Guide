@@ -7,7 +7,6 @@ function toggleModule(id) {
   } else {
     toggle.textContent = '\u25BC';
   }
-  updateProgress();
 }
 
 function checkAnswer(el, correct, questionId) {
@@ -36,7 +35,6 @@ function checkAnswer(el, correct, questionId) {
   }
 }
 
-function updateProgress() {}
 function toggleSidebar() {
   var sb = document.getElementById('sidebar');
   var overlay = document.getElementById('sidebarOverlay');
@@ -366,32 +364,6 @@ function toggleDark() {
   document.getElementById('darkToggle').textContent = document.body.classList.contains('dark') ? '\u2600\uFE0F' : '\uD83C\uDF19';
 }
 
-function highlightInElement(el, q) {
-  var children = el.querySelectorAll(':scope > *');
-  for (var c = 0; c < children.length; c++) {
-    var child = children[c];
-    if (child.classList && (child.classList.contains('module-header') || child.tagName === 'SCRIPT')) continue;
-    var walker = document.createTreeWalker(child, NodeFilter.SHOW_TEXT, null, false);
-    var nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    for (var n = 0; n < nodes.length; n++) {
-      var node = nodes[n];
-      var idx = node.textContent.toLowerCase().indexOf(q);
-      if (idx === -1) continue;
-      var span = document.createElement('span');
-      span.className = 'search-highlight';
-      span.textContent = node.textContent.substring(idx, idx + q.length);
-      var rest = node.textContent.substring(idx + q.length);
-      var before = node.textContent.substring(0, idx);
-      var frag = document.createDocumentFragment();
-      if (before) frag.appendChild(document.createTextNode(before));
-      frag.appendChild(span);
-      if (rest) frag.appendChild(document.createTextNode(rest));
-      node.parentNode.replaceChild(frag, node);
-    }
-  }
-}
-
 // Track scroll position for sidebar active link
 function updateSidebarActive() {
   var modules = document.querySelectorAll('.module');
@@ -406,7 +378,7 @@ function updateSidebarActive() {
   }
   var links = document.querySelectorAll('.sidebar-nav a');
   for (var i = 0; i < links.length; i++) {
-    links[i].classList.toggle('active', links[i].getAttribute('href') === '#' + activeId);
+    links[i].classList.toggle('active', links[i].getAttribute('onclick') && links[i].getAttribute('onclick').indexOf(activeId) !== -1);
   }
 }
 
