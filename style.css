@@ -385,25 +385,42 @@ body.sidebar-hidden .main-content { margin-left: 0; }
   display: none; position: fixed; inset: 0; z-index: 998;
   background: rgba(0,0,0,0.5);
 }
+/* Quiz options touch-friendly */
+.option { cursor: pointer; padding: 10px 14px; margin: 4px 0; border-radius: 8px; background: var(--card); border: 1px solid var(--border); transition: all 0.2s; }
+.option:hover { background: var(--highlight); border-color: var(--primary); }
+.option.correct { background: var(--success); border-color: var(--accent); font-weight: 600; }
+.option.wrong { background: var(--important); border-color: var(--secondary); text-decoration: line-through; }
+
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .sidebar-close { display: block; }
   .sidebar-overlay.show { display: block; }
   .main-content { margin-left: 0; }
+  .top-nav { flex-wrap: wrap; gap: 6px; padding: 8px 12px; }
   .top-nav .menu-btn { display: block; }
-  .top-nav h1 { font-size: 0.95rem; }
-  .search-bar input { width: 120px; }
-  .search-bar input:focus { width: 160px; }
-  .hero h1 { font-size: 1.5rem; }
-  .hero .meta { gap: 10px; }
-  .hero .meta-item { padding: 8px 14px; font-size: 0.82rem; }
+  .top-nav h1 { font-size: 0.9rem; flex: 1 1 auto; }
+  .search-bar { flex: 1 1 100%; order: 10; }
+  .search-bar input { width: 100%; }
+  .search-bar input:focus { width: 100%; }
+  .search-nav { order: 11; }
+  .dark-toggle { order: 12; }
+  .hero h1 { font-size: 1.4rem; }
+  .hero .meta { flex-wrap: wrap; gap: 8px; }
+  .hero .meta-item { padding: 6px 12px; font-size: 0.8rem; }
   .nav-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .module-header h2 { font-size: 1.05rem; }
-  .module-content { padding: 16px; }
+  .module-header h2 { font-size: 1rem; }
+  .module-content { padding: 14px; }
+  .option { padding: 12px 14px; font-size: 0.95rem; }
+  .quiz { padding: 12px; }
+  .search-results-panel { font-size: 0.75rem; padding: 4px 12px; }
 }
 @media (max-width: 480px) {
   .nav-cards { grid-template-columns: 1fr; }
-  .search-bar input { width: 100px; }
-  .search-bar input:focus { width: 140px; }
+  .top-nav h1 { font-size: 0.85rem; }
+  .search-bar input { width: 100%; }
+  .search-bar input:focus { width: 100%; }
+  .option { padding: 14px 12px; font-size: 0.9rem; }
+  .question-bank-hero { padding: 16px 12px; }
+  .question-bank-hero h1 { font-size: 1.3rem; }
 }

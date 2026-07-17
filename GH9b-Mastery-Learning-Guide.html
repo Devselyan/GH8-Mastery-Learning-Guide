@@ -1,0 +1,2306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GH 9b — Quantitative Research Methods | Mastery Learning Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1565c0;
+    --secondary: #c62828;
+    --accent: #2e7d32;
+    --orange: #ef6c00;
+    --purple: #6a1b9a;
+    --bg: #f5f5f5;
+    --text: #212121;
+    --muted: #616161;
+    --card: #ffffff;
+    --border: #e0e0e0;
+    --highlight: #fff59d;
+    --important: #ffcdd2;
+    --success: #c8e6c9;
+    --info: #e1f5fe;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--primary); color: white;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .top-nav h1 { font-size: 1.2rem; display: inline-block; }
+  .top-nav .progress {
+    float: right; font-size: 0.9rem; background: rgba(255,255,255,0.2);
+    padding: 4px 12px; border-radius: 12px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1565c0, #42a5f5);
+    color: white; padding: 50px 20px; text-align: center;
+  }
+  .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+  .hero p { font-size: 1.1rem; opacity: 0.95; max-width: 800px; margin: 0 auto; }
+  .hero .meta {
+    display: flex; justify-content: center; gap: 30px; margin-top: 25px;
+    flex-wrap: wrap;
+  }
+  .hero .meta-item {
+    background: rgba(255,255,255,0.15); padding: 12px 20px; border-radius: 8px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+  .nav-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px; margin: 30px 0;
+  }
+  .nav-card {
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 10px; padding: 20px; text-align: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .nav-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+  }
+  .nav-card .icon { font-size: 2rem; margin-bottom: 8px; }
+  .nav-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 5px; }
+  .nav-card p { color: var(--muted); font-size: 0.85rem; }
+  .module {
+    background: var(--card); border-radius: 10px;
+    margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .module-header {
+    background: var(--primary); color: white; padding: 18px 25px;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .module-header h2 { font-size: 1.4rem; }
+  .module-header .toggle { font-size: 1.5rem; transition: transform 0.3s; }
+  .module-content { padding: 25px; }
+  .module-content.collapsed { display: none; }
+  .concept-box {
+    background: var(--info); border-left: 4px solid var(--primary);
+    padding: 15px 20px; margin: 15px 0; border-radius: 4px;
+  }
+  .concept-box h3 { color: var(--primary); margin-bottom: 10px; }
+  .key-point {
+    background: var(--highlight); padding: 8px 12px; border-radius: 4px;
+    font-weight: 600; display: inline-block; margin: 5px 5px 5px 0;
+  }
+  .example {
+    background: #f3e5f5; border-left: 4px solid var(--purple);
+    padding: 15px 20px; margin: 15px 0; border-radius: 4px;
+  }
+  .example h4 { color: var(--purple); margin-bottom: 8px; }
+  .warning {
+    background: var(--important); border-left: 4px solid var(--secondary);
+    padding: 12px 15px; margin: 15px 0; border-radius: 4px;
+  }
+  .success-box {
+    background: var(--success); border-left: 4px solid var(--accent);
+    padding: 12px 15px; margin: 15px 0; border-radius: 4px;
+  }
+  .formula-box {
+    background: #263238; color: #fff;
+    padding: 20px; border-radius: 8px; margin: 15px 0;
+    font-family: 'Courier New', monospace; text-align: center;
+    font-size: 1.1rem;
+  }
+  .formula-box .label {
+    color: #90a4ae; font-size: 0.85rem; margin-bottom: 5px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .comparison-table {
+    width: 100%; border-collapse: collapse; margin: 20px 0;
+    background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  .comparison-table th, .comparison-table td {
+    padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border);
+  }
+  .comparison-table th {
+    background: var(--primary); color: white; font-weight: 600;
+  }
+  .comparison-table tr:hover { background: #f5f5f5; }
+  .mnemonic {
+    background: linear-gradient(135deg, #fff9c4, #fff59d);
+    border: 2px dashed #f57f17; padding: 15px; border-radius: 8px;
+    text-align: center; margin: 20px 0;
+  }
+  .mnemonic .label {
+    font-size: 0.8rem; color: #f57f17; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 5px;
+  }
+  .mnemonic .content { font-size: 1.2rem; font-weight: 700; }
+  .quiz {
+    background: #fff8e1; border: 1px solid #ffb300; border-radius: 8px;
+    padding: 20px; margin: 20px 0;
+  }
+  .quiz h4 { color: #e65100; margin-bottom: 12px; }
+  .quiz .question { font-weight: 600; margin-bottom: 12px; }
+  .quiz .options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz .option {
+    background: white; border: 2px solid #e0e0e0; border-radius: 6px;
+    padding: 10px 15px; cursor: pointer; transition: all 0.2s;
+  }
+  .quiz .option:hover { border-color: #ffb300; background: #fff8e1; }
+  .quiz .option.correct { background: var(--success); border-color: var(--accent); }
+  .quiz .option.wrong { background: var(--important); border-color: var(--secondary); }
+  .quiz .feedback {
+    display: none; margin-top: 12px; padding: 12px;
+    background: white; border-radius: 6px;
+  }
+  .quiz .feedback.show { display: block; }
+  .tip-box {
+    background: #e8f5e9; border: 2px solid var(--accent);
+    border-radius: 8px; padding: 15px; margin: 20px 0;
+  }
+  .tip-box h4 { color: var(--accent); margin-bottom: 8px; }
+  .definition {
+    background: #fce4ec; padding: 12px 15px; border-radius: 6px;
+    margin: 10px 0; border-left: 3px solid #c2185b;
+  }
+  .definition .term { font-weight: 700; color: #c2185b; }
+  .checklist {
+    background: white; padding: 15px 20px; border-radius: 6px;
+    margin: 15px 0;
+  }
+  .checklist label {
+    display: block; padding: 8px 0; cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .checklist input[type="checkbox"] { margin-right: 10px; }
+  .checklist label:last-child { border-bottom: none; }
+  .summary-card {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border-radius: 10px; padding: 25px; margin: 25px 0;
+  }
+  .summary-card h2 { color: var(--primary); margin-bottom: 15px; }
+  .reveal { cursor: pointer; color: var(--primary); font-weight: 600; }
+  .reveal-content { display: none; margin-top: 10px; padding: 12px; background: #f5f5f5; border-radius: 6px; }
+  .visual-diagram {
+    background: white; padding: 20px; border-radius: 8px;
+    margin: 20px 0; text-align: center; border: 1px solid var(--border);
+  }
+  .arrow { font-size: 1.5rem; color: var(--primary); margin: 0 10px; }
+  .step-box {
+    display: inline-block; background: var(--info);
+    padding: 8px 16px; border-radius: 6px; margin: 5px;
+    border: 2px solid var(--primary);
+  }
+  .case-study {
+    background: #fff3e0; border-left: 4px solid var(--orange);
+    padding: 15px 20px; margin: 15px 0; border-radius: 4px;
+  }
+  .case-study h4 { color: var(--orange); margin-bottom: 8px; }
+  .number-circle {
+    display: inline-block; width: 30px; height: 30px; line-height: 30px;
+    border-radius: 50%; background: var(--primary); color: white;
+    text-align: center; font-weight: 700; margin-right: 10px;
+  }
+  .exam-focus {
+    background: linear-gradient(135deg, #c62828, #e53935);
+    color: #fff; display: inline-block; padding: 3px 12px; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+    margin-left: 10px; vertical-align: middle; text-transform: uppercase;
+  }
+  .exam-section {
+    border: 3px solid #c62828 !important; position: relative;
+  }
+  .exam-section::before {
+    content: "📌 EXAM FOCUS"; position: absolute; top: -12px; left: 15px;
+    background: #c62828; color: #fff; padding: 2px 12px; border-radius: 10px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .exam-section .module-header { background: #c62828 !important; }
+  .exam-badge {
+    display: inline-block; background: #c62828; color: #fff;
+    padding: 2px 10px; border-radius: 10px; font-size: 0.7rem;
+    font-weight: 700; margin-right: 8px; vertical-align: middle;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .search-wrap { display: inline-block; position: relative; float: right; margin-right: 15px; }
+  .search-wrap input {
+    padding: 6px 12px; border: none; border-radius: 20px; font-size: 0.85rem;
+    width: 200px; outline: none; background: rgba(255,255,255,0.25); color: #fff;
+    transition: all 0.3s;
+  }
+  .search-wrap input::placeholder { color: rgba(255,255,255,0.7); }
+  .search-wrap input:focus { background: rgba(255,255,255,0.4); width: 260px; }
+  .search-results {
+    display: none; position: absolute; top: 100%; right: 0; width: 320px;
+    background: #fff; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    max-height: 400px; overflow-y: auto; z-index: 2000; margin-top: 8px;
+  }
+  .search-results.show { display: block; }
+  .search-results a {
+    display: block; padding: 10px 15px; color: var(--text); text-decoration: none;
+    border-bottom: 1px solid var(--border); font-size: 0.9rem;
+  }
+  .search-results a:last-child { border-bottom: none; }
+  .search-results a:hover { background: var(--info); }
+  .search-results a mark { background: var(--highlight); padding: 1px 3px; border-radius: 2px; }
+  .search-results .no-result { padding: 15px; color: var(--muted); text-align: center; }
+  .search-results .s-title { font-weight: 600; display: block; }
+  .search-results .s-context { font-size: 0.8rem; color: var(--muted); display: block; margin-top: 2px; }
+  .highlight-match { background: var(--highlight); padding: 1px 3px; border-radius: 2px; }
+  @media (max-width: 700px) {
+    .search-wrap { display: block; float: none; margin: 8px 0 0; }
+    .search-wrap input { width: 100%; }
+    .search-wrap input:focus { width: 100%; }
+    .search-results { width: 100%; }
+    .top-nav { display: flex; flex-wrap: wrap; align-items: center; }
+    .top-nav h1 { flex: 1; }
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    .nav-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <h1>📊 GH 9b Mastery Learning Guide</h1>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search topics..." oninput="doSearch(this.value)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="progress" id="progressBar">Progress: 0%</div>
+</div>
+
+<header class="hero">
+  <h1>Quantitative Research Methods</h1>
+  <p>A complete guide to understanding study designs, statistics, and critical appraisal for global health research</p>
+  <div class="meta">
+    <div class="meta-item">📖 <strong>Case-Based Learning</strong></div>
+    <div class="meta-item">⏱️ <strong>78 hours / 14 weeks</strong></div>
+    <div class="meta-item">🎯 <strong>5 ECTS</strong></div>
+    <div class="meta-item">👨‍🏫 <strong>Prof. Hendrik Siebert</strong></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="summary-card">
+    <h2>🎯 How to Use This Guide</h2>
+    <p>This guide covers EVERYTHING you need for the GH 9b 2-hour written exam. The exam has NO multiple choice questions — you must write detailed answers. This means you need to UNDERSTAND the concepts, not just memorize them. Work through each module in order. After each module, complete the quiz. Pay special attention to the case studies — the exam tests your ability to APPLY knowledge to real research scenarios.</p>
+    <p style="margin-top:10px"><strong>Exam format:</strong> 2 hours, written (no MCQ) • All content from semester plan + Logbook is exam-relevant</p>
+  </div>
+
+  <div class="warning" style="border-left-color: #c62828; background: #ffebee; border: 2px solid #c62828;">
+    <strong>📌 PROF. SIEBERT'S EXAM FOCUS AREAS</strong>
+    <p style="margin-top:8px;">These topics were explicitly emphasized as exam-relevant. Sections marked with <span class="exam-badge">EXAM FOCUS</span> or <span style="color:#c62828;font-weight:700;">red borders</span> are priority study areas:</p>
+    <ul style="margin: 8px 0 0 20px;">
+      <li><strong>cRCT designs</strong> — advantages, disadvantages, pros/cons of all variants</li>
+      <li><strong>Association measures</strong> — which measures are allowed in each study design</li>
+      <li><strong>Survival analysis</strong> — Kaplan-Meier, censoring, log-rank test</li>
+      <li><strong>Sample size planning</strong> — why important, how it's done</li>
+      <li><strong>Linear regression & confounding</strong> — regression analysis with confounders</li>
+      <li><strong>Confounder analysis & management strategies</strong></li>
+      <li><strong>Risk, Odds & all ratios</strong> — RR, OR, AR, AF, NNT</li>
+    </ul>
+  </div>
+
+  <h2 style="color:var(--primary); margin: 30px 0 15px;">📋 Quick Navigation</h2>
+  <div class="nav-cards">
+    <div class="nav-card" onclick="document.getElementById('m1').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">🎯</div>
+      <h3>Module 1</h3>
+      <p>The Basics: Why Quantitative Methods?</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m2').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">🔬</div>
+      <h3>Module 2</h3>
+      <p>Study Designs</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m3').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📏</div>
+      <h3>Module 3</h3>
+      <p>Effect Measures</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m4').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">⚠️</div>
+      <h3>Module 4</h3>
+      <p>Bias & Confounding</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m5').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">🧮</div>
+      <h3>Module 5</h3>
+      <p>Statistical Concepts</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m6').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📊</div>
+      <h3>Module 6</h3>
+      <p>Confidence Intervals & P-values</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m7').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📈</div>
+      <h3>Module 7</h3>
+      <p>Regression</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m8').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">🎓</div>
+      <h3>Module 8</h3>
+      <p>Exam Preparation</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m9').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">🏥</div>
+      <h3>Module 9</h3>
+      <p>cRCT Design Variants</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m10').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📊</div>
+      <h3>Module 10</h3>
+      <p>ICC & Design Effect</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m11').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">⏱️</div>
+      <h3>Module 11</h3>
+      <p>Survival Analysis</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m12').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📐</div>
+      <h3>Module 12</h3>
+      <p>Sample Size Planning</p>
+    </div>
+    <div class="nav-card" onclick="document.getElementById('m13').scrollIntoView({behavior:'smooth'})">
+      <div class="icon">📄</div>
+      <h3>Module 13</h3>
+      <p>Case Study: Surati et al. 2024</p>
+    </div>
+  </div>
+
+  <!-- MODULE 1: Why Quantitative Methods? -->
+  <div class="module" id="m1">
+    <div class="module-header" onclick="toggleModule('m1')">
+      <h2>Module 1: The Basics — Why Quantitative Methods?</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m1-content">
+
+      <div class="concept-box">
+        <h3>💡 The Big Picture</h3>
+        <p>Quantitative research methods help us answer questions like: <em>"How many people have this disease?" "Does this treatment work?" "What is the risk?"</em> Unlike qualitative methods (which explore <em>why</em> and <em>how</em>), quantitative methods give us <strong>NUMBERS</strong> that we can measure, compare, and analyze statistically.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🌍 The Four Case Scenarios</h3>
+      <p>Throughout this module, you'll learn through REAL global health case scenarios. These are the same cases used in class:</p>
+
+      <div class="case-study">
+        <h4>Case 1: Period Poverty in India (Alam et al. 2024)</h4>
+        <p>Research question: <em>What is the prevalence and determinants of period poverty in India?</em></p>
+        <p>This study used <strong>cross-sectional analysis</strong> of the National Family Health Survey-5 data to understand menstruation-related challenges faced by women in India.</p>
+      </div>
+
+      <div class="case-study">
+        <h4>Case 2: Long-COVID in HICs vs LMICs</h4>
+        <p>Research question: <em>How does Long-COVID affect different populations?</em></p>
+        <p>This examines how the COVID-19 pandemic's long-term effects differ between high-income countries and low/middle-income countries.</p>
+      </div>
+
+      <div class="case-study">
+        <h4>Case 3: Diet and Cancer in Spain</h4>
+        <p>Research question: <em>How does diet influence cancer risk?</em></p>
+        <p>Examines the relationship between dietary patterns and cancer outcomes in a Spanish cohort.</p>
+      </div>
+
+      <div class="case-study">
+        <h4>Case 4: Malaria in Mozambique</h4>
+        <p>Research question: <em>What factors influence malaria transmission and outcomes?</em></p>
+        <p>Studies malaria epidemiology in Mozambique, including the impact of climate change on transmission patterns.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 The Research Process</h3>
+      <div class="visual-diagram">
+        <span class="step-box"><span class="number-circle">1</span>Topic</span>
+        <span class="arrow">→</span>
+        <span class="step-box"><span class="number-circle">2</span>Study</span>
+        <span class="arrow">→</span>
+        <span class="step-box"><span class="number-circle">3</span>Scenario</span>
+        <span class="arrow">→</span>
+        <span class="step-box"><span class="number-circle">4</span>Critical Appraisal</span>
+        <span class="arrow">→</span>
+        <span class="step-box"><span class="number-circle">5</span>Summary</span>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🔑 Key Distinction: Prevalence vs. Incidence</h3>
+      <p>Two fundamental measures in epidemiology that students ALWAYS confuse:</p>
+
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Prevalence</th><th>Incidence</th></tr>
+        <tr><td><strong>What it measures</strong></td><td>Total existing cases at a point in time</td><td>New cases occurring over a time period</td></tr>
+        <tr><td><strong>Numerator</strong></td><td>All existing cases</td><td>New cases only</td></tr>
+        <tr><td><strong>Denominator</strong></td><td>Total population at that time</td><td>Population at risk (without disease)</td></tr>
+        <tr><td><strong>Think of it as</strong></td><td>"How many people HAVE this disease RIGHT NOW?"</td><td>"How many people GOT this disease OVER TIME?"</td></tr>
+        <tr><td><strong>Study design</strong></td><td>Cross-sectional</td><td>Cohort, experimental</td></tr>
+      </table>
+
+      <div class="example">
+        <h4>🍎 Real Example: Diabetes</h4>
+        <p><strong>Prevalence:</strong> "In 2024, 10% of adults in Germany have diabetes." (All cases, right now)</p>
+        <p><strong>Incidence:</strong> "In 2024, 5 new cases of diabetes per 1,000 people occur each year." (New cases only, over time)</p>
+        <p>Prevalence can increase even if incidence stays the same — because people with diabetes live longer!</p>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 Memory Aid</div>
+        <div class="content">Prevalence = "Picture" (snapshot) • Incidence = "Increase" (new cases over time)</div>
+      </div>
+
+      <div class="quiz">
+        <h4>📝 Quick Check — Module 1</h4>
+        <div class="question">1. What is the difference between prevalence and incidence?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q1')">They mean the same thing</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q1')">Prevalence = all existing cases; Incidence = new cases over time</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1')">Prevalence is for chronic diseases only</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1')">Incidence is measured by cross-sectional studies</div>
+        </div>
+        <div class="feedback" id="q1-feedback">
+          <strong>✓ Correct!</strong> Prevalence is a snapshot of all existing cases at one point in time. Incidence tracks new cases occurring over a period. Cross-sectional studies measure prevalence; cohort studies measure incidence.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 2: Study Designs -->
+  <div class="module" id="m2">
+    <div class="module-header" onclick="toggleModule('m2')">
+      <h2>Module 2: Study Designs — The Big Three <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m2-content">
+
+      <h3 style="color:var(--primary);">🔬 Three Main Observational Study Designs</h3>
+      <p>Every quantitative study fits into one of these designs. The exam WILL test your ability to identify which design was used and what it can/cannot tell us.</p>
+
+      <div class="visual-diagram">
+        <h4 style="color:var(--primary); margin-bottom: 8px;">The Three Study Designs — Visual Comparison</h4>
+        <svg viewBox="0 0 690 280" style="max-width:100%;height:auto;font-family:'Segoe UI',sans-serif;">
+          <rect x="0" y="0" width="690" height="280" fill="#fafafa" rx="6"/>
+
+          <!-- Cross-sectional -->
+          <text x="115" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1565c0">① Cross-sectional</text>
+          <rect x="40" y="32" width="150" height="50" rx="6" fill="#bbdefb" stroke="#1565c0" stroke-width="1.5"/>
+          <text x="115" y="52" text-anchor="middle" font-size="11" fill="#1565c0">Measure exposure + outcome</text>
+          <text x="115" y="68" text-anchor="middle" font-size="11" fill="#1565c0">at ONE point in time</text>
+          <text x="115" y="98" text-anchor="middle" font-size="10" fill="#757575">📸 Snapshot — no follow-up</text>
+          <text x="115" y="113" text-anchor="middle" font-size="10" fill="#757575">➜ Measures PREVALENCE</text>
+          <text x="115" y="128" text-anchor="middle" font-size="10" fill="#c62828">✗ Cannot establish causality</text>
+
+          <!-- Arrow -->
+          <text x="205" y="70" text-anchor="middle" font-size="20" fill="#bdbdbd">→</text>
+
+          <!-- Case-control -->
+          <text x="310" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#ef6c00">② Case-control</text>
+          <rect x="235" y="32" width="150" height="50" rx="6" fill="#fff3e0" stroke="#ef6c00" stroke-width="1.5"/>
+          <text x="310" y="48" text-anchor="middle" font-size="11" fill="#ef6c00">Start with disease status</text>
+          <text x="310" y="64" text-anchor="middle" font-size="11" fill="#ef6c00">Look BACK for past exposure</text>
+          <text x="310" y="98" text-anchor="middle" font-size="10" fill="#757575">🔄 Retrospective</text>
+          <text x="310" y="113" text-anchor="middle" font-size="10" fill="#757575">➜ Calculates ODDS RATIO</text>
+          <text x="310" y="128" text-anchor="middle" font-size="10" fill="#2e7d32">✓ Good for rare diseases</text>
+
+          <!-- Arrow -->
+          <text x="400" y="70" text-anchor="middle" font-size="20" fill="#bdbdbd">→</text>
+
+          <!-- Cohort -->
+          <text x="530" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#2e7d32">③ Cohort</text>
+          <rect x="450" y="32" width="160" height="50" rx="6" fill="#c8e6c9" stroke="#2e7d32" stroke-width="1.5"/>
+          <text x="530" y="48" text-anchor="middle" font-size="11" fill="#2e7d32">Start with exposure status</text>
+          <text x="530" y="64" text-anchor="middle" font-size="11" fill="#2e7d32">Follow FORWARD in time</text>
+          <text x="530" y="98" text-anchor="middle" font-size="10" fill="#757575">⏩ Prospective</text>
+          <text x="530" y="113" text-anchor="middle" font-size="10" fill="#757575">➜ Calculates RR, AR, INCIDENCE</text>
+          <text x="530" y="128" text-anchor="middle" font-size="10" fill="#2e7d32">✓ Strongest for causality</text>
+
+          <!-- Time arrow at bottom -->
+          <line x1="40" y1="210" x2="640" y2="210" stroke="#424242" stroke-width="2" marker-end="url(#tArrow)"/>
+          <text x="340" y="200" text-anchor="middle" font-size="11" fill="#424242" font-weight="600">← Past &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Present &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Future →</text>
+
+          <!-- Classification boxes -->
+          <rect x="40" y="228" width="150" height="36" rx="4" fill="#e3f2fd" stroke="#90caf9" stroke-width="1"/>
+          <text x="115" y="242" text-anchor="middle" font-size="9" fill="#1565c0">Snapshot</text>
+          <text x="115" y="255" text-anchor="middle" font-size="9" fill="#1565c0">Cheapest • Fastest</text>
+
+          <rect x="235" y="228" width="150" height="36" rx="4" fill="#fff3e0" stroke="#ffcc80" stroke-width="1"/>
+          <text x="310" y="242" text-anchor="middle" font-size="9" fill="#ef6c00">Disease → Exposure</text>
+          <text x="310" y="255" text-anchor="middle" font-size="9" fill="#ef6c00">$$ • Medium</text>
+
+          <rect x="450" y="228" width="160" height="36" rx="4" fill="#c8e6c9" stroke="#a5d6a7" stroke-width="1"/>
+          <text x="530" y="242" text-anchor="middle" font-size="9" fill="#2e7d32">Exposure → Disease</text>
+          <text x="530" y="255" text-anchor="middle" font-size="9" fill="#2e7d32">$$$ • Longest • Best</text>
+
+          <defs>
+            <marker id="tArrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#424242"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">1️⃣ Cross-Sectional Studies</h3>
+      <div class="definition">
+        <p><span class="term">What?</span> Measure exposure AND outcome at the SAME point in time. Like taking a photograph.</p>
+      </div>
+      <p><strong>What it CAN do:</strong> Measure prevalence, describe characteristics of a population, identify associations</p>
+      <p><strong>What it CANNOT do:</strong> Establish causality (because you don't know which came first — exposure or outcome)</p>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🔄 Standardization — Key Concept for Comparing Studies</h3>
+      <div class="concept-box">
+        <h3>💡 Why Standardization Matters</h3>
+        <p>Standardization removes confounding effects when comparing disease frequencies across populations or over time. Without standardization, you risk drawing biased conclusions about disease burden differences.</p>
+      </div>
+      
+      <h4>📊 Pitfalls of Using Crude (Non-Standardized) Measures</h4>
+      <ul style="margin-left: 20px;">
+        <li>Crude rates can be misleading when populations differ in age composition (e.g., a country with younger age structure appears to have lower mortality even if underlying risk is higher)</li>
+        <li>Policy decisions based on crude rates may misallocate resources</li>
+      </ul>
+      
+      <h4>📈 Types of Standardization (using age as example)</h4>
+      
+      <h5>1️⃣ Direct Age Standardization</h5>
+      <div class="definition">
+        <p><span class="term">What it does:</span> Assumes the study population has the same age structure as the standard population.</p>
+      </div>
+      <p><strong>Formula:</strong> Adjusted Rate = Σ (Age-specific rate in study population × Standard population weight)</p>
+      <p><strong>Use when:</strong> You have age-specific rates from your population and want to compare with others.</p>
+      
+      <h5>2️⃣ Indirect Age Standardization</h5>
+      <div class="definition">
+        <p><span class="term">What it does:</span> Applies standard population's age-specific rates to your population's age structure.</p>
+      </div>
+      <p><strong>Results in:</strong> Standardized Mortality Ratio (SMR) or Standardized Incidence Ratio (SIR)</p>
+      <p><strong>Use when:</strong> Age-specific rates for your population are unavailable (common in small studies)</p>
+      
+      <h4>🎯 Choosing the Right Standard Population</h4>
+      <ul style="margin-left: 20px;">
+        <li><strong>NESP (New European Standard Population)</strong> - Best for European-wide comparisons</li>
+        <li><strong>UN World Standard Population</strong> - Best for global or cross-continental work</li>
+        <li><strong>Key rule:</strong> Must be the same across all populations/time points being compared</li>
+      </ul>
+      
+      <h4>⚖️ Why This Matters for Your Exam</h4>
+      <div class="warning">
+        <strong>Common Exam Question:</strong> A study compares CVD mortality between Country A (young) and Country B (old). Crude rates are 150 vs 210/100,000. After standardization, rates become 350 vs 620/100,000. <br>
+        <strong>Key point:</strong> Country B has 77% higher risk after adjustment (620 vs 350), vs only 40% higher with crude rates!
+      </div>
+      
+      <div class="mnemonic">
+        <div class="label">🧠 Remember: Standardization Eliminates the "Age Structure Artifact</div>
+        <div class="content">Direct = Your rates × Standard weights<br>Indirect = Standard rates × Your population weights</div>
+      </div>
+
+      <div class="example">
+        <h4>📋 Example: Period Poverty Study (Alam et al. 2024)</h4>
+        <p>They analyzed the National Family Health Survey-5 in India. They measured period poverty prevalence and associated factors AT ONE POINT IN TIME. This is cross-sectional because they used existing survey data without following people over time.</p>
+      </div>
+
+      <div class="warning">
+        <strong>⚠️ Major Limitation:</strong> If you find that period poverty is associated with low income, you CANNOT tell if low income CAUSES period poverty, or if period poverty CAUSES low income, or if a third factor causes both. This is the <em>temporal ambiguity problem</em>.
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">2️⃣ Case-Control Studies</h3>
+      <div class="definition">
+        <p><span class="term">What?</span> Start with people WHO HAVE the disease (cases) and people WHO DON'T (controls), then look BACK in time to compare past exposures.</p>
+      </div>
+      <p><strong>The Logic:</strong> "People with the disease were exposed more often in the past than people without the disease."</p>
+
+      <div class="visual-diagram">
+        <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div style="text-align: center;">
+            <div class="step-box" style="background: #ffcdd2;">CASES (have disease)</div>
+            <div style="margin-top: 10px;">⬅️ Look back in time</div>
+            <div style="margin-top: 10px;">Was exposed? Yes/No</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="step-box" style="background: #c8e6c9;">CONTROLS (no disease)</div>
+            <div style="margin-top: 10px;">⬅️ Look back in time</div>
+            <div style="margin-top: 10px;">Was exposed? Yes/No</div>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>Measure used:</strong> <strong>Odds Ratio (OR)</strong></p>
+      <div class="concept-box">
+        <h3>💡 What the OR tells us conceptually</h3>
+        <p>The OR compares the <strong>odds of exposure</strong> among cases versus controls. It answers: "Were cases more likely to have been exposed than controls?"</p>
+        <ul>
+          <li><strong>OR = 1</strong> → No association (cases and controls had same exposure odds)</li>
+          <li><strong>OR > 1</strong> → Cases had higher exposure odds (possible risk factor)</li>
+          <li><strong>OR < 1</strong> → Cases had lower exposure odds (possible protective factor)</li>
+        </ul>
+      </div>
+
+      <div class="warning">
+        <strong>⚠️ Key Point:</strong> When the disease is RARE, the OR is a good approximation of the Relative Risk (RR). But for common diseases, OR overestimates the RR. This is a common exam trap!
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">3️⃣ Cohort Studies</h3>
+      <div class="definition">
+        <p><span class="term">What?</span> Start with people BASED ON EXPOSURE STATUS (exposed vs. unexposed), then follow them FORWARD IN TIME to see who develops the disease.</p>
+      </div>
+      <p><strong>Think of it as:</strong> "We'll watch these exposed people and these unexposed people over the next 10 years and see who gets sick."</p>
+
+      <div class="visual-diagram">
+        <div style="display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px;">
+          <div style="text-align: center;">
+            <div class="step-box" style="background: #bbdefb;">EXPOSED GROUP</div>
+            <div style="margin-top: 10px;">⬇️ Follow forward in time</div>
+            <div style="margin-top: 10px;">How many get disease?</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="step-box" style="background: #fff9c4;">UNEXPOSED GROUP</div>
+            <div style="margin-top: 10px;">⬇️ Follow forward in time</div>
+            <div style="margin-top: 10px;">How many get disease?</div>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>Measures used:</strong> <strong>Relative Risk (RR)</strong> and <strong>Attributable Risk (AR)</strong></p>
+
+      <div class="concept-box">
+        <h3>💡 What RR and AR tell us conceptually</h3>
+        <p><strong>Relative Risk (RR)</strong> compares the risk in the exposed group to the risk in the unexposed group. It answers: "How many times more (or less) likely is the outcome in the exposed group?"</p>
+        <ul>
+          <li><strong>RR = 1</strong> → No difference in risk</li>
+          <li><strong>RR > 1</strong> → Exposure increases risk (e.g., RR = 10 means 10× the risk)</li>
+          <li><strong>RR < 1</strong> → Exposure is protective (e.g., RR = 0.5 means half the risk)</li>
+        </ul>
+        <p style="margin-top:10px"><strong>Attributable Risk (AR)</strong> is the <strong>absolute difference</strong> in risk between groups. It answers: "How many excess cases are due to the exposure?"</p>
+        <ul>
+          <li><strong>AR = 0</strong> → No excess risk</li>
+          <li><strong>AR > 0</strong> → Some cases are attributable to the exposure</li>
+          <li>AR is measured in the same units as the outcome (e.g., 18 extra cases per 1000 people)</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 Quick Comparison</h3>
+      <table class="comparison-table">
+        <tr><th>Feature</th><th>Cross-sectional</th><th>Case-control</th><th>Cohort</th></tr>
+        <tr><td><strong>Starting point</strong></td><td>One point in time</td><td>Disease status</td><td>Exposure status</td></tr>
+        <tr><td><strong>Direction</strong></td><td>Snapshot</td><td>Backward (retrospective)</td><td>Forward (prospective)</td></tr>
+        <tr><td><strong>Measures</strong></td><td>Prevalence</td><td>Odds Ratio</td><td>Relative Risk, Incidence</td></tr>
+        <tr><td><strong>Temporality?</strong></td><td>❌ NO</td><td>✓ YES (retrospective)</td><td>✓ YES (prospective)</td></tr>
+        <tr><td><strong>Causality?</strong></td><td>❌ Weak</td><td>✓ Strong (if designed well)</td><td>✓ Strongest</td></tr>
+        <tr><td><strong>Cost</strong></td><td>$</td><td>$$</td><td>$$$</td></tr>
+        <tr><td><strong>Time</strong></td><td>Short</td><td>Medium</td><td>Long</td></tr>
+      </table>
+
+      <div class="exam-section" style="background: var(--card); border-radius: 10px; padding: 20px; margin: 20px 0;">
+        <h3 style="color:var(--primary);">📋 Association Measures by Study Design — Full Reference</h3>
+        <p>You need to know which measures can be used with each study design. This table tells you what is ALLOWED vs. NOT ALLOWED:</p>
+        <table class="comparison-table">
+          <tr><th>Measure</th><th>Cross-sectional</th><th>Case-control</th><th>Cohort</th><th>RCT</th></tr>
+          <tr>
+            <td><strong>Prevalence</strong></td><td>✅ Yes (primary measure)</td><td>❌ No (can't estimate)</td><td>✅ Yes (baseline)</td><td>✅ Yes (baseline)</td>
+          </tr>
+          <tr>
+            <td><strong>Incidence (Cumulative)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes (primary)</td><td>✅ Yes (primary)</td>
+          </tr>
+          <tr>
+            <td><strong>Incidence Rate (person-time)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td>
+          </tr>
+          <tr>
+            <td><strong>Relative Risk (RR)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes (primary)</td><td>✅ Yes (primary)</td>
+          </tr>
+          <tr>
+            <td><strong>Odds Ratio (OR)</strong></td><td>✅ Prevalence OR</td><td>✅ Yes (primary)</td><td>✅ Yes (if needed)</td><td>✅ Yes (if needed)</td>
+          </tr>
+          <tr>
+            <td><strong>Attributable Risk (AR)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td>
+          </tr>
+          <tr>
+            <td><strong>Attributable Fraction (AF%)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes</td>
+          </tr>
+          <tr>
+            <td><strong>Number Needed to Treat (NNT)</strong></td><td>❌ No</td><td>❌ No</td><td>✅ Yes</td><td>✅ Yes (primary)</td>
+          </tr>
+        </table>
+        <div class="concept-box" style="margin-top:15px;">
+          <h3>💡 Key Conceptual Rules</h3>
+          <ul>
+            <li><strong>Incidence and time-based measures</strong> (RR, AR, NNT) require following people forward → only possible in cohort or experimental designs</li>
+            <li><strong>Prevalence</strong> is a snapshot → only possible in cross-sectional designs</li>
+            <li><strong>Odds Ratio</strong> is the only ratio measure possible in case-control studies (because you select based on disease status, not exposure)</li>
+            <li><strong>OR approximates RR</strong> only when the disease is rare — for common diseases, OR overestimates the true risk ratio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 Remember: The Direction of Time</div>
+        <div class="content">Cross = Now • Case-control = Cases first, look back • Cohort = Exposed first, look forward</div>
+      </div>
+
+      <div class="quiz">
+        <h4>📝 Quick Check — Module 2</h4>
+        <div class="question">A study identifies 100 patients with lung cancer (cases) and 100 without (controls), then looks back 20 years to assess their smoking history. What type of study is this?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q2')">Cross-sectional</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q2')">Case-control</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2')">Cohort</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2')">Randomized controlled trial</div>
+        </div>
+        <div class="feedback" id="q2-feedback">
+          <strong>✓ Correct!</strong> Starting with disease status (cases vs. controls) and looking BACK in time = case-control study. The measure would be an Odds Ratio.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 3: Effect Measures -->
+  <div class="module" id="m3">
+    <div class="module-header" onclick="toggleModule('m3')">
+      <h2>Module 3: Effect Measures — Risk, Odds, and More <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m3-content">
+
+      <h3 style="color:var(--primary);">📏 The Three Main Effect Measures</h3>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">1️⃣ Relative Risk (RR)</h3>
+      <div class="definition">
+        <p><span class="term">RR:</span> Compares the risk in the exposed group to the risk in the unexposed group. Tells you the <strong>strength of an association</strong>.</p>
+      </div>
+      <p><strong>Interpretation:</strong></p>
+      <ul style="margin-left: 20px;">
+        <li>RR = 1.0 → No difference in risk</li>
+        <li>RR = 2.0 → Exposed have DOUBLE the risk</li>
+        <li>RR = 0.5 → Exposed have HALF the risk (protective!)</li>
+        <li>RR = 10 → Exposed have 10× the risk</li>
+      </ul>
+      <div class="example">
+        <h4>🍎 Conceptual Example</h4>
+        <p>Smokers have a much higher risk of lung cancer than non-smokers. The RR tells us <strong>how many times higher</strong> — e.g., smokers might have 10× the risk. RR only tells you about the <strong>ratio</strong>, not the absolute number of cases.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">2️⃣ Odds Ratio (OR)</h3>
+      <div class="definition">
+        <p><span class="term">OR:</span> Compares the odds of an event in one group to the odds in another. Used in case-control studies and logistic regression.</p>
+      </div>
+      <div class="concept-box">
+        <h3>🎲 Odds vs. Probability — Conceptual Difference</h3>
+        <p><strong>Probability</strong> = how often something happens out of ALL possible outcomes (e.g., 30 out of 100 people get the disease = 30%)</p>
+        <p><strong>Odds</strong> = how often something happens compared to how often it DOESN'T (e.g., 30 events vs. 70 non-events = 30:70 or roughly 3:7)</p>
+        <p><strong>Key insight:</strong> Odds always look <strong>larger</strong> than probability. This is why OR > RR for common outcomes — a common exam trap!</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">3️⃣ Attributable Risk (AR)</h3>
+      <p>Also called <strong>Risk Difference</strong> — the EXCESS risk in the exposed group due to the exposure.</p>
+      <div class="definition">
+        <p><span class="term">AR:</span> The absolute difference in risk between the exposed and unexposed groups. Tells you <strong>how much disease is due to the exposure</strong> in absolute terms.</p>
+      </div>
+      <p><strong>Interpretation:</strong> If AR = 9%, it means 9 out of 100 cases in the exposed group are attributable to the exposure. Unlike RR (which is a ratio), AR gives you the <strong>actual public health impact</strong>.</p>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">4️⃣ Attributable Fraction (AF%)</h3>
+      <div class="definition">
+        <p><span class="term">Attributable Fraction (AF%):</span> The proportion of cases in the exposed group that is caused by the exposure. Tells you the <strong>public health impact</strong> — how much disease could be prevented if the exposure were removed.</p>
+      </div>
+      <p><strong>Interpretation:</strong> "In smokers, X% of lung cancer cases are due to smoking and would not occur if nobody smoked."</p>
+      <p>AF% is used when you want to communicate the <strong>practical importance</strong> of an association, not just its strength.</p>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">5️⃣ Number Needed to Treat (NNT)</h3>
+      <div class="definition">
+        <p><span class="term">NNT:</span> The number of people who need to receive an intervention to prevent ONE additional bad outcome (or achieve one additional good outcome).</p>
+      </div>
+      <p><strong>Conceptual meaning:</strong> NNT tells you about <strong>clinical efficiency</strong> — how many people must be treated for one person to benefit.</p>
+      <ul style="margin-left: 20px;">
+        <li><strong>Small NNT</strong> (e.g., 2–5) → highly effective intervention</li>
+        <li><strong>Large NNT</strong> (e.g., 100+) → modest benefit, many need treatment for one to benefit</li>
+        <li><strong>Infinite NNT</strong> → no effect</li>
+        <li><strong>Negative NNT (NNH)</strong> → harm (Number Needed to Harm)</li>
+      </ul>
+      <div class="example">
+        <h4>💊 Real Example</h4>
+        <p>A new cholesterol drug has NNT = 50 over 5 years to prevent one heart attack. This means 50 people must take the drug for 5 years to prevent one heart attack — the other 49 get no benefit but may still experience side effects.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🎯 When to Use What?</h3>
+      <div class="concept-box">
+        <h3>Quick Guide</h3>
+        <ul style="margin-left: 20px;">
+          <li><strong>Prevalence</strong> → Cross-sectional studies</li>
+          <li><strong>Incidence & RR</strong> → Cohort studies (prospective)</li>
+          <li><strong>Odds Ratio</strong> → Case-control studies (or logistic regression)</li>
+          <li><strong>Attributable Risk</strong> → When you want to know "how much disease is caused by this exposure"</li>
+        </ul>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 POOR PIRATES Use OR</div>
+        <div class="content">Prevalence = Odds Ratio for RARE diseases</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 4: Bias & Confounding -->
+  <div class="module" id="m4">
+    <div class="module-header" onclick="toggleModule('m4')">
+      <h2>Module 4: Bias, Confounding & Effect Modification <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m4-content">
+
+      <h3 style="color:var(--primary);">⚠️ Why Studies Can Be Wrong</h3>
+      <p>Three major threats to validity in any study:</p>
+
+      <table class="comparison-table">
+        <tr><th>Threat</th><th>What it is</th><th>How to control it</th></tr>
+        <tr>
+          <td><strong>Selection Bias</strong></td>
+          <td>Who you include affects the result. Study sample ≠ target population</td>
+          <td>Random sampling, proper recruitment</td>
+        </tr>
+        <tr>
+          <td><strong>Information (Measurement) Bias</strong></td>
+          <td>How you measure exposure or outcome affects the result</td>
+          <td>Blinding, validated instruments</td>
+        </tr>
+        <tr>
+          <td><strong>Confounding</strong></td>
+          <td>A third variable distorts the exposure-outcome relationship</td>
+          <td>Randomization, matching, stratification, regression</td>
+        </tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🎭 Confounding — The Classic Trap</h3>
+      <div class="definition">
+        <p><span class="term">Confounder:</span> A variable that is associated with BOTH the exposure AND the outcome, but is NOT on the causal pathway between them.</p>
+      </div>
+
+      <p><strong>Three criteria for a confounder:</strong></p>
+      <ol style="margin-left: 20px;">
+        <li>Must be associated with the EXPOSURE</li>
+        <li>Must be an independent risk factor for the OUTCOME</li>
+        <li>Must NOT be on the causal pathway (not an intermediate variable)</li>
+      </ol>
+
+      <div class="visual-diagram">
+        <h4 style="color:var(--primary); margin-bottom: 8px;">Directed Acyclic Graph (DAG) — Confounding</h4>
+        <svg viewBox="0 0 520 200" style="max-width:100%;height:auto;font-family:'Segoe UI',sans-serif;">
+          <rect x="0" y="0" width="520" height="200" fill="#fafafa" rx="6"/>
+
+          <!-- Nodes -->
+          <ellipse cx="120" cy="100" rx="65" ry="28" fill="#e3f2fd" stroke="#1565c0" stroke-width="2.5"/>
+          <text x="120" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Coffee</text>
+
+          <ellipse cx="390" cy="100" rx="65" ry="28" fill="#ffebee" stroke="#c62828" stroke-width="2.5"/>
+          <text x="390" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#c62828">Lung Cancer</text>
+
+          <ellipse cx="255" cy="40" rx="65" ry="28" fill="#fff3e0" stroke="#ef6c00" stroke-width="2.5"/>
+          <text x="255" y="45" text-anchor="middle" font-size="14" font-weight="700" fill="#ef6c00">Smoking</text>
+
+          <!-- Arrows -->
+          <!-- Smoking -> Coffee -->
+          <path d="M220,55 C195,65 175,80 165,90" stroke="#ef6c00" stroke-width="2" fill="none" marker-end="url(#arrowConf)"/>
+          <!-- Smoking -> Lung Cancer -->
+          <path d="M290,55 C315,65 335,80 345,90" stroke="#ef6c00" stroke-width="2" fill="none" marker-end="url(#arrowConf)"/>
+          <!-- Coffee -> Lung Cancer (dashed - spurious) -->
+          <path d="M185,100 L325,100" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="8,4" fill="none" marker-end="url(#arrowSpurious)"/>
+
+          <!-- Labels -->
+          <text x="205" y="130" text-anchor="middle" font-size="11" fill="#ef6c00" font-weight="600">Confounder</text>
+          <text x="255" y="148" text-anchor="middle" font-size="10" fill="#9e9e9e">(associated with both exposure and outcome)</text>
+          <text x="255" y="175" text-anchor="middle" font-size="11" fill="#9e9e9e" font-style="italic">Dashed arrow = spurious association (confounded)</text>
+
+          <defs>
+            <marker id="arrowConf" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#ef6c00"/>
+            </marker>
+            <marker id="arrowSpurious" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#9e9e9e"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="example">
+        <h4>🍺 The Classic Example: Coffee and Lung cancer</h4>
+        <p>Studies once showed that coffee drinking was associated with lung cancer. But this was CONFOUNDED by smoking!</p>
+        <ul>
+          <li>Coffee drinkers are more likely to SMOKE</li>
+          <li>SMOKING causes lung cancer</li>
+          <li>So smoking confounds the coffee-cancer relationship</li>
+        </ul>
+        <p><strong>The fix:</strong> Stratify by smoking status or use multivariable regression to "adjust for" smoking.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🛠️ Strategies for Managing Confounders</h3>
+      <p>Confounders can be handled at two stages of a study. You need to understand when and why each strategy is used:</p>
+
+      <h4>📐 Design Stage (before data collection)</h4>
+      <table class="comparison-table">
+        <tr><th>Strategy</th><th>How it works</th><th>When to use</th></tr>
+        <tr>
+          <td><strong>Randomization</strong></td>
+          <td>Randomly assign exposure — this balances BOTH known and unknown confounders between groups</td>
+          <td>RCTs (gold standard). Only works for experimental studies</td>
+        </tr>
+        <tr>
+          <td><strong>Restriction</strong></td>
+          <td>Limit the study to one level of the confounder (e.g., only non-smokers)</td>
+          <td>When the confounder is easy to measure and restrict on; limits generalizability</td>
+        </tr>
+        <tr>
+          <td><strong>Matching</strong></td>
+          <td>Select controls so they have the same confounder distribution as cases</td>
+          <td>Case-control studies (frequency or individual matching)</td>
+        </tr>
+      </table>
+
+      <h4>📊 Analysis Stage (after data collection)</h4>
+      <table class="comparison-table">
+        <tr><th>Strategy</th><th>How it works</th><th>When to use</th></tr>
+        <tr>
+          <td><strong>Stratification</strong></td>
+          <td>Split data into strata of the confounder and compare effect estimates across strata</td>
+          <td>Simple, intuitive. Limited by number of confounders you can handle at once</td>
+        </tr>
+        <tr>
+          <td><strong>Multivariable Regression</strong></td>
+          <td>Include confounders as covariates in the regression model to obtain an "adjusted" effect estimate</td>
+          <td>Most flexible; can handle many confounders simultaneously</td>
+        </tr>
+        <tr>
+          <td><strong>Standardization</strong></td>
+          <td>Apply a standard population distribution to remove age/structure differences</td>
+          <td>Comparing rates across populations with different structures (covered in Module 2)</td>
+        </tr>
+      </table>
+
+      <div class="concept-box">
+        <h3>💡 Example: Crude vs. Adjusted Effects</h3>
+        <p><strong>Crude RR</strong> (unadjusted): RR = 2.5 — coffee drinkers appear to have 2.5× the risk of lung cancer</p>
+        <p><strong>Adjusted RR</strong> (after controlling for smoking in regression): RR = 1.1 — the effect nearly disappears because smoking was the real cause</p>
+        <p>The difference between crude and adjusted estimates tells you how much confounding is present. A large change means strong confounding.</p>
+      </div>
+
+      <div class="warning">
+        <strong>⚠️ Residual Confounding:</strong> Even after adjustment, some confounding may remain if confounders are measured imprecisely or important confounders are unknown/unmeasured. This is why RCTs (randomization) are the gold standard — they theoretically balance all confounders, even unknown ones.
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🔄 Effect Modification (Interaction)</h3>
+      <p><strong>Different from confounding!</strong> Effect modification is when the effect of the exposure on the outcome DIFFERS across strata of a third variable.</p>
+
+      <div class="example">
+        <h4>💊 Example: Drug effect by sex</h4>
+        <p>A drug works well in men but not in women. Sex is an <strong>effect modifier</strong> — the drug's effect is modified by sex.</p>
+        <p><strong>Key difference from confounding:</strong></p>
+        <ul>
+          <li>Confounding: You want to REMOVE the effect of the confounder</li>
+          <li>Effect modification: You want to REPORT the different effects across strata</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🎯 Misclassification Bias</h3>
+      <div class="definition">
+        <p><span class="term">Non-differential misclassification:</span> Error in classification is EQUAL in both groups being compared. Tends to bias TOWARD THE NULL (underestimate the true effect).</p>
+      </div>
+      <div class="definition">
+        <p><span class="term">Differential misclassification:</span> Error DIFFERS between groups. Can bias in EITHER direction (toward or away from null).</p>
+      </div>
+
+      <div class="example">
+        <h4>🧠 Recall Bias — The Classic Case</h4>
+        <p>People WITH a disease remember past exposures better than people WITHOUT the disease. This is <strong>differential</strong> misclassification (cases recall differently from controls) and can strongly bias results.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 5: Statistical Concepts -->
+  <div class="module" id="m5">
+    <div class="module-header" onclick="toggleModule('m5')">
+      <h2>Module 5: Essential Statistical Concepts</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m5-content">
+
+      <h3 style="color:var(--primary);">📊 Types of Variables</h3>
+      <p>Understanding variable types is CRUCIAL for choosing the right statistical test:</p>
+
+      <table class="comparison-table">
+        <tr><th>Type</th><th>Description</th><th>Examples</th><th>Visualization</th></tr>
+        <tr>
+          <td><strong>Categorical (Qualitative)</strong></td>
+          <td>Groups or categories</td>
+          <td>Sex, blood type, yes/no</td>
+          <td>Bar chart</td>
+        </tr>
+        <tr>
+          <td><strong>Numerical (Quantitative)</strong></td>
+          <td>Numbers with meaning</td>
+          <td>Age, blood pressure, income</td>
+          <td>Histogram</td>
+        </tr>
+        <tr>
+          <td><strong>Ordinal</strong></td>
+          <td>Ordered categories</td>
+          <td>Likert scale (1-5), education level</td>
+          <td>Bar chart</td>
+        </tr>
+        <tr>
+          <td><strong>Binary</strong></td>
+          <td>Only two options</td>
+          <td>Dead/alive, disease/no disease</td>
+          <td>Bar chart</td>
+        </tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📏 Measures of Central Tendency & Dispersion</h3>
+
+      <div class="definition">
+        <p><span class="term">Mean (Average):</span> The sum of all values divided by the count. Use for normally distributed continuous data.</p>
+      </div>
+
+      <div class="definition">
+        <p><span class="term">Median (Middle value):</span> The value separating the higher half from the lower half. Use for skewed data, ordinal data, or when outliers are present.</p>
+      </div>
+
+      <div class="definition">
+        <p><span class="term">Standard Deviation (SD):</span> Measures how spread out the data is around the mean. ±1 SD covers ~68% of data, ±2 SD covers ~95%, ±3 SD covers ~99.7%.</p>
+      </div>
+
+      <div class="concept-box">
+        <h3>🎯 Which Measure to Use?</h3>
+        <p><strong>Normal distribution (symmetric, no outliers):</strong> Mean ± SD</p>
+        <p><strong>Skewed distribution or outliers:</strong> Median + IQR (Interquartile Range)</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 6: Confidence Intervals -->
+  <div class="module" id="m6">
+    <div class="module-header" onclick="toggleModule('m6')">
+      <h2>Module 6: Confidence Intervals & P-values</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m6-content">
+
+      <h3 style="color:var(--primary);">📏 Confidence Intervals (CIs)</h3>
+
+      <div class="concept-box">
+        <h3>💡 What is a CI?</h3>
+        <p>A confidence interval gives a RANGE of values that is likely to contain the true population parameter. The 95% CI is most common.</p>
+        <p><strong>Correct interpretation:</strong> "If we repeated this study 100 times, 95 of the resulting CIs would contain the true population parameter."</p>
+        <p><strong>WRONG interpretation:</strong> "There is a 95% probability that the true value lies in this interval." (This is a common exam trap!)</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🔍 What CIs Tell Us</h3>
+      <ol style="margin-left: 20px;">
+        <li><strong>Precision:</strong> Narrower CI = more precise estimate. Larger sample size → narrower CI.</li>
+        <li><strong>Statistical significance (for differences):</strong>
+          <ul>
+            <li>For difference in MEANS: CI excludes 0 → significant</li>
+            <li>For RATIOS (OR, RR, HR): CI excludes 1 → significant</li>
+          </ul>
+        </li>
+        <li><strong>Clinical importance:</strong> The range tells us the best-case and worst-case scenarios.</li>
+      </ol>
+
+      <div class="example">
+        <h4>🎲 Real Example: OR with CI</h4>
+        <p>A study reports: <strong>OR = 2.5, 95% CI: 1.8 to 3.5</strong></p>
+        <ul>
+          <li>The OR is 2.5 (odds are 2.5x higher in exposed group)</li>
+          <li>95% CI: 1.8 to 3.5 (true OR is likely between 1.8 and 3.5)</li>
+          <li>Since the CI does NOT include 1, the result is statistically significant!</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 P-values</h3>
+      <div class="definition">
+        <p><span class="term">P-value:</span> The probability of observing the data (or more extreme) IF the null hypothesis is true.</p>
+      </div>
+      <p><strong>Standard threshold:</strong> p < 0.05 (5%) = "statistically significant"</p>
+
+      <div class="warning">
+        <strong>⚠️ Common Misconceptions:</strong>
+        <ul style="margin-left: 20px;">
+          <li>❌ p < 0.05 does NOT mean the null hypothesis is false with 95% probability</li>
+          <li>❌ p > 0.05 does NOT mean there is NO effect (it just means we can't rule out chance)</li>
+          <li>❌ Statistical significance ≠ clinical importance</li>
+        </ul>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 CI vs P-value</div>
+        <div class="content">CIs give a RANGE • P-values give a YES/NO answer</div>
+      </div>
+
+      <div class="quiz">
+        <h4>📝 Quick Check — Module 6</h4>
+        <div class="question">A study reports RR = 1.5, 95% CI: 1.1 to 2.0. Is this result statistically significant?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q3')">No, because the RR is close to 1</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q3')">Yes, because the 95% CI does not include 1</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3')">No, because the RR is positive</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3')">Yes, because the upper limit is greater than 1</div>
+        </div>
+        <div class="feedback" id="q3-feedback">
+          <strong>✓ Correct!</strong> For ratio measures (RR, OR), statistical significance is determined by whether the CI includes 1. Since 1.1 to 2.0 does NOT include 1, the result is significant.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 7: Regression -->
+  <div class="module" id="m7">
+    <div class="module-header" onclick="toggleModule('m7')">
+      <h2>Module 7: Regression Basics <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m7-content">
+
+      <h3 style="color:var(--primary);">📈 Linear Regression</h3>
+      <p>Used when the OUTCOME is continuous (e.g., blood pressure, weight, income).</p>
+
+      <div class="concept-box">
+        <h3>💡 What Linear Regression Does</h3>
+        <p>Linear regression finds the <strong>best straight line</strong> through the data points. The slope of that line tells you the <strong>effect</strong> of the predictor on the outcome.</p>
+        <ul>
+          <li>The <strong>intercept</strong> (β₀) is the predicted outcome when the predictor is zero</li>
+          <li>The <strong>slope</strong> (β₁) tells you how much the outcome changes for each one-unit increase in the predictor</li>
+        </ul>
+      </div>
+
+      <div class="example">
+        <h4>🍎 Conceptual Example</h4>
+        <p>Study of coffee consumption and blood pressure:</p>
+        <ul>
+          <li>The intercept tells you the baseline blood pressure for someone who drinks zero coffee</li>
+          <li>The slope tells you how much blood pressure increases with each additional cup of coffee</li>
+          <li>If the slope is positive → more coffee = higher BP; if negative → more coffee = lower BP</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 Logistic Regression</h3>
+      <p>Used when the OUTCOME is BINARY (yes/no, disease/no disease).</p>
+
+      <div class="concept-box">
+        <h3>💡 What Logistic Regression Does</h3>
+        <p>Logistic regression models the <strong>probability</strong> of an outcome occurring. The output is an <strong>Odds Ratio (OR)</strong> for each predictor.</p>
+        <ul>
+          <li>OR = 1 → predictor has no effect on the outcome</li>
+          <li>OR > 1 → predictor increases the odds of the outcome</li>
+          <li>OR < 1 → predictor decreases the odds (protective)</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🔑 Which Regression to Use?</h3>
+      <table class="comparison-table">
+        <tr><th>Outcome Type</th><th>Regression</th><th>Output</th></tr>
+        <tr><td>Continuous (BP, weight)</td><td>Linear regression</td><td>β coefficient (slope)</td></tr>
+        <tr><td>Binary (disease yes/no)</td><td>Logistic regression</td><td>Odds Ratio (OR)</td></tr>
+        <tr><td>Count (number of events)</td><td>Poisson regression</td><td>Rate Ratio</td></tr>
+        <tr><td>Time-to-event</td><td>Cox regression</td><td>Hazard Ratio (HR)</td></tr>
+      </table>
+
+      <div class="exam-section" style="background: var(--card); border-radius: 10px; padding: 20px; margin: 20px 0;">
+        <h3 style="color:var(--primary);">🔬 Regression & Confounding — The Critical Link</h3>
+
+        <h4>Unadjusted vs. Adjusted Models</h4>
+        <div class="definition">
+          <p><span class="term">Unadjusted (crude) model:</span> Only includes the exposure as a predictor. The result is the raw association — it may be confounded.</p>
+        </div>
+        <div class="definition">
+          <p><span class="term">Adjusted model:</span> Includes the exposure PLUS potential confounders as additional predictors. The result is the <strong>independent</strong> effect of the exposure after removing the confounders' influence.</p>
+        </div>
+
+        <div class="example">
+          <h4>📊 Conceptual Example</h4>
+          <p><strong>Research question:</strong> Does coffee consumption affect blood pressure?</p>
+          <ul>
+            <li><strong>Crude model:</strong> BP = 120 + 2.5 × coffee → each cup increases BP by 2.5 mmHg</li>
+            <li><strong>Adjusted model:</strong> BP = 115 + 1.0 × coffee + 5 × age + 3 × smoking</li>
+            <li>After adjusting for age and smoking (confounders), the coffee effect drops from 2.5 to 1.0 — meaning part of the original effect was due to confounding</li>
+          </ul>
+          <p><strong>Interpretation:</strong> The adjusted β = 1.0 is the effect of coffee holding age and smoking constant — this is the "independent" effect.</p>
+        </div>
+
+        <h4>📋 How Regression Controls for Confounders</h4>
+        <ul style="margin-left: 20px;">
+          <li>Including a confounder in the regression model estimates the effect of the exposure <strong>at each level</strong> of the confounder</li>
+          <li>The adjustment answers: "What would the effect be if everyone had the same confounder value?"</li>
+          <li>Comparing crude vs. adjusted estimates tells you <strong>how much confounding</strong> is present</li>
+        </ul>
+
+        <div class="warning">
+          <strong>⚠️ What You Must Know for the Exam:</strong> You need to understand <strong>conceptually</strong> that regression can "adjust for" confounders by including them as additional variables. You should be able to explain why adjustment changes the effect estimate and what "holding other variables constant" means. No formulas needed.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 8: Exam Preparation -->
+  <div class="module" id="m8">
+    <div class="module-header" onclick="toggleModule('m8')">
+      <h2>Module 8: 🎓 EXAM PREPARATION</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m8-content">
+
+      <h3 style="color:var(--primary);">📝 Exam Format & Strategy</h3>
+      <div class="warning">
+        <strong>KEY FACTS:</strong> 2 hours • Written exam • NO multiple choice • All Logbook content is relevant
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🎯 The Most Likely Exam Questions</h3>
+
+      <div class="quiz">
+        <h4>Question 1 (VERY LIKELY)</h4>
+        <div class="question">A case-control study investigates the link between smoking and lung cancer. 80 out of 100 lung cancer patients were smokers, while only 20 out of 100 controls were smokers. What does the OR tell us about this association?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('a1')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="a1">
+          <p><strong>Conceptual Answer:</strong></p>
+          <ul>
+            <li>The OR compares the odds of smoking between cases (lung cancer patients) and controls (people without lung cancer)</li>
+            <li>Cases were much more likely to have been smokers than controls</li>
+            <li>This suggests smoking is strongly associated with lung cancer (OR >> 1)</li>
+          </ul>
+          <p><strong>Key point:</strong> Case-control studies cannot directly measure risk — they can only estimate the odds ratio. The OR tells us about the <strong>strength and direction</strong> of the association, but cannot give us absolute risk.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 2 (VERY LIKELY)</h4>
+        <div class="question">Compare and contrast cross-sectional, case-control, and cohort studies. When would you use each?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('a2')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="a2">
+          <p><strong>Cross-sectional:</strong></p>
+          <ul>
+            <li>Snapshot at one point in time</li>
+            <li>Measures PREVALENCE</li>
+            <li>Cannot establish causality (no temporality)</li>
+            <li>Use when: You want to know how many people have a disease, or describe a population</li>
+            <li>Example: NHFS-5 survey in India (period poverty study)</li>
+          </ul>
+          <p><strong>Case-control:</strong></p>
+          <ul>
+            <li>Start with disease status, look back</li>
+            <li>Calculates ODDS RATIO</li>
+            <li>Good for rare diseases</li>
+            <li>Use when: Disease is rare, you need quick results, you have limited resources</li>
+            <li>Example: Studying rare cancers</li>
+          </ul>
+          <p><strong>Cohort:</strong></p>
+          <ul>
+            <li>Start with exposure status, follow forward</li>
+            <li>Calculates RELATIVE RISK and INCIDENCE</li>
+            <li>Strongest for establishing causality</li>
+            <li>Use when: You want to establish temporality and causality, you have time and resources</li>
+            <li>Example: Following smokers vs. non-smokers for 20 years</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 3 (LIKELY)</h4>
+        <div class="question">What is confounding? Give a real example and explain how to control for it.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('a3')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="a3">
+          <p><strong>Definition:</strong> A confounder is a variable associated with BOTH the exposure and the outcome, but NOT on the causal pathway. It creates a spurious association.</p>
+          <p><strong>Criteria for a confounder:</strong></p>
+          <ol>
+            <li>Associated with the exposure</li>
+            <li>Independent risk factor for the outcome</li>
+            <li>Not on the causal pathway (not an intermediate)</li>
+          </ol>
+          <p><strong>Example:</strong> Coffee drinking appears associated with lung cancer. But smoking is the confounder — coffee drinkers are more likely to smoke, and smoking causes lung cancer.</p>
+          <p><strong>How to control for confounding:</strong></p>
+          <ol>
+            <li><strong>Design stage:</strong> Randomization, restriction, matching</li>
+            <li><strong>Analysis stage:</strong> Stratification, multivariable regression, standardization</li>
+          </ol>
+        </div>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 30px;">🎯 Final Checklist</h3>
+      <div class="checklist">
+        <label><input type="checkbox" onchange="updateProgress()"> I can distinguish prevalence from incidence</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can identify the three main study designs (cross-sectional, case-control, cohort)</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can interpret RR, OR, and AR conceptually</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can define and identify confounding</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can distinguish confounding from effect modification</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can explain selection, information, and confounding bias</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can interpret 95% confidence intervals</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I understand p-values and their limitations</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can choose the right regression (linear vs. logistic)</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can distinguish cRCT design variants (parallel, stepped-wedge, etc.)</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can explain ICC, Design Effect, and Effective Sample Size</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I understand Kaplan-Meier estimation and right-censoring</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can interpret survival curves and the log-rank test</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can explain why sample size planning matters and how it's done conceptually</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I understand statistical power and factors that affect sample size</label>
+        <label><input type="checkbox" onchange="updateProgress()"> I can apply all this to the case scenarios (Period Poverty, Long-COVID, etc.)</label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 9: cRCT Design Variants -->
+  <div class="module" id="m9">
+    <div class="module-header" onclick="toggleModule('m9')">
+      <h2>Module 9: Cluster RCT Design Variants <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m9-content">
+
+      <div class="concept-box">
+        <h3>🏥 What is a Cluster RCT?</h3>
+        <p>Cluster-randomized controlled trials (cRCTs) allocate <strong>groups</strong> (e.g., villages, schools, health facilities) rather than individuals to intervention or control conditions. This design is common in Global Health when interventions are delivered at the community or service-delivery level.</p>
+        <p><strong>Why cRCTs are important in Global Health:</strong> Many interventions (water sanitation, community health education, vaccination campaigns) cannot be delivered to individuals in isolation — they naturally affect entire communities. cRCTs are the <strong>gold standard</strong> for evaluating such interventions.</p>
+      </div>
+
+      <div class="exam-section" style="background: var(--card); border-radius: 10px; padding: 20px; margin: 20px 0;">
+      <h3 style="color:var(--primary);">1️⃣ Parallel (Simple) Cluster RCT</h3>
+      <p>Clusters are randomly assigned once at the start and remain in that arm for the entire follow-up.</p>
+      <table class="comparison-table">
+        <tr><th width="25%">Aspect</th><th>Details</th></tr>
+        <tr><td>Randomisation</td><td>Cluster (e.g., health centre)</td></tr>
+        <tr><td>Analysis</td><td>Accounts for ICC using mixed-effects models or GEE</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">✅ Advantages</td><td>Straightforward to implement and analyze; clear separation of intervention vs. control; minimal contamination risk</td></tr>
+        <tr><td style="color:var(--secondary);font-weight:700;">❌ Disadvantages</td><td>Requires a larger number of clusters to achieve statistical power because of ICC; baseline imbalances can occur if few clusters</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700;">📌 Relevance</td><td>Best choice when interventions are clearly cluster-level and you have enough clusters for adequate power</td></tr>
+      </table>
+      <div class="example"><h4>Example</h4><p>A malaria-prevention package (bed nets + education) in 20 villages. 10 get the package, 10 standard care. Malaria incidence measured after 12 months.</p></div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">2️⃣ Stepped-Wedge Cluster RCT</h3>
+      <p>All clusters start in control. At regular intervals, a randomly selected subset crosses over to intervention until all receive it.</p>
+      <table class="comparison-table">
+        <tr><th width="25%">Aspect</th><th>Details</th></tr>
+        <tr><td>Randomisation</td><td>Cluster, but timing of crossover is randomised</td></tr>
+        <tr><td>Analysis</td><td>Time-adjusted mixed models; accounts for cluster and period effects</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">✅ Advantages</td><td>Ethical appeal: every cluster eventually receives the intervention; allows assessment of temporal trends; often requires fewer clusters than parallel cRCT</td></tr>
+        <tr><td style="color:var(--secondary);font-weight:700;">❌ Disadvantages</td><td>More complex design and analysis; potential confounding by secular trends (e.g., seasonal disease patterns); longer overall study duration</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700;">📌 Relevance</td><td>Ideal when it's unethical to withhold the intervention from any cluster, or when the intervention must be rolled out in phases</td></tr>
+      </table>
+      <div class="example"><h4>Example</h4><p>Ten schools get a nutrition programme. Every 2 months, 2 schools randomly start. By month 10, all have it. BMI measured monthly.</p></div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">3️⃣ Pair-Matched (Stratified) Cluster RCT</h3>
+      <p>Clusters are paired on key characteristics; within each pair, one is randomised to intervention, the other to control.</p>
+      <table class="comparison-table">
+        <tr><th width="25%">Aspect</th><th>Details</th></tr>
+        <tr><td>Randomisation</td><td>Cluster, with matching/stratification</td></tr>
+        <tr><td>Analysis</td><td>Paired-difference methods or mixed models with pair-level random effect</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">✅ Advantages</td><td>Improves balance on important covariates, increasing power; reduces variability from cluster heterogeneity</td></tr>
+        <tr><td style="color:var(--secondary);font-weight:700;">❌ Disadvantages</td><td>Requires reliable baseline data for matching; benefits diminish if matching variables are poorly chosen; more logistical effort in pairing</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700;">📌 Relevance</td><td>Best when clusters are highly heterogeneous and you have good baseline data for matching</td></tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">4️⃣ Cluster Crossover RCT</h3>
+      <p>Each cluster receives both intervention and control in different periods with a wash-out phase.</p>
+      <table class="comparison-table">
+        <tr><th width="25%">Aspect</th><th>Details</th></tr>
+        <tr><td>Randomisation</td><td>Cluster, with crossover order randomised</td></tr>
+        <tr><td>Analysis</td><td>Within-cluster comparisons using mixed models; must adjust for period and carry-over effects</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">✅ Advantages</td><td>Each cluster acts as its own control, reducing between-cluster variability; can be efficient with limited clusters</td></tr>
+        <tr><td style="color:var(--secondary);font-weight:700;">❌ Disadvantages</td><td>Risk of carry-over if the intervention has lasting effects; requires sufficient wash-out period (extends study); more complex logistics switching interventions</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700;">📌 Relevance</td><td>Useful when the number of clusters is small and the intervention effect is short-acting/washes out quickly</td></tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">5️⃣ Factorial Cluster RCT</h3>
+      <p>Two (or more) interventions evaluated simultaneously (e.g., 2×2 layout). Clusters randomised to: A, B, A+B, or neither.</p>
+      <table class="comparison-table">
+        <tr><th width="25%">Aspect</th><th>Details</th></tr>
+        <tr><td>Randomisation</td><td>Cluster, factorial allocation</td></tr>
+        <tr><td>Analysis</td><td>Main effects and interaction assessed with mixed models</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">✅ Advantages</td><td>Tests multiple interventions efficiently; can detect synergistic or antagonistic effects (interactions)</td></tr>
+        <tr><td style="color:var(--secondary);font-weight:700;">❌ Disadvantages</td><td>Larger sample size needed to detect interactions; more complex design and interpretation</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700;">📌 Relevance</td><td>Efficient when you want to test two interventions in the same trial and explore whether they interact</td></tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 When to Choose Which Variant — Decision Guide</h3>
+      <table class="comparison-table">
+        <tr><th>Situation</th><th>Best Variant</th></tr>
+        <tr><td>Simple intervention, enough clusters, clear ethics</td><td><strong>Parallel</strong></td></tr>
+        <tr><td>Intervention must eventually reach everyone (ethical imperative)</td><td><strong>Stepped-Wedge</strong></td></tr>
+        <tr><td>Clusters are very different in size/characteristics</td><td><strong>Pair-Matched</strong></td></tr>
+        <tr><td>Few clusters available, short-acting intervention</td><td><strong>Crossover</strong></td></tr>
+        <tr><td>Want to test two interventions together</td><td><strong>Factorial</strong></td></tr>
+      </table>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 Quick Reference</div>
+        <div class="content">Parallel = Simple • Stepped-Wedge = Ethical/All get it • Pair-Matched = Balance • Crossover = Own control • Factorial = Multiple tests</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 10: ICC & Design Effect -->
+  <div class="module" id="m10">
+    <div class="module-header" onclick="toggleModule('m10')">
+      <h2>Module 10: ICC & Design Effect</h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m10-content">
+
+      <div class="concept-box">
+        <h3>📊 The Problem with Clusters</h3>
+        <p>In cRCTs, individuals within a cluster are likely to be more similar regarding the outcome compared to individuals from different clusters. This similarity reduces the <strong>effective sample size</strong>, leading to a loss of statistical power.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🔢 Intra-Cluster Correlation Coefficient (ICC)</h3>
+      <div class="definition">
+        <p><span class="term">ICC:</span> Quantifies the similarity of individual responses within clusters. Ranges from 0 (no similarity) to 1 (perfect similarity).</p>
+      </div>
+
+      <div class="concept-box">
+        <h3>💡 What ICC Means Conceptually</h3>
+        <p>ICC measures how much of the total variability is due to <strong>differences between clusters</strong> vs. <strong>differences within clusters</strong>.</p>
+        <ul>
+          <li><strong>ICC = 0</strong> → All variability is within clusters; individuals are independent (ideal for standard analysis)</li>
+          <li><strong>ICC = 1</strong> → All variability is between clusters; everyone in a cluster has the same outcome</li>
+          <li><strong>ICC = 0.01 to 0.05</strong> → Typical range in health research; even small ICC reduces power substantially</li>
+        </ul>
+      </div>
+
+      <p><strong>Typical ICC values:</strong> 0.01 to 0.05 in many study scenarios. Always check literature for similar studies or use pilot data.</p>
+
+      <div class="warning">
+        <strong>⚠️ Important:</strong> ICC = 1 means all individuals in a cluster have the same outcome — the cluster effectively contributes only 1 data point. ICC = 0 means no clustering effect — effective sample size equals total individuals.
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📐 Design Effect (DE)</h3>
+      <div class="definition">
+        <p><span class="term">Design Effect:</span> The factor by which you must multiply the sample size of an individually randomized trial to achieve the same power in a cRCT.</p>
+      </div>
+
+      <div class="concept-box">
+        <h3>💡 What DE Tells You</h3>
+        <p>The Design Effect tells you <strong>how much larger</strong> your sample needs to be because of clustering.</p>
+        <ul>
+          <li><strong>DE = 1</strong> → No clustering effect (ICC = 0); no adjustment needed</li>
+          <li><strong>DE = 2</strong> → You need twice as many participants as an individually randomized trial</li>
+          <li><strong>DE depends on:</strong> cluster size (larger clusters → bigger DE) and ICC (higher ICC → bigger DE)</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🧮 Effective Sample Size (ESS)</h3>
+      <div class="definition">
+        <p><span class="term">Effective Sample Size:</span> The number of <strong>independent observations</strong> your study actually has after accounting for clustering. Always <strong>less</strong> than the total number of participants.</p>
+      </div>
+
+      <div class="concept-box">
+        <h3>💡 Why ESS Matters</h3>
+        <p>If you have 300 participants but ESS = 190, you only have 190 "worth" of independent data. Your study has the statistical power of a 190-person individually randomized trial, not 300. This is why cRCTs need more participants than individual RCTs.</p>
+      </div>
+
+      <div class="concept-box">
+        <h3>💡 Takeaway</h3>
+        <p>Always account for clustering when designing and analyzing cRCTs. The ICC reduces your effective sample size, and the Design Effect tells you how much larger your sample needs to be.</p>
+      </div>
+
+      <div class="quiz">
+        <h4>📝 Quick Check — Module 10</h4>
+        <div class="question">A cRCT has 20 clusters with 25 individuals each. ICC = 0.05. What does this mean for the study's power?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q10')">The ICC is negligible and can be ignored</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q10')">The study has more power than an individual RCT</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q10')">The effective sample size is reduced, so the study needs more participants to maintain power</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q10')">ICC only affects the analysis, not the sample size</div>
+        </div>
+        <div class="feedback" id="q10-feedback">
+          <strong>✓ Correct!</strong> Any ICC > 0 reduces the effective sample size due to clustering. The Design Effect (DE) tells you how much larger the sample needs to be to compensate. In this example, DE = 1 + (25−1) × 0.05 = 2.2 — meaning the study needs 2.2× the sample size of an individual RCT.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 11: Survival Analysis -->
+  <div class="module" id="m11">
+    <div class="module-header" onclick="toggleModule('m11')">
+      <h2>Module 11: Time-to-Event (Survival) Analysis <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m11-content">
+
+      <div class="concept-box">
+        <h3>⏱️ What is Time-to-Event Data?</h3>
+        <p>When the <strong>time until an event</strong> happens is more important than whether the event happens at all, we use survival analysis. Examples: time until death, disease remission, or recurrence.</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">📌 Key Concepts</h3>
+      <div class="definition">
+        <p><span class="term">Survival time:</span> The time span from a well-defined starting point (e.g., diagnosis, study baseline) until the occurrence of a well-defined event (death, remission, recurrence, or end of observation).</p>
+      </div>
+
+      <div class="definition">
+        <p><span class="term">Right-censoring:</span> When an individual does not have the event during the observation period — either because they left the study, the study ended, or they were lost to follow-up. Censored observations are still informative!</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📈 Kaplan-Meier Estimator</h3>
+      <p>The Kaplan-Meier estimator (KME) estimates the <strong>survival function</strong> S(t) = P(T > t) — the probability of surviving beyond time t.</p>
+
+      <div class="concept-box">
+        <h3>💡 How the KM Estimator Works (Conceptually)</h3>
+        <p>The KM estimator calculates the probability of surviving <strong>up to each point in time</strong> by multiplying the probabilities of surviving each earlier time point.</p>
+        <ul>
+          <li>At each time point where an event occurs, the survival probability drops</li>
+          <li>When a patient is <strong>censored</strong>, they are removed from the "risk set" but the survival probability does NOT drop</li>
+          <li>The result is a <strong>step function</strong> — flat between events, dropping only when events occur</li>
+        </ul>
+      </div>
+
+      <div class="example">
+        <h4>📋 Conceptual Example</h4>
+        <p>In a study of 31 patients with severe liver disease:</p>
+        <ul>
+          <li>At the start, everyone is alive → survival = 100%</li>
+          <li>When the first patient dies, survival drops slightly</li>
+          <li>When a patient is censored (leaves the study or reaches the end), survival stays the same — but that patient no longer contributes to future calculations</li>
+          <li><strong>Key insight:</strong> Censored observations reduce the risk set but do NOT cause a drop in the survival function</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 The Kaplan-Meier Curve</h3>
+      <div class="visual-diagram">
+        <h4 style="color:var(--primary); margin-bottom: 8px;">Kaplan-Meier Survival Curves — Treatment vs. Control</h4>
+        <svg viewBox="0 0 620 360" style="max-width:100%;height:auto;font-family:'Segoe UI',sans-serif;">
+          <rect x="0" y="0" width="620" height="360" fill="#fafafa" rx="6"/>
+
+          <!-- Title -->
+          <text x="310" y="25" text-anchor="middle" font-size="13" font-weight="700" fill="#424242">Kaplan-Meier Survival Estimates</text>
+
+          <!-- Axes -->
+          <line x1="70" y1="50" x2="70" y2="310" stroke="#424242" stroke-width="1.5"/>
+          <line x1="70" y1="310" x2="590" y2="310" stroke="#424242" stroke-width="1.5"/>
+
+          <!-- Y-axis labels -->
+          <text x="58" y="314" text-anchor="end" font-size="11" fill="#616161">0%</text>
+          <text x="58" y="185" text-anchor="end" font-size="11" fill="#616161">50%</text>
+          <text x="58" y="56" text-anchor="end" font-size="11" fill="#616161">100%</text>
+          <text x="20" y="180" text-anchor="middle" font-size="12" fill="#424242" font-weight="600" transform="rotate(-90,20,180)">Survival</text>
+
+          <!-- X-axis labels -->
+          <text x="70" y="330" text-anchor="middle" font-size="11" fill="#616161">0</text>
+          <text x="200" y="330" text-anchor="middle" font-size="11" fill="#616161">5</text>
+          <text x="330" y="330" text-anchor="middle" font-size="11" fill="#616161">10</text>
+          <text x="460" y="330" text-anchor="middle" font-size="11" fill="#616161">15</text>
+          <text x="590" y="330" text-anchor="middle" font-size="11" fill="#616161">20</text>
+          <text x="330" y="350" text-anchor="middle" font-size="12" fill="#424242" font-weight="600">Time (months)</text>
+
+          <!-- Treatment curve (blue) — step function -->
+          <!-- Steps: (70,310)->(70,310) start, then drops at various points -->
+          <path d="M70,55 L140,55 L140,65 L190,65 L190,80 L250,80 L250,100 L290,100 L290,130 L370,130 L370,155 L440,155 L440,185 L500,185 L500,210 L560,210 L560,230 L590,230"
+                stroke="#1565c0" stroke-width="3" fill="none" stroke-linejoin="round"/>
+
+          <!-- Treatment censoring ticks -->
+          <line x1="160" y1="60" x2="160" y2="48" stroke="#1565c0" stroke-width="2"/>
+          <line x1="220" y1="72" x2="220" y2="60" stroke="#1565c0" stroke-width="2"/>
+          <line x1="330" y1="115" x2="330" y2="103" stroke="#1565c0" stroke-width="2"/>
+          <line x1="530" y1="200" x2="530" y2="188" stroke="#1565c0" stroke-width="2"/>
+
+          <!-- Control curve (red) — step function -->
+          <path d="M70,55 L70,65 L100,65 L100,85 L130,85 L130,110 L170,110 L170,155 L200,155 L200,210 L230,210 L230,260 L270,260 L270,295 L310,295 L340,310 L590,310"
+                stroke="#c62828" stroke-width="3" fill="none" stroke-linejoin="round"/>
+
+          <!-- Control censoring ticks -->
+          <line x1="80" y1="55" x2="80" y2="43" stroke="#c62828" stroke-width="2"/>
+          <line x1="150" y1="100" x2="150" y2="88" stroke="#c62828" stroke-width="2"/>
+          <line x1="420" y1="310" x2="420" y2="298" stroke="#c62828" stroke-width="2"/>
+
+          <!-- Median survival line for control -->
+          <line x1="70" y1="185" x2="230" y2="185" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="230" y1="185" x2="230" y2="310" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="235" y="200" font-size="10" fill="#9e9e9e">Median ≈ 7 mo</text>
+
+          <!-- Median survival line for treatment -->
+          <line x1="70" y1="130" x2="440" y2="130" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="440" y1="130" x2="440" y2="310" stroke="#9e9e9e" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="445" y="145" font-size="10" fill="#9e9e9e">Median ≈ 14 mo</text>
+
+          <!-- Legend -->
+          <rect x="400" y="38" width="14" height="14" rx="2" fill="#1565c0"/>
+          <text x="420" y="50" font-size="11" fill="#424242">Treatment</text>
+          <rect x="500" y="38" width="14" height="14" rx="2" fill="#c62828"/>
+          <text x="520" y="50" font-size="11" fill="#424242">Control</text>
+
+          <!-- Annotation -->
+          <text x="310" y="360" text-anchor="middle" font-size="10" fill="#9e9e9e">Tick marks = censored observations</text>
+        </svg>
+      </div>
+
+      <div class="concept-box">
+        <h3>How to Read a KM Curve</h3>
+        <ul>
+          <li>The curve is a <strong>step function</strong> — it drops only when events occur</li>
+          <li>Censored observations are marked with <strong>tick marks</strong> (no drop)</li>
+          <li><strong>Median survival</strong> = time when S(t) ≤ 0.5 (dashed line intersection)</li>
+          <li>Wider steps = fewer people at risk (less precision)</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🧪 Log-Rank Test</h3>
+      <p>Used to test whether two (or more) survival functions are statistically different.</p>
+      <div class="definition">
+        <p><span class="term">Null hypothesis:</span> The survival functions are the same: S(t)<sub>1</sub> = S(t)<sub>2</sub></p>
+      </div>
+      <p>The log-rank test is a χ²-like test procedure that compares observed vs. expected events across time points.</p>
+
+      <div class="mnemonic">
+        <div class="label">🧠 Survival Analysis in a Nutshell</div>
+        <div class="content">KM = Step function • Censoring = No drop • Log-rank = Compare two curves • Median = 50% survival time</div>
+      </div>
+
+      <div class="quiz">
+        <h4>📝 Quick Check — Module 11</h4>
+        <div class="question">What happens to the Kaplan-Meier survival estimate when a patient is censored at time t?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q11')">The estimate drops at time t</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q11')">The estimate stays the same, but the risk set shrinks for future events</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11')">The estimate increases at time t</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q11')">The patient is removed from the analysis entirely</div>
+        </div>
+        <div class="feedback" id="q11-feedback">
+          <strong>✓ Correct!</strong> Censoring does not cause a drop in the survival function. The censored individual is included in the risk set up until their censoring time, then removed from subsequent calculations.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 12: Sample Size Planning -->
+  <div class="module" id="m12">
+    <div class="module-header" onclick="toggleModule('m12')">
+      <h2>Module 12: Sample Size Planning <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m12-content">
+
+      <div class="warning" style="background:#ffebee;border-left-color:#c62828;">
+        <strong>📌 PROF. SIEBERT SAYS: Sample size planning is VERY IMPORTANT for the exam.</strong> You need to understand <strong>why</strong> it matters and <strong>how</strong> it's approached conceptually — not memorize formulas.
+      </div>
+
+      <div class="concept-box">
+        <h3>❓ Why Is Sample Size Planning Important?</h3>
+        <p>Sample size planning answers a fundamental question: <strong>"How many participants do I need for my study to be meaningful?"</strong></p>
+        <ul>
+          <li><strong>Too small</strong> → Study may fail to detect a real effect (false negative), wasting time and resources</li>
+          <li><strong>Too large</strong> → Waste of resources, may detect trivial effects that are statistically significant but clinically meaningless</li>
+          <li><strong>Ethical issue:</strong> Too many or too few participants exposes people to research without sufficient scientific benefit</li>
+          <li><strong>Funding:</strong> Grant reviewers expect a clear justification of the sample size</li>
+        </ul>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🔑 Key Concept: Statistical Power</h3>
+      <div class="definition">
+        <p><span class="term">Statistical Power:</span> The probability of detecting a true effect if it exists. Usually set at 80% (meaning if there is a real effect, you'll find it 8 out of 10 times).</p>
+      </div>
+      <p>Power depends on four things (conceptually):</p>
+      <table class="comparison-table">
+        <tr><th>Factor</th><th>Effect on Sample Size</th></tr>
+        <tr><td><strong>Larger effect size</strong> (bigger difference between groups)</td><td>→ Need <strong>fewer</strong> participants (easier to detect)</td></tr>
+        <tr><td><strong>Higher variability</strong> (more spread in the data)</td><td>→ Need <strong>more</strong> participants (harder to detect signal)</td></tr>
+        <tr><td><strong>Higher desired power</strong> (e.g., 90% vs. 80%)</td><td>→ Need <strong>more</strong> participants</td></tr>
+        <tr><td><strong>Stricter significance level</strong> (α = 0.01 vs. 0.05)</td><td>→ Need <strong>more</strong> participants</td></tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📋 How Sample Size Planning Is Done (Conceptual Steps)</h3>
+      <div class="visual-diagram" style="text-align:left;">
+        <ol style="margin-left: 20px;">
+          <li><strong>Define the research question</strong> — What comparison are you making?</li>
+          <li><strong>Choose the study design</strong> — Cross-sectional, cohort, case-control, RCT, cRCT</li>
+          <li><strong>Specify the primary outcome</strong> — What will you measure?</li>
+          <li><strong>Estimate the expected effect size</strong> — From literature, pilot studies, or clinically meaningful difference</li>
+          <li><strong>Set power and significance level</strong> — Usually 80% power, α = 0.05</li>
+          <li><strong>Account for design features</strong> — For cRCTs, multiply by the Design Effect (DE) to account for clustering</li>
+          <li><strong>Add attrition buffer</strong> — Increase by 10-20% to account for dropouts/loss to follow-up</li>
+        </ol>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🎯 Special Considerations by Study Design</h3>
+      <table class="comparison-table">
+        <tr><th>Design</th><th>Sample Size Consideration</th></tr>
+        <tr><td><strong>Cross-sectional</strong></td><td>Based on expected prevalence and desired precision of the estimate</td></tr>
+        <tr><td><strong>Case-control</strong></td><td>Depends on expected exposure prevalence in controls and the OR you want to detect</td></tr>
+        <tr><td><strong>Cohort</strong></td><td>Depends on expected incidence in unexposed and the RR you want to detect</td></tr>
+        <tr><td><strong>cRCT</strong></td><td>Must calculate sample size for an individual RCT, then <strong>multiply by Design Effect</strong> (DE) — this accounts for clustering</td></tr>
+      </table>
+
+      <div class="concept-box">
+        <h3>💡 Key Takeaways for the Exam</h3>
+        <ul>
+          <li>Sample size is about <strong>balancing</strong> scientific rigor with practical constraints</li>
+          <li><strong>Power = 80%</strong> is the standard — there's a 20% chance of missing a true effect</li>
+          <li>Larger effects need <strong>fewer</strong> participants; smaller effects need <strong>more</strong></li>
+          <li>For cRCTs, the Design Effect (DE) <strong>increases</strong> the required sample size</li>
+          <li>Sample size calculations should always be reported and justified in research proposals</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODULE 13: Applied Case Study — Surati et al. 2024 -->
+  <div class="module exam-section" id="m13">
+    <div class="module-header" onclick="toggleModule('m13')">
+      <h2>Module 13: Applied Case Study — Surati et al. 2024 <span class="exam-focus">EXAM FOCUS</span></h2>
+      <span class="toggle">▼</span>
+    </div>
+    <div class="module-content" id="m13-content">
+
+      <div class="concept-box">
+        <h3>📄 Paper Overview</h3>
+        <p><strong>Title:</strong> Postpartum depression in Gujarat, India: Associations with social support, breastfeeding attitudes, and self-efficacy</p>
+        <p><strong>Authors:</strong> Surati B, Yogesh M, Munshi R, Vamja R (2024)</p>
+        <p><strong>Journal:</strong> Journal of Family Medicine and Primary Care, 13, 5689-96</p>
+        <p><strong>Design:</strong> Cross-sectional study of 403 postpartum women in Jamnagar, Gujarat</p>
+        <p><strong>Primary outcome:</strong> PPD (EPDS ≥ 10), prevalence = 50.1%</p>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 20px;">🔗 How the Paper Maps to the Course Modules</h3>
+      <table class="comparison-table">
+        <tr><th>Course Module</th><th>Concept in Surati et al.</th></tr>
+        <tr><td><strong>M1: Basics</strong></td><td>Prevalence vs. Incidence — this study measures <strong>prevalence</strong> (snapshot of existing PPD cases at one point)</td></tr>
+        <tr><td><strong>M2: Study Designs</strong></td><td><strong>Cross-sectional</strong> — exposure (social support, breastfeeding attitudes, self-efficacy) and outcome (PPD) measured simultaneously. No follow-up, no temporality.</td></tr>
+        <tr><td><strong>M3: Effect Measures</strong></td><td>Uses <strong>OR</strong> from logistic regression. Cannot calculate RR. OR approximates RR only if PPD were rare — but PPD is 50.1%, so OR overestimates any risk ratio.</td></tr>
+        <tr><td><strong>M4: Confounding</strong></td><td>Uses <strong>multivariate logistic regression</strong> to adjust for confounders (age, education, SES). Compares crude vs. adjusted ORs.</td></tr>
+        <tr><td><strong>M6: CIs & P-values</strong></td><td>Reports AOR with 95% CIs and p-values. E.g., low social support AOR = 2.51 (95% CI: 1.57–4.02), p < 0.001 — CI excludes 1, highly significant.</td></tr>
+        <tr><td><strong>M7: Regression</strong></td><td><strong>Logistic regression</strong> — binary outcome (PPD yes/no). Reports AOR. Adjusted model includes education, SES, breastfeeding status, social support, depression history, attitude, self-efficacy.</td></tr>
+        <tr><td><strong>M12: Sample Size</strong></td><td>n = 403 calculated using 31% anticipated prevalence (from literature), 95% CI, 5% margin of error, 20% non-response buffer. <strong>Two-stage cluster sampling</strong> used — PHCs selected by PPS, then women randomly sampled.</td></tr>
+      </table>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📊 Key Results — Memorise These Numbers</h3>
+      <table class="comparison-table">
+        <tr><th>Variable</th><th>Category</th><th>AOR</th><th>95% CI</th><th>p-value</th></tr>
+        <tr><td>Education</td><td>Primary or below</td><td>1.72</td><td>1.04–2.85</td><td>0.034*</td></tr>
+        <tr><td>Socioeconomic Status</td><td>Lower</td><td>1.84</td><td>1.12–3.02</td><td>0.016*</td></tr>
+        <tr><td>Breastfeeding</td><td>Non-exclusive</td><td>1.68</td><td>1.11–2.54</td><td>0.014*</td></tr>
+        <tr><td>Social Support</td><td>Low (vs. High)</td><td><strong>2.51</strong></td><td>1.57–4.02</td><td>&lt;0.001**</td></tr>
+        <tr><td>Social Support</td><td>Moderate (vs. High)</td><td>1.52</td><td>1.00–2.31</td><td>0.049*</td></tr>
+        <tr><td>History of Depression</td><td>Yes</td><td><strong>2.94</strong></td><td>1.82–4.75</td><td>&lt;0.001**</td></tr>
+        <tr><td>Breastfeeding Attitude</td><td>Negative (vs. Positive)</td><td>2.02</td><td>1.3–5.5</td><td>&lt;0.001**</td></tr>
+        <tr><td>Self-Efficacy</td><td>Low (vs. High)</td><td>2.1</td><td>1.12–5</td><td>&lt;0.001**</td></tr>
+      </table>
+
+      <div class="visual-diagram">
+        <h4 style="color:var(--primary); margin-bottom: 12px;">Forest Plot — Adjusted Odds Ratios with 95% CIs</h4>
+        <svg viewBox="0 0 760 420" style="max-width:100%;height:auto;font-family:'Segoe UI',sans-serif;">
+          <defs>
+            <linearGradient id="barGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#e53935"/>
+              <stop offset="100%" stop-color="#1565c0"/>
+            </linearGradient>
+            <marker id="arrowRight" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#616161"/>
+            </marker>
+          </defs>
+
+          <!-- Background -->
+          <rect x="0" y="0" width="760" height="420" fill="#fafafa" rx="6"/>
+
+          <!-- Title -->
+          <text x="380" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Adjusted Odds Ratio (95% CI)</text>
+
+          <!-- Draw reference line at OR=1 -->
+          <line x1="400" y1="40" x2="400" y2="390" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="400" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">1.0</text>
+
+          <!-- X-axis labels -->
+          <text x="280" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">0.5</text>
+          <text x="340" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">0.75</text>
+          <text x="460" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">1.5</text>
+          <text x="520" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">2.0</text>
+          <text x="580" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">3.0</text>
+          <text x="640" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">4.0</text>
+          <text x="700" y="408" text-anchor="middle" font-size="11" fill="#9e9e9e">5.0</text>
+
+          <!-- Helper to convert OR to x: scale from 0.5 to 5.0 mapped to 280..700 -->
+          <!-- x = 280 + (OR - 0.5) / 4.5 * 420 -->
+
+          <!-- Row 1: Education (Primary) — OR=1.72, CI=1.04-2.85 -->
+          <text x="10" y="72" font-size="12" fill="#212121" font-weight="600">Education (Primary)</text>
+          <text x="10" y="86" font-size="10" fill="#757575">1.72 (1.04–2.85)</text>
+          <line x1="330" y1="76" x2="475" y2="76" stroke="#1565c0" stroke-width="3" stroke-linecap="round"/>
+          <rect x="388" y="70" width="20" height="12" rx="2" fill="#1565c0"/>
+
+          <!-- Row 2: SES (Lower) — OR=1.84, CI=1.12-3.02 -->
+          <text x="10" y="122" font-size="12" fill="#212121" font-weight="600">SES (Lower)</text>
+          <text x="10" y="136" font-size="10" fill="#757575">1.84 (1.12–3.02)</text>
+          <line x1="337" y1="126" x2="489" y2="126" stroke="#1565c0" stroke-width="3" stroke-linecap="round"/>
+          <rect x="391" y="120" width="20" height="12" rx="2" fill="#1565c0"/>
+
+          <!-- Row 3: Breastfeeding (Non-exclusive) — OR=1.68, CI=1.11-2.54 -->
+          <text x="10" y="172" font-size="12" fill="#212121" font-weight="600">Breastfeeding (Non-exclusive)</text>
+          <text x="10" y="186" font-size="10" fill="#757575">1.68 (1.11–2.54)</text>
+          <line x1="336" y1="176" x2="455" y2="176" stroke="#1565c0" stroke-width="3" stroke-linecap="round"/>
+          <rect x="385" y="170" width="20" height="12" rx="2" fill="#1565c0"/>
+
+          <!-- Row 4: Social Support (Low) — OR=2.51, CI=1.57-4.02 -->
+          <text x="10" y="222" font-size="12" fill="#c62828" font-weight="700">Social Support (Low)</text>
+          <text x="10" y="236" font-size="10" fill="#757575">2.51 (1.57–4.02)</text>
+          <line x1="366" y1="226" x2="540" y2="226" stroke="#c62828" stroke-width="4" stroke-linecap="round"/>
+          <rect x="412" y="219" width="22" height="14" rx="2" fill="#c62828"/>
+
+          <!-- Row 5: Social Support (Moderate) — OR=1.52, CI=1.00-2.31 -->
+          <text x="10" y="272" font-size="12" fill="#212121" font-weight="600">Social Support (Moderate)</text>
+          <text x="10" y="286" font-size="10" fill="#757575">1.52 (1.00–2.31)</text>
+          <line x1="400" y1="276" x2="442" y2="276" stroke="#1565c0" stroke-width="3" stroke-linecap="round"/>
+          <rect x="384" y="270" width="20" height="12" rx="2" fill="#1565c0"/>
+
+          <!-- Row 6: History of Depression — OR=2.94, CI=1.82-4.75 -->
+          <text x="10" y="322" font-size="12" fill="#c62828" font-weight="700">History of Depression</text>
+          <text x="10" y="336" font-size="10" fill="#757575">2.94 (1.82–4.75)</text>
+          <line x1="380" y1="326" x2="575" y2="326" stroke="#c62828" stroke-width="4" stroke-linecap="round"/>
+          <rect x="430" y="319" width="22" height="14" rx="2" fill="#c62828"/>
+
+          <!-- Row 7: Negative Breastfeeding Attitude — OR=2.02, CI=1.3-5.5 -->
+          <text x="10" y="372" font-size="12" fill="#212121" font-weight="600">Breastfeeding Attitude (Negative)</text>
+          <text x="10" y="386" font-size="10" fill="#757575">2.02 (1.30–5.50)</text>
+          <line x1="351" y1="376" x2="602" y2="376" stroke="#1565c0" stroke-width="3" stroke-linecap="round"/>
+          <rect x="399" y="370" width="20" height="12" rx="2" fill="#1565c0"/>
+
+          <text x="380" y="418" text-anchor="middle" font-size="10" fill="#9e9e9e">← Protective &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Risk →</text>
+        </svg>
+      </div>
+
+      <div class="mnemonic">
+        <div class="label">🧠 The Top 3 Risk Factors by AOR</div>
+        <div class="content">1. History of Depression (2.94) • 2. Low Social Support (2.51) • 3. Negative Breastfeeding Attitude (2.02)</div>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📈 Correlation Heatmap (Figure 1 — Recreated)</h3>
+      <div class="visual-diagram">
+        <svg viewBox="0 0 580 450" style="max-width:100%;height:auto;font-family:'Segoe UI',sans-serif;">
+          <defs>
+            <linearGradient id="heatPos" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e8f5e9"/>
+              <stop offset="50%" stop-color="#fff9c4"/>
+              <stop offset="100%" stop-color="#e53935"/>
+            </linearGradient>
+            <linearGradient id="heatNeg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#e3f2fd"/>
+              <stop offset="50%" stop-color="#e1f5fe"/>
+              <stop offset="100%" stop-color="#1565c0"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="0" y="0" width="580" height="450" fill="#fafafa" rx="6"/>
+
+          <!-- Title -->
+          <text x="290" y="28" text-anchor="middle" font-size="14" font-weight="700" fill="#1565c0">Correlation Matrix (Figure 1 — Surati et al. 2024)</text>
+
+          <!-- Layout: 4x4 grid starting at (120, 60), cell size 90x70, gap 4 -->
+          <!-- Variables: 0=PPD, 1=SocSupp, 2=BF_Att, 3=SelfEff -->
+
+          <!-- Column headers -->
+          <text x="165" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#424242">PPD</text>
+          <text x="259" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#424242">SocSupp</text>
+          <text x="353" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#424242">BF_Att</text>
+          <text x="447" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#424242">SelfEff</text>
+
+          <!-- Row labels -->
+          <text x="112" y="96" text-anchor="end" font-size="11" font-weight="600" fill="#424242">PPD</text>
+          <text x="112" y="170" text-anchor="end" font-size="11" font-weight="600" fill="#424242">SocSupp</text>
+          <text x="112" y="244" text-anchor="end" font-size="11" font-weight="600" fill="#424242">BF_Att</text>
+          <text x="112" y="318" text-anchor="end" font-size="11" font-weight="600" fill="#424242">SelfEff</text>
+
+          <!-- Helper: cell positions: x = 120 + col*94, y = 60 + row*74, w=90, h=70 -->
+
+          <!-- Row 0: PPD -->
+          <!-- (0,0) PPD vs PPD = 1.00 → dark red -->
+          <rect x="120" y="60" width="90" height="70" rx="4" fill="#c62828"/>
+          <text x="165" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1.00</text>
+          <!-- (0,1) PPD vs SocSupp = -0.42 → blue -->
+          <rect x="214" y="60" width="90" height="70" rx="4" fill="#1565c0"/>
+          <text x="259" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.42</text>
+          <!-- (0,2) PPD vs BF_Att = -0.31 → lighter blue -->
+          <rect x="308" y="60" width="90" height="70" rx="4" fill="#42a5f5"/>
+          <text x="353" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.31</text>
+          <!-- (0,3) PPD vs SelfEff = -0.47 → blue -->
+          <rect x="402" y="60" width="90" height="70" rx="4" fill="#1565c0"/>
+          <text x="447" y="100" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.47</text>
+
+          <!-- Row 1: SocSupp -->
+          <!-- (1,0) SocSupp vs PPD = -0.42 → blue -->
+          <rect x="120" y="134" width="90" height="70" rx="4" fill="#1565c0"/>
+          <text x="165" y="174" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.42</text>
+          <!-- (1,1) SocSupp vs SocSupp = 1.00 → dark red -->
+          <rect x="214" y="134" width="90" height="70" rx="4" fill="#c62828"/>
+          <text x="259" y="174" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1.00</text>
+          <!-- (1,2) SocSupp vs BF_Att = 0.28 → light red -->
+          <rect x="308" y="134" width="90" height="70" rx="4" fill="#ef9a9a"/>
+          <text x="353" y="174" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">0.28</text>
+          <!-- (1,3) SocSupp vs SelfEff = 0.39 → medium red -->
+          <rect x="402" y="134" width="90" height="70" rx="4" fill="#e53935"/>
+          <text x="447" y="174" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">0.39</text>
+
+          <!-- Row 2: BF_Att -->
+          <!-- (2,0) BF_Att vs PPD = -0.31 → lighter blue -->
+          <rect x="120" y="208" width="90" height="70" rx="4" fill="#42a5f5"/>
+          <text x="165" y="248" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.31</text>
+          <!-- (2,1) BF_Att vs SocSupp = 0.28 → light red -->
+          <rect x="214" y="208" width="90" height="70" rx="4" fill="#ef9a9a"/>
+          <text x="259" y="248" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">0.28</text>
+          <!-- (2,2) BF_Att vs BF_Att = 1.00 → dark red -->
+          <rect x="308" y="208" width="90" height="70" rx="4" fill="#c62828"/>
+          <text x="353" y="248" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1.00</text>
+          <!-- (2,3) BF_Att vs SelfEff = not reported → gray -->
+          <rect x="402" y="208" width="90" height="70" rx="4" fill="#e0e0e0"/>
+          <text x="447" y="248" text-anchor="middle" font-size="13" fill="#757575">—</text>
+
+          <!-- Row 3: SelfEff -->
+          <!-- (3,0) SelfEff vs PPD = -0.47 → blue -->
+          <rect x="120" y="282" width="90" height="70" rx="4" fill="#1565c0"/>
+          <text x="165" y="322" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">−0.47</text>
+          <!-- (3,1) SelfEff vs SocSupp = 0.39 → medium red -->
+          <rect x="214" y="282" width="90" height="70" rx="4" fill="#e53935"/>
+          <text x="259" y="322" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">0.39</text>
+          <!-- (3,2) SelfEff vs BF_Att = not reported → gray -->
+          <rect x="308" y="282" width="90" height="70" rx="4" fill="#e0e0e0"/>
+          <text x="353" y="322" text-anchor="middle" font-size="13" fill="#757575">—</text>
+          <!-- (3,3) SelfEff vs SelfEff = 1.00 → dark red -->
+          <rect x="402" y="282" width="90" height="70" rx="4" fill="#c62828"/>
+          <text x="447" y="322" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1.00</text>
+
+          <!-- Legend -->
+          <rect x="140" y="375" width="16" height="16" rx="2" fill="#1565c0"/>
+          <text x="162" y="388" font-size="11" fill="#424242">Strong negative</text>
+          <rect x="280" y="375" width="16" height="16" rx="2" fill="#42a5f5"/>
+          <text x="302" y="388" font-size="11" fill="#424242">Weak negative</text>
+          <rect x="140" y="400" width="16" height="16" rx="2" fill="#ef9a9a"/>
+          <text x="162" y="413" font-size="11" fill="#424242">Weak positive</text>
+          <rect x="280" y="400" width="16" height="16" rx="2" fill="#e53935"/>
+          <text x="302" y="413" font-size="11" fill="#424242">Strong positive</text>
+          <rect x="420" y="375" width="16" height="16" rx="2" fill="#e0e0e0"/>
+          <text x="442" y="388" font-size="11" fill="#424242">Not reported</text>
+        </svg>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🧠 Flashcards — Surati Paper + Course Concepts</h3>
+
+      <div class="quiz">
+        <h4>Card 1</h4>
+        <div class="question">What study design did Surati et al. use, and which effect measure is appropriate?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f1')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f1">
+          <p><strong>Cross-sectional study.</strong> They measured exposure (social support, breastfeeding attitudes, self-efficacy) and outcome (PPD) at the same point in time. The appropriate effect measure is <strong>Prevalence OR</strong> from logistic regression. They <strong>cannot</strong> calculate RR, incidence, or AR because there is no follow-up over time.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 2</h4>
+        <div class="question">Why can't Surati et al. claim causality between low social support and PPD?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f2')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f2">
+          <p><strong>Temporal ambiguity.</strong> In a cross-sectional study, you don't know which came first — did low social support <em>cause</em> PPD, or did PPD <em>cause</em> women to perceive less social support? Both directions are plausible. This is the fundamental limitation of cross-sectional designs.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 3</h4>
+        <div class="question">The paper reports AOR = 2.51 for low social support (95% CI: 1.57–4.02). Interpret this.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f3')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f3">
+          <p>Women with low social support have <strong>2.51 times the odds</strong> of PPD compared to women with high social support, after adjusting for confounders (education, SES, breastfeeding status, depression history, etc.). The 95% CI (1.57–4.02) excludes 1, so this is <strong>statistically significant</strong>. The wide CI suggests some imprecision — the true effect could be anywhere from 1.57× to 4.02×.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 4</h4>
+        <div class="question">The paper used multivariate logistic regression. Why was this necessary instead of just reporting crude ORs?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f4')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f4">
+          <p>To <strong>control for confounding</strong>. Crude ORs may be biased by confounders — e.g., SES is associated with both social support (lower SES → less support) and PPD (lower SES → more depression). By including confounders as covariates in the regression model, the adjusted OR represents the <strong>independent effect</strong> of each variable holding others constant. This is exactly what Module 7 teaches about regression with confounders.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 5</h4>
+        <div class="question">PPD prevalence was 50.1%. What does this imply about using OR to approximate RR?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f5')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f5">
+          <p>Since PPD is <strong>not rare</strong> (50.1% prevalence), the OR <strong>cannot</strong> approximate the RR. For common outcomes, OR overestimates the true risk ratio. The authors correctly report ORs. If they had reported RRs, they would need a different study design (cohort) and a different regression model (log-binomial or Poisson). This is a classic exam trap — always check disease prevalence before interpreting OR as RR!</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 6</h4>
+        <div class="question">Name two confounders the authors adjusted for and explain why each meets the three criteria for a confounder.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f6')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f6">
+          <p><strong>Example 1 — Socioeconomic Status (SES):</strong> (1) Associated with exposure — lower SES women have less social support; (2) Independent risk factor for PPD — lower SES increases stress; (3) Not on causal pathway — SES is not caused by social support or PPD.</p>
+          <p style="margin-top:8px;"><strong>Example 2 — Education:</strong> (1) Lower education is associated with lower breastfeeding self-efficacy; (2) Lower education is a risk factor for PPD; (3) Education precedes both exposure and outcome, not on causal pathway.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 7</h4>
+        <div class="question">The correlation heatmap shows r = −0.47 for PPD and self-efficacy. Interpret this.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f7')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f7">
+          <p>There is a <strong>moderate negative correlation</strong> between PPD and self-efficacy. As self-efficacy increases, PPD tends to decrease (and vice versa). The correlation coefficient −0.47 means it's a moderate-strength linear relationship. However, <strong>correlation ≠ causation</strong> — this could be bidirectional, or a third factor (like prior depression) could influence both. This aligns with Module 5's teaching on correlation.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Card 8</h4>
+        <div class="question">How was the sample size of 403 calculated, and what design feature increased the required sample?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('f8')">📖 Click to reveal</span></div>
+        <div class="reveal-content" id="f8">
+          <p>Sample size was calculated using the formula for a single proportion: 95% CI, 5% margin of error, 31% anticipated prevalence (from prior studies), plus 20% for non-response. The <strong>two-stage cluster sampling</strong> (PHCs selected by PPS, then women within PHCs) introduces a <strong>Design Effect</strong> due to clustering — women within the same PHC are more similar. A cluster-adjusted sample size would multiply by DE = 1 + (m−1) × ICC. The paper does not explicitly state the DE adjustment, which is a common limitation.</p>
+        </div>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">🎯 Exam-Style Questions on Surati et al.</h3>
+
+      <div class="quiz">
+        <h4>Question 1 (Likely Exam Format)</h4>
+        <div class="question">A researcher wants to replicate Surati et al.'s study but using a <strong>cohort design</strong> instead of cross-sectional. Describe how the design would differ, what new measures become possible, and what additional resources would be needed.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('eq1')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="eq1">
+          <p><strong>Design change:</strong> Instead of measuring social support and PPD at one time, the researcher would recruit women <em>before</em> or <em>immediately after</em> childbirth, measure social support/self-efficacy at baseline, then follow them forward for 6–12 months to track who develops PPD.</p>
+          <p><strong>New measures possible:</strong> <strong>Cumulative incidence, Relative Risk (RR), Attributable Risk (AR), Attributable Fraction (AF%), NNT</strong> — none of which are possible in a cross-sectional study. Kaplan-Meier curves could estimate time-to-PPD.</p>
+          <p><strong>Additional resources:</strong> Longer study duration (follow-up over time), more staff for repeated assessments, strategies to minimise loss to follow-up, higher cost.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 2 (Likely Exam Format)</h4>
+        <div class="question">In Surati et al., the crude OR for low social support was 3.28 (95% CI: 2.14–5.03). After adjustment, AOR = 2.51 (95% CI: 1.57–4.02). What does this change tell you about confounding in this association?</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('eq2')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="eq2">
+          <p>The OR decreased from 3.28 to 2.51 after adjustment — a reduction of about 23%. This means part of the crude association was due to <strong>confounding by other variables</strong> (education, SES, depression history, etc.). The adjusted OR (2.51) is the <strong>independent effect</strong> of low social support, holding confounders constant. However, the association remains significant after adjustment (CI still excludes 1), indicating a robust independent effect. In the exam, you would explain that the difference between crude and adjusted estimates quantifies the amount of confounding present.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 3 (Likely Exam Format)</h4>
+        <div class="question">The study found that non-exclusive breastfeeding was associated with higher odds of PPD (AOR = 1.68, p = 0.014). Explain <strong>two possible causal mechanisms</strong> for this association, and why the cross-sectional design cannot distinguish between them.</div>
+        <div style="margin-top: 10px;"><span class="reveal" onclick="revealAnswer('eq3')">📖 Click to see model answer</span></div>
+        <div class="reveal-content" id="eq3">
+          <p><strong>Mechanism 1 (Breastfeeding difficulties → PPD):</strong> Women who struggle with breastfeeding experience stress, frustration, and sleep disruption, which triggers or worsens depressive symptoms.</p>
+          <p><strong>Mechanism 2 (PPD → Breastfeeding difficulties):</strong> Women with PPD have low motivation, energy, and confidence, making it harder to maintain exclusive breastfeeding, leading to early cessation or supplementation.</p>
+          <p><strong>Why cross-sectional can't distinguish:</strong> Both mechanisms are plausible and both predict the same cross-sectional association. Without knowing the temporal sequence (which came first), we cannot determine the causal direction. This is the <strong>temporal ambiguity</strong> problem — the fatal flaw of cross-sectional designs for causal inference. A cohort study with repeated measures would be needed.</p>
+        </div>
+      </div>
+
+      <h3 style="color:var(--primary); margin-top: 25px;">📝 Quick Quiz — Surati Paper</h3>
+
+      <div class="quiz">
+        <h4>Question 1</h4>
+        <div class="question">What was the prevalence of PPD in the Surati et al. study?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'surq1')">31.0%</div>
+          <div class="option" onclick="checkAnswer(this, true, 'surq1')">50.1%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq1')">28.8%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq1')">70.5%</div>
+        </div>
+        <div class="feedback" id="surq1-feedback">
+          <strong>✓ Correct!</strong> PPD prevalence was 50.1% (202 out of 403 women). 28.8% had mild, 16.6% moderate, and 4.7% severe depression.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 2</h4>
+        <div class="question">Which variable had the strongest association with PPD (highest AOR)?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'surq2')">Low social support (AOR = 2.51)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq2')">Lower socioeconomic status (AOR = 1.84)</div>
+          <div class="option" onclick="checkAnswer(this, true, 'surq2')">History of depression (AOR = 2.94)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq2')">Non-exclusive breastfeeding (AOR = 1.68)</div>
+        </div>
+        <div class="feedback" id="surq2-feedback">
+          <strong>✓ Correct!</strong> History of depression had the highest AOR at 2.94 (95% CI: 1.82–4.75), followed by low social support (2.51) and low self-efficacy (2.1).
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 3</h4>
+        <div class="question">What does the correlation r = −0.42 between PPD and social support mean?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'surq3')">Social support causes a 42% reduction in PPD</div>
+          <div class="option" onclick="checkAnswer(this, true, 'surq3')">There is a moderate negative linear relationship — higher support tends to co-occur with lower PPD</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq3')">42% of women with low support have PPD</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq3')">Social support explains 42% of the variance in PPD</div>
+        </div>
+        <div class="feedback" id="surq3-feedback">
+          <strong>✓ Correct!</strong> r = −0.42 indicates a moderate negative correlation. Higher social support is associated with lower PPD scores. Note this is NOT causation — and r² = 0.176, meaning social support explains only ~18% of the variance.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 4</h4>
+        <div class="question">Why did the authors use logistic regression instead of linear regression?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'surq4')">Because the sample size was small</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq4')">Because the exposure variables were categorical</div>
+          <div class="option" onclick="checkAnswer(this, true, 'surq4')">Because the outcome (PPD) is binary — yes/no</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq4')">Because they wanted to calculate RR</div>
+        </div>
+        <div class="feedback" id="surq4-feedback">
+          <strong>✓ Correct!</strong> Logistic regression is used when the outcome is binary (PPD: yes/no). It models the log-odds of the outcome and produces Odds Ratios. Linear regression requires a continuous outcome.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Question 5</h4>
+        <div class="question">The 95% CI for low social support was 1.57–4.02. Is this result statistically significant, and what does the width tell you?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, true, 'surq5')">Yes, significant (CI excludes 1). The wide CI indicates the estimate is imprecise — the true AOR could be anywhere from 1.57 to 4.02.</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq5')">No, not significant because the CI is wide</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq5')">Yes, significant because the lower bound is above 0</div>
+          <div class="option" onclick="checkAnswer(this, false, 'surq5')">The CI width tells us the p-value is exactly 0.001</div>
+        </div>
+        <div class="feedback" id="surq5-feedback">
+          <strong>✓ Correct!</strong> For ratio measures (OR, RR, HR), significance is determined by whether the 95% CI excludes 1. The CI 1.57–4.02 excludes 1 → significant at p < 0.05. The width (2.45 units) reflects moderate imprecision — a larger sample would give a narrower CI.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="summary-card" style="margin-top: 40px;">
+    <h2>🎉 You're Ready!</h2>
+    <p>Work through each module. Practice applying the concepts to the case studies. The exam is 2 hours with no MCQ — you must be able to EXPLAIN and INTERPRET, not memorize formulas. Good luck!</p>
+  </div>
+
+</div>
+
+<script>
+function doSearch(query) {
+  const results = document.getElementById('searchResults');
+  if (!query.trim()) { results.classList.remove('show'); results.innerHTML = ''; return; }
+  const q = query.toLowerCase();
+  const modules = document.querySelectorAll('.module');
+  const matches = [];
+  modules.forEach(mod => {
+    const text = mod.textContent;
+    const idx = text.toLowerCase().indexOf(q);
+    if (idx === -1) return;
+    const header = mod.querySelector('.module-header h2');
+    const title = header ? header.textContent : 'Module';
+    const start = Math.max(0, idx - 60);
+    const end = Math.min(text.length, idx + q.length + 80);
+    let context = text.slice(start, end).replace(/\s+/g, ' ');
+    if (start > 0) context = '…' + context;
+    if (end < text.length) context = context + '…';
+    const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+    context = context.replace(re, '<mark>$1</mark>');
+    matches.push({ title, id: mod.id, context });
+  });
+  if (!matches.length) {
+    results.innerHTML = '<div class="no-result">No matching topics found</div>';
+    results.classList.add('show');
+    return;
+  }
+  results.innerHTML = matches.map(m =>
+    '<a href="#" onclick="scrollToModule(\'' + m.id + '\');return false">' +
+    '<span class="s-title">' + m.title.replace(new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>') + '</span>' +
+    '<span class="s-context">' + m.context + '</span></a>'
+  ).join('');
+  results.classList.add('show');
+}
+function scrollToModule(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    const content = document.getElementById(id + '-content');
+    if (content && content.classList.contains('collapsed')) {
+      toggleModule(id);
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.getElementById('searchResults').classList.remove('show');
+  document.getElementById('searchInput').value = '';
+}
+
+function toggleModule(id) {
+  const content = document.getElementById(id + '-content');
+  const toggle = document.querySelector('#' + id + ' .toggle');
+  if (content.classList.contains('collapsed')) {
+    content.classList.remove('collapsed');
+    toggle.textContent = '▲';
+  } else {
+    content.classList.add('collapsed');
+    toggle.textContent = '▼';
+  }
+}
+
+function checkAnswer(option, isCorrect, questionId) {
+  const options = option.parentElement.querySelectorAll('.option');
+  const feedback = document.getElementById(questionId + '-feedback');
+  let correctEl = null;
+  options.forEach(opt => {
+    if (opt.onclick && opt.onclick.toString().includes('true')) {
+      correctEl = opt;
+    }
+  });
+  options.forEach(opt => {
+    opt.onclick = null;
+    opt.style.cursor = 'default';
+  });
+  if (isCorrect) {
+    option.classList.add('correct');
+    if (feedback) feedback.classList.add('show');
+  } else {
+    option.classList.add('wrong');
+    if (correctEl) correctEl.classList.add('correct');
+    if (feedback) {
+      feedback.classList.add('show');
+      if (!feedback.dataset.prepended) {
+        feedback.innerHTML = '<strong>✗ Not quite.</strong> ' + feedback.innerHTML;
+        feedback.dataset.prepended = 'true';
+      }
+    }
+  }
+}
+
+function revealAnswer(id) {
+  const el = document.getElementById(id);
+  if (el.style.display === 'block') {
+    el.style.display = 'none';
+  } else {
+    el.style.display = 'block';
+  }
+}
+
+function updateProgress() {
+  const checkboxes = document.querySelectorAll('.checklist input[type="checkbox"]');
+  const checked = document.querySelectorAll('.checklist input[type="checkbox"]:checked').length;
+  const total = checkboxes.length;
+  const percent = Math.round((checked / total) * 100);
+  document.getElementById('progressBar').textContent = 'Progress: ' + percent + '%';
+  if (percent === 100) {
+    document.getElementById('progressBar').style.background = '#4ade80';
+    document.getElementById('progressBar').textContent = '✓ Ready for Exam!';
+  }
+}
+
+window.addEventListener('load', function() {
+  const modules = document.querySelectorAll('.module-content');
+  const toggles = document.querySelectorAll('.toggle');
+  modules.forEach((mod, i) => {
+    if (i > 0) {
+      mod.classList.add('collapsed');
+      toggles[i].textContent = '▼';
+    } else {
+      toggles[i].textContent = '▲';
+    }
+  });
+  document.addEventListener('click', function(e) {
+    const wrap = document.querySelector('.search-wrap');
+    if (wrap && !wrap.contains(e.target)) {
+      document.getElementById('searchResults').classList.remove('show');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

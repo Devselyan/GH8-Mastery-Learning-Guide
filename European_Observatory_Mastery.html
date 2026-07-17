@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery: European Observatory on Health Systems and Policies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.2);
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .phase-header {
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 16px;
+            margin: 40px 0 20px 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--accent-glow);
+            color: var(--accent-blue);
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .term {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .desc {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="subtitle">European Health Systems Mastery</span>
+            <h1>European Observatory on Health Systems and Policies</h1>
+        </header>
+
+        <div class="phase-header">01: What is the Observatory?</div>
+        <div class="card">
+            <p>Founded in <span class="highlight">1998</span>, the European Observatory on Health Systems and Policies is a high-level partnership that acts as a <span class="highlight">"knowledge broker."</span> It bridges the gap between scientific evidence and health policy-making across the European region.</p>
+            <br>
+            <p>It is hosted by the <span class="highlight">WHO Regional Office for Europe</span> and operates with the core mission of promoting evidence-informed policy-making through rigorous analysis of health systems, trends, and reforms.</p>
+        </div>
+
+        <div class="phase-header">02: Institutional Partners</div>
+        <div class="grid">
+            <div class="card">
+                <span class="tag">International Organizations</span>
+                <ul>
+                    <li>WHO Regional Office for Europe</li>
+                    <li>European Commission</li>
+                    <li>The World Bank</li>
+                    <li>European Investment Bank</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="tag">Academic Institutions</span>
+                <ul>
+                    <li>London School of Economics (LSE)</li>
+                    <li>London School of Hygiene & Tropical Medicine (LSHTM)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="tag">Governments</span>
+                <ul>
+                    <li>Austria, Belgium, Finland</li>
+                    <li>Ireland, Norway, Slovenia</li>
+                    <li>Sweden, United Kingdom</li>
+                </ul>
+            </div>
+            <div class="card">
+                <span class="tag">Regional & Social Bodies</span>
+                <ul>
+                    <li>Veneto Region (Italy)</li>
+                    <li>French National Union of Health Insurance Funds (UNCAM)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="phase-header">03: Core Products & Outputs</div>
+        <div class="card">
+            <span class="term">HiT (Health Systems in Transition) Profiles</span>
+            <span class="desc">The "gold standard" of health system analysis. Standardized, deep-dive reports on individual national health systems (e.g., Germany: Health System Review).</span>
+        </div>
+        <div class="card">
+            <span class="term">HSPM (Health Systems and Policy Monitor)</span>
+            <span class="desc">An online platform for real-time tracking of health reforms and comparative cross-country data analysis.</span>
+        </div>
+        <div class="card">
+            <span class="term">Policy Briefs & Dialogues</span>
+            <span class="desc">Concise evidence summaries for urgent policy questions, complemented by workshops where experts meet directly with national decision-makers.</span>
+        </div>
+        <div class="card">
+            <span class="term">Eurohealth</span>
+            <span class="desc">A quarterly academic and policy journal providing a platform for discussing emerging health issues.</span>
+        </div>
+
+        <div class="phase-header">04: Current Analytical Priorities (2024-2028)</div>
+        <div class="card">
+            <ul>
+                <li><span class="highlight">Health Workforce:</span> Managing shortages, migration, and retention of medical professionals.</li>
+                <li><span class="highlight">Digital Health & AI:</span> Governance of Artificial Intelligence and implementation of electronic health records.</li>
+                <li><span class="highlight">Resilience & Crisis:</span> Learning from COVID-19 to build systems capable of withstanding future shocks.</li>
+                <li><span class="highlight">Integrated Care:</span> Improving coordination between primary care, social services, and long-term care.</li>
+                <li><span class="highlight">Sustainability:</span> Addressing the "Green" health system and reducing the carbon footprint of delivery.</li>
+                <li><span class="highlight">Access to Innovation:</span> Strategies for sustainable pricing of high-cost innovative medicines.</li>
+            </ul>
+        </div>
+
+        <footer>
+            Mastery Series &bull; German Health Care System &bull; 2026
+        </footer>
+    </div>
+</body>
+</html>

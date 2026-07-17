@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siebert Part: Epidemiology & Social Inequalities</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --border-color: #334155;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .phase-header {
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 15px;
+            margin: 40px 0 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            color: #60a5fa;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .mcq-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-blue);
+            background-color: #1e293b;
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent-blue);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .verify-btn {
+            margin-top: 20px;
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .verify-btn:hover {
+            opacity: 0.9;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .formula {
+            background-color: #0f172a;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            display: block;
+            margin: 10px 0;
+            text-align: center;
+            color: #fbbf24;
+        }
+
+        ul {
+            padding-left: 20px;
+            color: var(--text-dim);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        b {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Siebert 01: Epidemiology & Social Inequalities</h1>
+
+        <!-- SUMMARY SECTION -->
+        <div class="phase-header">Phase 1: Knowledge Summary</div>
+        
+        <div class="summary-card">
+            <h2>Core Foundations</h2>
+            <p><b>Epidemiology:</b> The study of the <b>distribution</b> (frequencies/patterns) and <b>determinants</b> (causes/factors) of health-related states in human populations.</p>
+            <p><b>Social Epidemiology:</b> A specific branch focusing on how <b>social-structural factors</b> (power, money, resources) affect patterns of disease and health distribution.</p>
+            <p><b>Socio-Economic Status (SES):</b> A composite measure of social position based on three primary dimensions:</p>
+            <ul>
+                <li><b>Income:</b> Financial resources.</li>
+                <li><b>Education:</b> Knowledge and credentials (e.g., CASMIN classification).</li>
+                <li><b>Occupation:</b> Status of employment (e.g., ISEI index).</li>
+            </ul>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h2>Goals of Epidemiology</h2>
+                <ul>
+                    <li><b>Describe:</b> Prevalence and incidence in populations.</li>
+                    <li><b>Analyze:</b> Course, prognosis, and etiology (determinants).</li>
+                    <li><b>Evaluate:</b> Preventive and therapeutic interventions.</li>
+                    <li><b>Inform:</b> Decision makers and the policy cycle.</li>
+                </ul>
+            </div>
+            <div class="summary-card">
+                <h2>Causality Concepts</h2>
+                <ul>
+                    <li><b>Necessary Cause:</b> Factor must be present for the outcome to occur.</li>
+                    <li><b>Sufficient Cause:</b> A set of factors that inevitably lead to the outcome.</li>
+                    <li><b>Multifactorial:</b> Complex associations where multiple component causes interact.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <h2>Hill Guidelines for Causation</h2>
+            <div class="summary-grid">
+                <ul>
+                    <li><b>Strength:</b> Magnitude of association (High HR/RR).</li>
+                    <li><b>Temporality:</b> Exposure precedes outcome (Critical).</li>
+                    <li><b>Consistency:</b> Found across different studies/populations.</li>
+                </ul>
+                <ul>
+                    <li><b>Dose-Response:</b> Risk increases with higher exposure.</li>
+                    <li><b>Biological Rationale:</b> Plausible biological mechanism.</li>
+                    <li><b>Reversibility:</b> Removing factor reduces risk.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <h2>Cross-Sectional Studies</h2>
+            <p>A "Point-in-time" concept examining exposure and outcome simultaneously.</p>
+            <div class="summary-grid">
+                <div>
+                    <p><b>Prevalence (P):</b> Proportion of diseased individuals at a point in time.</p>
+                    <span class="formula">P = (a + c) / (a + b + c + d)</span>
+                </div>
+                <div>
+                    <p><b>Odds Ratio (OR):</b> Cross-product formula for disease chance.</p>
+                    <span class="formula">OR = (a * d) / (b * c)</span>
+                </div>
+            </div>
+            <p><b>Prevalence Ratio (PR):</b> Ratio of prevalence in exposed vs. non-exposed.</p>
+            <span class="formula">PR = [a / (a + b)] / [c / (c + d)]</span>
+        </div>
+
+        <!-- MCQ SECTION -->
+        <div class="phase-header">Phase 2: Mastery Quiz</div>
+
+        <div id="quiz-container">
+            <!-- Questions will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                question: "Which term describes the study of frequencies and patterns of health-related states in a population?",
+                options: {
+                    A: "Determinants",
+                    B: "Distribution",
+                    C: "Etiology",
+                    D: "Intervention"
+                },
+                correct: "B",
+                explanation: "Epidemiology studies the distribution (patterns/frequencies) and determinants (causes) of health states."
+            },
+            {
+                id: 2,
+                question: "According to the SES measure discussed by Siebert, which three dimensions are typically used?",
+                options: {
+                    A: "Income, Wealth, and Housing",
+                    B: "Income, Education, and Occupation",
+                    C: "Education, Age, and Gender",
+                    D: "Occupation, Ethnicity, and Income"
+                },
+                correct: "B",
+                explanation: "Socio-economic status (SES) is measured using Income, Education (CASMIN), and Occupation (ISEI)."
+            },
+            {
+                id: 3,
+                question: "What is the primary focus of 'Social Epidemiology'?",
+                options: {
+                    A: "Individual biological risk factors",
+                    B: "Chemical exposures in laboratory settings",
+                    C: "The impact of social-structural factors on health",
+                    D: "The genetic basis of chronic diseases"
+                },
+                correct: "C",
+                explanation: "Social epidemiology specifically identifies societal characteristics that affect the pattern of disease distribution."
+            },
+            {
+                id: 4,
+                question: "In the context of validity, how are observational studies generally characterized compared to experimental studies?",
+                options: {
+                    A: "Higher internal validity, lower external validity",
+                    B: "Equal internal and external validity",
+                    C: "Lower internal validity, lower external validity",
+                    D: "Lower internal validity, higher external validity"
+                },
+                correct: "D",
+                explanation: "Observational studies have lower internal validity (less control) but higher external validity (natural settings)."
+            },
+            {
+                id: 5,
+                question: "A factor that must always be present to realize a given outcome is known as a:",
+                options: {
+                    A: "Necessary cause",
+                    B: "Sufficient cause",
+                    C: "Component cause",
+                    D: "Multifactorial cause"
+                },
+                correct: "A",
+                explanation: "A necessary cause is a condition that must be present for an effect to occur (e.g., Mycobacterium for TB)."
+            },
+            {
+                id: 6,
+                question: "Which Hill Guideline states that the exposure must precede the outcome in time?",
+                options: {
+                    A: "Biological Rationale",
+                    B: "Temporality",
+                    C: "Consistency",
+                    D: "Dose-Response"
+                },
+                correct: "B",
+                explanation: "Temporality is the only essential criterion; the cause must occur before the effect."
+            },
+            {
+                id: 7,
+                question: "A study that measures exposure and outcome simultaneously at a specific 'point-in-time' is a:",
+                options: {
+                    A: "Cohort study",
+                    B: "Randomized Controlled Trial",
+                    C: "Cross-sectional study",
+                    D: "Longitudinal study"
+                },
+                correct: "C",
+                explanation: "Cross-sectional studies are point-in-time prevalence studies where today's status of E and O is recorded."
+            },
+            {
+                id: 8,
+                question: "If a cross-sectional study finds a Prevalence Ratio (PR) of 6.0 for COPD among smokers, what does this indicate?",
+                options: {
+                    A: "Smokers have a 6% risk of developing COPD over 10 years.",
+                    B: "Smokers have 6 times the odds of non-smokers in a longitudinal study.",
+                    C: "The prevalence of COPD in non-smokers is 6 times higher than in smokers.",
+                    D: "The prevalence of COPD among smokers is 6 times the prevalence among non-smokers."
+                },
+                correct: "D",
+                explanation: "A Prevalence Ratio (PR) of 6.0 means the prevalence in the exposed group is 6 times that of the unexposed group."
+            },
+            {
+                id: 9,
+                question: "Using a 2x2 table where 'a' is diseased-exposed, 'b' is non-diseased-exposed, 'c' is diseased-unexposed, and 'd' is non-diseased-unexposed, what is the cross-product formula for the Odds Ratio (OR)?",
+                options: {
+                    A: "(a * d) / (b * c)",
+                    B: "(a + c) / (b + d)",
+                    C: "(a / b) * (c / d)",
+                    D: "(a * b) / (c * d)"
+                },
+                correct: "A",
+                explanation: "The Odds Ratio (OR) is calculated as the cross-product of the 2x2 table cells: (a * d) / (b * c)."
+            },
+            {
+                id: 10,
+                question: "Which of the following is a key limitation of cross-sectional studies?",
+                options: {
+                    A: "They are extremely time-consuming and expensive.",
+                    B: "They cannot estimate risks (incidence).",
+                    C: "They cannot use 2x2 tables for analysis.",
+                    D: "They require high internal control and artificial settings."
+                },
+                correct: "B",
+                explanation: "Because they only measure prevalence at one point in time, cross-sectional studies cannot establish incidence or true risk."
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            questions.forEach(q => {
+                const card = document.createElement('div');
+                card.className = 'mcq-card';
+                card.id = `q-${q.id}`;
+                
+                card.innerHTML = `
+                    <div class="question-text">${q.id}. ${q.question}</div>
+                    <div class="options-container">
+                        ${Object.entries(q.options).map(([key, value]) => `
+                            <button class="option-btn" onclick="selectOption(${q.id}, '${key}')" id="btn-${q.id}-${key}">
+                                <b>${key}:</b> ${value}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <button class="verify-btn" onclick="verifyAnswer(${q.id})">Verify Logic</button>
+                    <div class="feedback" id="feedback-${q.id}"></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        const userAnswers = {};
+
+        window.selectOption = (qId, option) => {
+            userAnswers[qId] = option;
+            const buttons = document.querySelectorAll(`#q-${qId} .option-btn`);
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            document.getElementById(`btn-${qId}-${option}`).classList.add('selected');
+        };
+
+        window.verifyAnswer = (qId) => {
+            const selected = userAnswers[qId];
+            const feedback = document.getElementById(`feedback-${qId}`);
+            const q = questions.find(item => item.id === qId);
+
+            if (!selected) {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = '<b>Socratic Hint:</b> You must select an option before verification. Consider which parameter defines "distribution" vs "determinants".';
+                feedback.style.display = 'block';
+                return;
+            }
+
+            if (selected === q.correct) {
+                feedback.className = 'feedback success';
+                feedback.innerHTML = `<b>Correct:</b> ${q.explanation}`;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = `<b>Critical Review:</b> That is incorrect. ${q.explanation.split('.')[0]}. Re-examine the core lecture concepts for ${q.question.split(' ')[0]}.`;
+            }
+            feedback.style.display = 'block';
+        };
+
+        renderQuiz();
+    </script>
+</body>
+</html>

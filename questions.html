@@ -3,59 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GH 8 — Question Bank</title>
+<title>GH 8 — Question Bank | Mastery Learning Guide</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.qbank-nav {
-  position: sticky; top: 0; z-index: 100;
+.search-results-panel {
+  display: none;
   background: var(--primary); color: white;
-  padding: 10px 20px;
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 6px 20px; font-size: 0.82rem;
+  text-align: center;
 }
-.qbank-nav h1 { font-size: 1.1rem; margin-right: auto; }
-.qbank-nav a, .qbank-nav .back-link {
-  background: rgba(255,255,255,0.2); color: white;
-  text-decoration: none; padding: 4px 12px;
-  border-radius: 6px; font-size: 0.85rem;
+.result-badge {
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  margin: 0 3px; font-size: 0.75rem; font-weight: 600;
 }
-.qbank-container { max-width: 900px; margin: 0 auto; padding: 20px; }
-.qbank-module { margin-bottom: 28px; }
-.qbank-module h2 {
-  background: var(--primary); color: white;
-  padding: 10px 18px; border-radius: 8px 8px 0 0;
-  font-size: 1.15rem; margin: 0;
-}
-.qbank-content { background: var(--card); padding: 18px; border-radius: 0 0 8px 8px; }
-.qbank-module .quiz { margin: 12px 0; }
-.qbank-module .quiz:first-child { margin-top: 0; }
-.qbank-module .quiz:last-child { margin-bottom: 0; }
+.result-tight { background: #2e7d32; color: white; }
+.result-module { background: #1565c0; color: white; }
+.result-any { background: #6a1b9a; color: white; }
+.result-count { opacity: 0.7; font-size: 0.75rem; margin-left: 4px; }
+.question-bank-hero { text-align: center; padding: 25px 20px; background: linear-gradient(135deg, #e8eaf6, #c5cae9); border-radius: 12px; margin-bottom: 25px; }
+.question-bank-hero h1 { color: var(--primary); margin-bottom: 8px; }
+.question-bank-hero p { color: #555; max-width: 600px; margin: 0 auto; font-size: 0.95rem; }
+.back-link { display: inline-block; margin-bottom: 15px; color: var(--primary); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+.back-link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<div class="qbank-nav">
-  <h1>📝 Question Bank</h1>
-  <div style="display:flex; gap:6px; flex-wrap:wrap;">
-    <a href="#q-module-1">MODULE 1</a>
-    <a href="#q-module-2">MODULE 2</a>
-    <a href="#q-module-3">MODULE 3</a>
-    <a href="#q-module-4">MODULE 4</a>
-    <a href="#q-module-5">MODULE 5</a>
-    <a href="#q-module-6">MODULE 6</a>
-    <a href="#q-module-7">MODULE 7</a>
-    <a href="#q-module-8">MODULE 8</a>
-    <a href="#q-module-9">MODULE 9</a>
-    <a href="#q-module-10">MODULE 10</a>
-    <a href="#q-module-11">MODULE 11</a>
-    <a href="#q-exam-preparation">EXAM PREPARATION</a>
-    <a class="back-link" href="index.html">← Guide</a>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>📚 Question Bank</h2>
+    <button class="sidebar-pin" onclick="toggleSidebar()" title="Toggle sidebar">📌</button>
+    <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
   </div>
+  <ul class="sidebar-nav">
+    <li class="section-label">Core Modules</li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m1')">🔍 Module 1 — Basics</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m2')">📜 Module 2 — History</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m3')">🏛️ Module 3 — Frameworks</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m4')">🩺 Module 4 — Service Delivery</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m5')">🏥 Module 5 — Prevention</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m6')">📊 Module 6 — Performance</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m7')">⚖️ Module 7 — Governing</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m8')">🔄 Module 8 — Path Dependency</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m9')">💰 Module 9 — Political Economy</a></li>
+    <li class="section-label">Thesen Modules</li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m11')">🧩 Module 10 — Systems Theory</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m12')">📈 Module 11 — Economics</a></li>
+    <li class="section-label">Practice</li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('practice')">🎓 Practice Questions</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('synthesis')">📝 Synthesis Questions</a></li>
+  </ul>
 </div>
-<div class="qbank-container">
-  <p style="text-align:center; color:var(--muted); margin-bottom:20px;">Click any answer to reveal the explanation.</p>
-<div class="qbank-module" id="q-module-1">
-  <h2>MODULE 1: What is a Health System?</h2>
-  <div class="qbank-content">
-<div class="quiz">
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="main-content">
+<div class="top-nav">
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <h1>📝 Question Bank</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Search questions..." oninput="searchModules()">
+    <span class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</span>
+  </div>
+  <div class="search-nav" id="searchNav">
+    <button onclick="prevMatch()">◀</button>
+    <span class="count" id="matchCount">0/0</span>
+    <button onclick="nextMatch()">▶</button>
+  </div>
+  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙</button>
+</div>
+<div class="container">
+<div class="question-bank-hero">
+  <h1>📝 Question Bank</h1>
+  <p>All 39 quizzes extracted from the GH8 Mastery Learning Guide. Click any question to reveal the correct answer. Use the sidebar to jump to a module, or search for specific topics.</p>
+  <p style="margin-top:10px;"><a href="index.html" class="back-link">← Back to Guide</a></p>
+</div>
+<div id="searchResultsPanel" class="search-results-panel"></div>
+<div class="focus-banner" id="focusBanner"></div>
+<div class="module" id="m1">
+  <div class="module-header"><h2>🔍 Module 1 — Basics</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 1</h4>
         <div class="question">1. According to the WHO, what is a health system?</div>
         <div class="options">
@@ -68,7 +93,7 @@
           <strong>✓ Correct!</strong> The WHO definition is very broad. Remember: home care of the sick, traditional healers, and self-medication are all part of the health system according to WHO.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 1</h4>
         <div class="question">2. Which is NOT one of the WHO Building Blocks?</div>
         <div class="options">
@@ -81,12 +106,11 @@
           <strong>✓ Correct!</strong> Electoral accountability is not one of the six WHO Building Blocks. The six are: Service Delivery, Health Workforce, Health Information Systems, Medical Products & Technologies, Financing, and Leadership & Governance.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-2">
-  <h2>MODULE 2: Historical Development</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m2">
+  <div class="module-header"><h2>📜 Module 2 — History</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <h4> Quick Check — Module 2</h4>
         <div class="question">1. What percentage of Germans are in the GKV (~2024)?</div>
         <div class="options">
@@ -99,7 +123,7 @@
           <strong> Correct!</strong> ~73 million Germans are in the GKV. The remaining ~10% (~8.7 million) are in PKV.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4> Quick Check — Module 2</h4>
         <div class="question">2. What does the subsidiarity principle mean in German health policy?</div>
         <div class="options">
@@ -112,12 +136,24 @@
           <strong> Correct!</strong> Subsidiarity means organising social protection at the lowest feasible level. This is why Germany has corporatist self-governance, non-profit hospitals, and federalism.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-3">
-  <h2>MODULE 3: Comparing Health Systems</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m3">
+  <div class="module-header"><h2>🏛️ Module 3 — Frameworks</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 3</h4>
+        <div class="question">1. Which model is financed primarily through general taxation?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q3-1')">Bismarck</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q3-1')">Beveridge</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-1')">Semashko</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-1')">All three</div>
+        </div>
+        <div class="feedback" id="q3-1-feedback">
+          <strong> Correct!</strong> The Beveridge model (UK, Scandinavia) is funded by general taxation.
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 3</h4>
         <div class="question">2. According to Bhm et al., what type is Germany?</div>
         <div class="options">
@@ -130,12 +166,24 @@
           <strong> Correct!</strong> Germany is SHI type: corporatist regulation, social insurance financing, private provision.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-4">
-  <h2>MODULE 4: Service Delivery</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m4">
+  <div class="module-header"><h2>🩺 Module 4 — Service Delivery</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 4</h4>
+        <div class="question">1. What payment method is used for ambulatory physicians in the GKV?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q4-1')">Capitation only</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q4-1')">Fee-for-service based on the EBM</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-1')">Global budgets from the Ministry</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-1')">Pure out-of-pocket</div>
+        </div>
+        <div class="feedback" id="q4-1-feedback">
+          <strong> Correct!</strong> Ambulatory physicians are paid fee-for-service based on the EBM, with quarterly budget constraints.
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 4</h4>
         <div class="question">2. Which is NOT one of the three hospital ownership types?</div>
         <div class="options">
@@ -148,12 +196,24 @@
           <strong> Correct!</strong> The three types are public, non-profit, and private for-profit.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-5">
-  <h2>MODULE 5: Prevention</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m5">
+  <div class="module-header"><h2>🏥 Module 5 — Prevention</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 5</h4>
+        <div class="question">1. What percentage of GKV expenditure goes to prevention?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q5-1')">~5%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-1')">~1.5%</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q5-1')">~0.3%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-1')">~10%</div>
+        </div>
+        <div class="feedback" id="q5-1-feedback">
+          <strong> Correct!</strong> GKV prevention spending is ~€700M out of ~€280B — about 0.3%, well below OECD average ~3%.
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 5</h4>
         <div class="question">2. What is the main governance problem in German prevention?</div>
         <div class="options">
@@ -166,12 +226,24 @@
           <strong> Correct!</strong> Core problems: fragmentation (16 state laws, 375 offices), weak coordination, curative dominance.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-6">
-  <h2>MODULE 6: Performance Assessment</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m6">
+  <div class="module-header"><h2>📊 Module 6 — Performance</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 6</h4>
+        <div class="question">1. What is the performance paradox?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q6-1')">Low spending, high life expectancy</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q6-1')">~12.7% GDP spending but LE below comparable countries</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-1')">Lowest spending, lowest LE in OECD</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-1')">Average spending, above-average outcomes</div>
+        </div>
+        <div class="feedback" id="q6-1-feedback">
+          <strong> Correct!</strong> Germany is among the highest spenders but LE (81.1) is below France (82.3), Sweden (83.1), Italy (83.4).
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 6</h4>
         <div class="question">2. What reflects substantive inequality in Germany?</div>
         <div class="options">
@@ -184,7 +256,7 @@
           <strong> Correct!</strong> The waiting-time differential shows how formal universality coexists with substantive inequality.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4> Quick Check — Module 6</h4>
         <div class="question">3. What is a central critique of OECD performance frameworks?</div>
         <div class="options">
@@ -197,12 +269,24 @@
           <strong> Correct!</strong> Standard frameworks rate Germany highly on aggregate coverage while obscuring two-tier access and curative bias.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-7">
-  <h2>MODULE 7: Governance</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m7">
+  <div class="module-header"><h2>⚖️ Module 7 — Governing</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 7</h4>
+        <div class="question">1. Which governance mode dominates in Germany?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q7-1')">State hierarchy</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-1')">Market competition</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q7-1')">Corporatist negotiation</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-1')">Pure market</div>
+        </div>
+        <div class="feedback" id="q7-1-feedback">
+          <strong> Correct!</strong> Germany is primarily corporatist — G-BA, KVen, and GKV-Spitzenverband are self-governing bodies.
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 7</h4>
         <div class="question">2. What is the main legitimacy problem of the G-BA?</div>
         <div class="options">
@@ -215,12 +299,11 @@
           <strong> Correct!</strong> G-BA members are not elected, patient organisations have advisory-only status, and parliamentary override is rare.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-8">
-  <h2>MODULE 8: Path Dependency</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m8">
+  <div class="module-header"><h2>🔄 Module 8 — Path Dependency</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <h4> Quick Check — Module 8</h4>
         <div class="question">1. What is institutional layering?</div>
         <div class="options">
@@ -233,7 +316,7 @@
           <strong> Correct!</strong> Layering adds rules on top without abolishing old structures. Examples: Morbi-RSA, NPK.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4> Quick Check — Module 8</h4>
         <div class="question">2. What is Scharpf's joint decision trap?</div>
         <div class="options">
@@ -246,12 +329,24 @@
           <strong> Correct!</strong> The joint decision trap describes how federal systems requiring state consent produce lowest-common-denominator outcomes.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-9">
-  <h2>MODULE 9: Political Economy</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m9">
+  <div class="module-header"><h2>💰 Module 9 — Political Economy</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4> Quick Check — Module 9</h4>
+        <div class="question">1. Which welfare state type is Germany according to Esping-Andersen?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q9-1')">Liberal</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q9-1')">Conservative-corporatist</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-1')">Social democratic</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-1')">Mixed</div>
+        </div>
+        <div class="feedback" id="q9-1-feedback">
+          <strong> Correct!</strong> Germany is conservative-corporatist: social rights linked to employment, status maintenance, subsidiarity.
+        </div>
+      </div>
+      <div class="quiz">
         <h4> Quick Check — Module 9</h4>
         <div class="question">2. What did AMNOG introduce in 2010?</div>
         <div class="options">
@@ -264,7 +359,7 @@
           <strong> Correct!</strong> AMNOG introduced mandatory early benefit assessment by IQWIG, then price negotiation based on benefit. ~€2bn/year savings.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4> Quick Check — Module 9</h4>
         <div class="question">3. What is the key implication of Varieties of Capitalism theory for German health reform?</div>
         <div class="options">
@@ -277,12 +372,11 @@
           <strong> Correct!</strong> VoC theory predicts CMEs resist both radical marketisation (LME direction) and universalist expansion (social democratic direction) because of institutional complementarities.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-10">
-  <h2>MODULE 10: Systems Theory Foundations</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="m11">
+  <div class="module-header"><h2>🧩 Module 10 — Systems Theory</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <h4>Try this with a classmate:</h4>
         <p>For each AGIL function, formulate the <strong>key question</strong> that best addresses that function in the context of Germany's hospital sector. Then find a concrete example for each.</p>
         <ul style="margin-left:20px; margin-top:8px;">
@@ -292,7 +386,7 @@
           <li><strong>L (Latency):</strong> What question about hospital ownership traditions and professional values?</li>
         </ul>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 10</h4>
         <div class="question">1. Which statement best describes a complex system?</div>
         <div class="options">
@@ -305,7 +399,7 @@
           <strong>✓ Correct!</strong> Complex systems have many interacting parts whose collective behavior cannot be predicted by analyzing individual components alone.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 10</h4>
         <div class="question">2. What was the main contribution of the Macy Conferences?</div>
         <div class="options">
@@ -318,7 +412,7 @@
           <strong>✓ Correct!</strong> The Macy Conferences brought together scientists from multiple disciplines, shifting scientific thinking from things to relations and founding cybernetics.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 10</h4>
         <div class="question">3. In Parsons' AGIL framework, what does the "I" (Integration) function address?</div>
         <div class="options">
@@ -361,12 +455,7 @@
           <strong>✓ Correct!</strong> Second-order cybernetics (Heinz von Foerster) recognises that the observer cannot be separated from the observed system.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-module-11">
-  <h2>MODULE 11: Economics for Health Care</h2>
-  <div class="qbank-content">
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Market Mechanisms</h4>
         <div class="question">1. What is the core argument of opponents of market mechanisms in health care?</div>
         <div class="options">
@@ -390,7 +479,11 @@
           <div class="option">GKV is voluntary; PKV is mandatory</div>
         </div>
       </div>
-<div class="quiz">
+</div></div>
+<div class="module" id="m12">
+  <div class="module-header"><h2>📈 Module 11 — Economics</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <h4>📝 Quick Check — Economic Evaluation Methods</h4>
         <div class="question">1. What is the key advantage of CUA over CEA?</div>
         <div class="options">
@@ -407,7 +500,7 @@
           <div class="option">No change to usual care; ignore evidence</div>
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 11</h4>
         <div class="question">1. What is opportunity cost?</div>
         <div class="options">
@@ -420,7 +513,7 @@
           <strong>✓ Correct!</strong> Opportunity cost measures the value of what you give up when choosing one option over another — including both monetary and non-monetary sacrifices.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 11</h4>
         <div class="question">2. Which condition of perfect competition is most clearly violated in health care?</div>
         <div class="options">
@@ -433,7 +526,7 @@
           <strong>✓ Correct!</strong> Information asymmetry — doctors know more than patients about diagnosis and treatment options — is the most fundamental violation. Arrow (1963) made this the centerpiece of market failure theory in health care.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 11</h4>
         <div class="question">3. According to Rosenbrock (2014), what does health policy encompass?</div>
         <div class="options">
@@ -446,7 +539,7 @@
           <strong>✓ Correct!</strong> Health policy covers both prevention (before illness) and management (after illness) of health risks.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>📝 Quick Check — Module 11</h4>
         <div class="question">4. What is the ICER formula used for in economic evaluation?</div>
         <div class="options">
@@ -519,7 +612,11 @@
           <strong>✓ Correct!</strong> Health care markets are heavily regulated, feature massive information asymmetry, and solidarity principles constrain pure market outcomes — hence "quasi-market."
         </div>
       </div>
-<div class="quiz">
+</div></div>
+<div class="module" id="synthesis">
+  <div class="module-header"><h2>📝 Synthesis Questions</h2></div>
+  <div class="module-content">
+      <div class="quiz">
         <div class="question">1. How would you use the concept of opportunity cost to evaluate Germany's hospital overcapacity problem?</div>
         <div class="options">
           <div class="option" onclick="checkAnswer(this, true, 'synth-1')">Opportunity cost of hospital investment is forgone investment in primary care or prevention. Germany's high bed density (~8.0/1,000 vs. OECD 4.4) means resources are locked into hospital infrastructure that could alternatively improve ambulatory care and reduce unnecessary admissions.</div>
@@ -561,12 +658,21 @@
           <strong>✓ Correct!</strong> This question demonstrates how integrated analysis reveals deeper institutional and cultural factors that pure economic or pure systems analysis would miss.
         </div>
       </div>
-  </div>
-</div>
-<div class="qbank-module" id="q-exam-preparation">
-  <h2>EXAM PREPARATION</h2>
-  <div class="qbank-content">
-<div class="quiz">
+</div></div>
+<div class="module" id="practice">
+  <div class="module-header"><h2>🎓 Practice Questions</h2></div>
+  <div class="module-content">
+      <div class="quiz">
+        <h4>Practice Question 1</h4>
+        <div class="question">Explain Germany's performance paradox. What is it, and what are three explanations?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, true, 'q10-1')">Show Answer</div>
+        </div>
+        <div class="feedback" id="q10-1-feedback">
+          <strong>Model answer:</strong> Germany spends ~12.7% GDP on health (among highest in OECD) but life expectancy is below comparable high-spending countries. Three explanations: (1) Curative bias — over-investment in hospital care, underinvestment in prevention/public health. (2) Sectoral fragmentation — poor coordination between ambulatory and inpatient care produces inefficiency. (3) Dual system inequalities — PKV members get faster access, but average population outcomes are lower because GKV members face access barriers. Connect to Donabedian: high spending on structures does not guarantee good outcomes if processes are suboptimal.
+        </div>
+      </div>
+      <div class="quiz">
         <h4>Practice Question 2</h4>
         <div class="question">What is institutional layering? Give three German examples and explain why layering dominates.</div>
         <div class="options">
@@ -576,7 +682,7 @@
           <strong>Model answer:</strong> Layering = adding new rules/institutions on top of old ones without abolishing them. Examples: (1) Morbi-RSA added to correct adverse selection without abolishing dual system. (2) NPK added to address prevention without restructuring GKV/GGD separation. (3) Gesundheitsfonds centralized contribution collection without abolishing fund competition. Layering dominates because: multiple veto players block fundamental reform (Bundesrat, FDP on PKV, Constitutional Court); path dependency makes existing institutions hard to abolish; incremental change is politically easier than replacement. This produces extraordinary complexity.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 3</h4>
         <div class="question">Apply ACI to explain why the Bürgerversicherung has never been implemented in Germany.</div>
         <div class="options">
@@ -586,7 +692,7 @@
           <strong>Model answer:</strong> <strong>Actors:</strong> SPD/Greens (support), FDP/CDU/CSU (oppose), PKV industry (oppose), KBV (mixed — higher rates but less private billing), GKV funds (support). <strong>Orientations:</strong> FDP sees PKV as property right and liberal profession privilege; CDU sees it as middle-class benefit. <strong>Constellation:</strong> Reform requires majority in Bundestag + Bundesrat (typically impossible). <strong>Interaction rules:</strong> Constitutional Court has signaled PKV property rights are protected (Art. 14 GG). <strong>Conclusion:</strong> Too many veto players with divergent preferences — reform blocked despite evidence of inequity.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 4</h4>
         <div class="question">Compare Germany's prevention system with its curative care system. What explains the imbalance?</div>
         <div class="options">
@@ -596,7 +702,7 @@
           <strong>Model answer:</strong> Germany's health spending is overwhelmingly curative — only ~0.3% of GKV expenditure on primary prevention (§20 SGB V). The curative system has powerful corporate actors (KVen, DKG, pharma) with institutionalized influence in the G-BA. Prevention has weak actors (federal institutes, fragmented state/local ÖGD). The medical-industrial complex systematically favors high-technology curative medicine. Conservative-corporatist welfare logic prioritizes treatment of established illness over prevention. The Prevention Law 2015 added resources but did not restructure — classic layering.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 5</h4>
         <div class="question">What did AMNOG introduce? Describe the process and evaluate its impact. Why was the reform weaker than originally conceived?</div>
         <div class="options">
@@ -606,7 +712,7 @@
           <strong>Model answer:</strong> AMNOG (2010) introduced mandatory early benefit assessment for all new drugs: pharma submits dossier → IQWIG assesses benefit vs comparator → G-BA determines degree → price negotiation with GKV-SV. Results: ~50% drugs get "no additional benefit"; ~€2bn/year savings. But pharma shaped the reform: (1) One-year free pricing period before assessment. (2) IQWIG methodology repeatedly challenged in court. (3) Post-passage amendments weakened rules. This illustrates the medical-industrial complex's ability to dilute reform: pharma's resources (legal, expertise, political access) + state ambivalence (protecting domestic industry) + institutional rules (G-BA decision process).
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 6</h4>
         <div class="question">Explain Germany's position in Esping-Andersen's welfare regime typology. What does it predict about reform possibilities?</div>
         <div class="options">
@@ -616,7 +722,7 @@
           <strong>Model answer:</strong> Germany is the paradigmatic conservative-corporatist welfare state: social rights linked to employment/contribution, not citizenship; status stratification preserved (GKV/PKV dual system); subsidiarity principle; occupational fragmentation. Predictions: (1) Universalist reform (Bürgerversicherung) conflicts with conservative-corporatist logic of status differentiation. (2) Prevention structurally less supported than curative care (employment-linked insurance not designed for population health). (3) Corporatist governance is natural and stable. (4) Incremental > fundamental change. Combined with VoC: Germany as CME means institutional complementarities between labour market and health system resist both marketisation and universalism.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 7</h4>
         <div class="question">What is the joint decision trap? Apply it to hospital reform in Germany.</div>
         <div class="options">
@@ -626,7 +732,7 @@
           <strong>Model answer:</strong> The joint decision trap (Scharpf) occurs when federal decisions require state government consent, producing lowest-common-denominator outcomes. Hospital reform in Germany: hospital planning is a state competence (Art. 84 GG). The federal government cannot restructure hospital planning without Bundesrat approval. State governments protect "their" hospitals for regional economic reasons. Result: KHVVG 2024 achieved modest coordination but could not fundamentally reduce overcapacity. Federalism blocks rationalization. Each state vetoes closure of its own hospitals. The trap is structural — only a critical juncture (e.g., massive financial crisis) could break it.
         </div>
       </div>
-<div class="quiz">
+      <div class="quiz">
         <h4>Practice Question 8</h4>
         <div class="question">Explain how Power Resources Theory accounts for the creation of the GKV in 1883 and the dual GKV/PKV system in 1955.</div>
         <div class="options">
@@ -636,9 +742,8 @@
           <strong>Model answer:</strong> Power Resources Theory (Korpi) argues welfare states reflect the relative power of labour vs capital. <strong>1883:</strong> The rising SPD (socialist movement) threatened Bismarck's conservative order. Repression alone (Anti-Socialist Laws 1878) failed. Bismarck responded with a strategic concession: state social insurance to undercut socialist appeal. The GKV's design (occupational fragmentation, employer involvement) reflected the power balance — workers got benefits but organized in separate funds that prevented cross-industry solidarity. <strong>1955:</strong> After WWII, the middle class and professional groups had strong political resources in Adenauer's CDU coalition. They demanded a separate private track to avoid pooling with workers. The SPD could not block it. Result: the dual system, which institutionalizes status differentiation. Both cases show welfare state design = outcome of political power struggles.
         </div>
       </div>
-  </div>
+</div></div>
 </div>
-
 </div>
 <script src="script.js"></script>
 </body>
