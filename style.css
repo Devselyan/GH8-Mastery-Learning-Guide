@@ -373,13 +373,6 @@ body.dark .reveal-content { background: #2a2a2a; }
 .sidebar.collapsed { transform: translateX(-100%); }
 
 body.sidebar-hidden .main-content { margin-left: 0; }
-.sidebar-pin {
-  background: none; border: none; color: var(--sidebar-text);
-  cursor: pointer; font-size: 0.9rem; opacity: 0.5; padding: 4px;
-  margin-left: auto;
-}
-.sidebar-pin:hover { opacity: 1; }
-
 /* Mobile sidebar */
 .sidebar-overlay {
   display: none; position: fixed; inset: 0; z-index: 998;
