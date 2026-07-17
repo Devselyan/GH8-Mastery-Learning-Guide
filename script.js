@@ -422,8 +422,20 @@ window.onload = function() {
     document.getElementById('darkToggle').textContent = '\u2600\uFE0F';
   }
 
-  // Collapse all modules except first
   var modules = document.querySelectorAll('.module');
+  var isQuestionBank = document.querySelector('.question-bank-hero') !== null;
+
+  if (isQuestionBank) {
+    // Question bank: expand all modules
+    for (var i = 0; i < modules.length; i++) {
+      modules[i].querySelector('.module-content').classList.remove('collapsed');
+    }
+    // Setup scroll listener for sidebar
+    window.addEventListener('scroll', updateSidebarActive);
+    return;
+  }
+
+  // Guide: collapse all modules except first
   for (var i = 0; i < modules.length; i++) {
     var content = modules[i].querySelector('.module-content');
     if (i === 0) {
