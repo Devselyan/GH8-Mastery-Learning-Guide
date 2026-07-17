@@ -132,6 +132,8 @@ body {
 .no-search-results {
   text-align: center; padding: 40px; color: var(--muted); font-size: 1.1rem; display: none;
 }
+.table-scroll-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+.table-scroll-wrapper .comparison-table { min-width: 480px; }
 .search-highlight { background: #fff176; padding: 0 2px; border-radius: 2px; }
 .search-highlight.active { background: #ff8f00; color: white; }
 
@@ -385,8 +387,6 @@ body.sidebar-hidden .main-content { margin-left: 0; }
 .option.wrong { background: var(--important); border-color: var(--secondary); text-decoration: line-through; }
 
 @media (max-width: 768px) {
-  .comparison-table { min-width: 600px; }
-  .module-content { overflow-x: auto; }
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .sidebar-close { display: block; }

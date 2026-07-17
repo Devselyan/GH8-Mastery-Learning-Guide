@@ -417,6 +417,17 @@ window.onload = function() {
     document.getElementById('darkToggle').textContent = '\u2600\uFE0F';
   }
 
+  // Wrap tables in scrollable containers (only on mobile)
+  if (window.innerWidth <= 768) {
+    var tables = document.querySelectorAll('.comparison-table');
+    for (var i = 0; i < tables.length; i++) {
+      var wrapper = document.createElement('div');
+      wrapper.className = 'table-scroll-wrapper';
+      tables[i].parentNode.insertBefore(wrapper, tables[i]);
+      wrapper.appendChild(tables[i]);
+    }
+  }
+
   var modules = document.querySelectorAll('.module');
   var isQuestionBank = document.querySelector('.question-bank-hero') !== null;
 
