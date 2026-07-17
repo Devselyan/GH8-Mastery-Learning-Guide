@@ -40,20 +40,28 @@ function updateProgress() {}
 function toggleSidebar() {
   var sb = document.getElementById('sidebar');
   var overlay = document.getElementById('sidebarOverlay');
-  var isOpen = sb.classList.contains('open');
+  var isMobile = window.innerWidth <= 768;
 
-  if (isOpen) {
-    sb.classList.remove('open');
-    sb.classList.add('collapsed');
-    overlay.classList.remove('show');
-    document.body.classList.remove('sidebar-hidden');
-  } else {
-    sb.classList.add('open');
-    sb.classList.remove('collapsed');
-    if (window.innerWidth <= 768) {
+  if (isMobile) {
+    var isOpen = sb.classList.contains('open');
+    if (isOpen) {
+      sb.classList.remove('open');
+      overlay.classList.remove('show');
+      document.body.classList.remove('sidebar-hidden');
+    } else {
+      sb.classList.add('open');
       overlay.classList.add('show');
+      document.body.classList.add('sidebar-hidden');
     }
-    document.body.classList.add('sidebar-hidden');
+  } else {
+    var isCollapsed = sb.classList.contains('collapsed');
+    if (isCollapsed) {
+      sb.classList.remove('collapsed');
+      document.body.classList.remove('sidebar-hidden');
+    } else {
+      sb.classList.add('collapsed');
+      document.body.classList.add('sidebar-hidden');
+    }
   }
 }
 
