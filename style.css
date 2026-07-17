@@ -123,6 +123,12 @@ body {
   background: rgba(255,255,255,0.15); border: none; color: white;
   padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;
 }
+.qbank-btn {
+  background: rgba(255,255,255,0.2); color: white;
+  text-decoration: none; padding: 4px 12px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 600; white-space: nowrap;
+}
+.qbank-btn:hover { background: rgba(255,255,255,0.3); }
 .no-search-results {
   text-align: center; padding: 40px; color: var(--muted); font-size: 1.1rem; display: none;
 }
