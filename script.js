@@ -196,12 +196,9 @@ function _doSearch() {
 
       var mc = mods[m].querySelector('.module-content');
       var h2 = mods[m].querySelector('.module-header h2');
-      var headerText = h2 ? h2.textContent.toLowerCase() : '';
       for (var ti = 0; ti < terms.length; ti++) {
-        if (headerText.indexOf(terms[ti]) !== -1 && h2) {
-          _collectMatches(h2, terms[ti]);
-        }
-        if (mc) _collectMatches(mc, terms[ti]);
+        if (h2) _highlightTextNodes(h2, terms[ti]);
+        if (mc) _highlightTextNodes(mc, terms[ti]);
       }
     } else {
       mods[m].style.display = 'none';
@@ -212,8 +209,6 @@ function _doSearch() {
   var tightCount = tightMatches.length;
   var allCount = allMatches.length;
   var anyCount = anyMatches.length;
-
-  _applyHighlights(q);
 
   // Show results panel
   var panel = document.getElementById('searchResultsPanel');
@@ -273,59 +268,32 @@ function _doSearch() {
   }
 }
 
-function _collectMatches(el, q) {
+function _highlightTextNodes(el, q) {
   var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+  var ql = q.toLowerCase();
   var nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
   for (var n = 0; n < nodes.length; n++) {
     var node = nodes[n];
     var text = node.textContent;
     var lower = text.toLowerCase();
-    var idx = lower.indexOf(q);
-    while (idx !== -1) {
-      _searchMatches.push({ node: node, start: idx, len: q.length });
-      idx = lower.indexOf(q, idx + q.length);
-    }
-  }
-}
-
-function _applyHighlights(q) {
-  if (!_searchMatches.length) return;
-  var sorted = [];
-  for (var i = 0; i < _searchMatches.length; i++) sorted.push(i);
-  sorted.sort(function(a, b) {
-    var na = _searchMatches[a].node;
-    var nb = _searchMatches[b].node;
-    if (na === nb) return _searchMatches[b].start - _searchMatches[a].start;
-    var posA = _nodePosition(na);
-    var posB = _nodePosition(nb);
-    return posB - posA;
-  });
-  for (var s = 0; s < sorted.length; s++) {
-    var m = _searchMatches[sorted[s]];
-    var text = m.node.textContent;
-    var span = document.createElement('span');
-    span.className = 'search-highlight';
-    span.textContent = text.substring(m.start, m.start + m.len);
-    var after = document.createTextNode(text.substring(m.start + m.len));
-    var before = text.substring(0, m.start);
+    var idx = lower.indexOf(ql);
+    if (idx === -1) continue;
     var frag = document.createDocumentFragment();
-    if (before) frag.appendChild(document.createTextNode(before));
-    frag.appendChild(span);
-    if (after) frag.appendChild(after);
-    m.node.parentNode.replaceChild(frag, m.node);
-    _searchMatches[sorted[s]].span = span;
+    var last = 0;
+    while (idx !== -1) {
+      if (idx > last) frag.appendChild(document.createTextNode(text.substring(last, idx)));
+      var span = document.createElement('span');
+      span.className = 'search-highlight';
+      span.textContent = text.substring(idx, idx + ql.length);
+      frag.appendChild(span);
+      _searchMatches.push({ span: span });
+      last = idx + ql.length;
+      idx = lower.indexOf(ql, last);
+    }
+    if (last < text.length) frag.appendChild(document.createTextNode(text.substring(last)));
+    node.parentNode.replaceChild(frag, node);
   }
-}
-
-function _nodePosition(node) {
-  var pos = 0;
-  while (node) {
-    pos++;
-    node = node.previousSibling || node.parentNode;
-    if (node && node.classList && (node.classList.contains('module') || node.classList.contains('module-header') || node.classList.contains('module-content'))) break;
-  }
-  return pos;
 }
 
 function _scrollToMatch(idx) {
