@@ -4,276 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GH 8 — German Health Care System | Mastery Learning Guide</title>
+<link rel="stylesheet" href="style.css">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --primary: #0d47a1;
-    --secondary: #c62828;
-    --accent: #2e7d32;
-    --bg: #f5f5f5;
-    --text: #212121;
-    --muted: #616161;
-    --card: #ffffff;
-    --border: #e0e0e0;
-    --highlight: #fff59d;
-    --important: #ffcdd2;
-    --success: #c8e6c9;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-  }
-  .top-nav {
-    position: sticky; top: 0; z-index: 1000;
-    background: var(--primary); color: white;
-    padding: 12px 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  }
-  .top-nav h1 { font-size: 1.2rem; display: inline-block; margin-right: auto; }
-
-  .search-bar {
-    display: flex; align-items: center; position: relative;
-  }
-  .search-bar input {
-    padding: 6px 12px; border-radius: 20px; border: none;
-    font-size: 0.85rem; width: 200px; background: rgba(255,255,255,0.9);
-    color: #333; outline: none; transition: width 0.3s;
-  }
-  .search-bar input:focus { width: 280px; background: white; }
-  .search-bar .clear-btn {
-    position: absolute; right: 8px; cursor: pointer; color: #999; font-size: 1rem; display: none;
-  }
-  .search-bar .clear-btn:hover { color: #333; }
-  .search-highlight { background: #fff176; padding: 0 2px; border-radius: 2px; }
-  .search-highlight.active { background: #ff8f00; color: white; }
-  .search-nav { display: none; align-items: center; gap: 4px; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
-  .search-nav button {
-    background: rgba(255,255,255,0.2); border: none; color: white; padding: 2px 8px;
-    border-radius: 4px; cursor: pointer; font-size: 0.85rem;
-  }
-  .search-nav button:hover { background: rgba(255,255,255,0.35); }
-  .search-nav .count { min-width: 30px; text-align: center; }
-  .no-search-results {
-    text-align: center; padding: 40px; color: var(--muted); font-size: 1.1rem; display: none;
-  }
-  .hero {
-    background: linear-gradient(135deg, #0d47a1, #1976d2);
-    color: white; padding: 50px 20px; text-align: center;
-  }
-  .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
-  .hero p { font-size: 1.1rem; opacity: 0.95; max-width: 800px; margin: 0 auto; }
-  .hero .meta {
-    display: flex; justify-content: center; gap: 30px; margin-top: 25px;
-    flex-wrap: wrap;
-  }
-  .hero .meta-item {
-    background: rgba(255,255,255,0.15); padding: 12px 20px; border-radius: 8px;
-    backdrop-filter: blur(10px);
-  }
-  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-  .nav-cards {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px; margin: 30px 0;
-  }
-  .nav-card {
-    background: var(--card); border: 2px solid var(--border);
-    border-radius: 10px; padding: 20px; text-align: center;
-    cursor: pointer; transition: all 0.3s;
-  }
-  .nav-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    border-color: var(--primary);
-  }
-  .nav-card .icon { font-size: 2rem; margin-bottom: 8px; }
-  .nav-card h3 { color: var(--primary); font-size: 1rem; margin-bottom: 5px; }
-  .nav-card p { color: var(--muted); font-size: 0.85rem; }
-  .module {
-    background: var(--card); border-radius: 10px;
-    margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    overflow: hidden;
-  }
-  .module-header {
-    background: var(--primary); color: white; padding: 18px 25px;
-    cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center;
-  }
-  .module-header h2 { font-size: 1.4rem; }
-  .module-header .toggle { font-size: 1.5rem; transition: transform 0.3s; }
-  .module-content { padding: 25px; }
-  .module-content.collapsed { display: none; }
-  .concept-box {
-    background: #e3f2fd; border-left: 4px solid var(--primary);
-    padding: 15px 20px; margin: 15px 0; border-radius: 4px;
-  }
-  .concept-box h3 { color: var(--primary); margin-bottom: 10px; }
-  .key-point {
-    background: var(--highlight); padding: 8px 12px; border-radius: 4px;
-    font-weight: 600; display: inline-block; margin: 5px 5px 5px 0;
-  }
-  .example {
-    background: #f3e5f5; border-left: 4px solid #7b1fa2;
-    padding: 15px 20px; margin: 15px 0; border-radius: 4px;
-  }
-  .example h4 { color: #7b1fa2; margin-bottom: 8px; }
-  .warning {
-    background: var(--important); border-left: 4px solid var(--secondary);
-    padding: 12px 15px; margin: 15px 0; border-radius: 4px;
-  }
-  .warning strong { color: var(--secondary); }
-  .success-box {
-    background: var(--success); border-left: 4px solid var(--accent);
-    padding: 12px 15px; margin: 15px 0; border-radius: 4px;
-  }
-  .comparison-table {
-    width: 100%; border-collapse: collapse; margin: 20px 0;
-    background: white; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  }
-  .comparison-table th, .comparison-table td {
-    padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border);
-  }
-  .comparison-table th {
-    background: var(--primary); color: white; font-weight: 600;
-  }
-  .comparison-table tr:hover { background: #f5f5f5; }
-  .mnemonic {
-    background: linear-gradient(135deg, #fff9c4, #fff59d);
-    border: 2px dashed #f57f17; padding: 15px; border-radius: 8px;
-    text-align: center; margin: 20px 0;
-  }
-  .mnemonic .label {
-    font-size: 0.8rem; color: #f57f17; text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 5px;
-  }
-  .mnemonic .content { font-size: 1.2rem; font-weight: 700; }
-  .quiz {
-    background: #fff8e1; border: 1px solid #ffb300; border-radius: 8px;
-    padding: 20px; margin: 20px 0;
-  }
-  .quiz h4 { color: #e65100; margin-bottom: 12px; }
-  .quiz .question { font-weight: 600; margin-bottom: 12px; }
-  .quiz .options { display: flex; flex-direction: column; gap: 8px; }
-  .quiz .option {
-    background: white; border: 2px solid #e0e0e0; border-radius: 6px;
-    padding: 10px 15px; cursor: pointer; transition: all 0.2s;
-  }
-  .quiz .option:hover { border-color: #ffb300; background: #fff8e1; }
-  .quiz .option.correct { background: var(--success); border-color: var(--accent); }
-  .quiz .option.wrong { background: var(--important); border-color: var(--secondary); }
-  .quiz .feedback {
-    display: none; margin-top: 12px; padding: 12px;
-    background: white; border-radius: 6px;
-  }
-  .quiz .feedback.show { display: block; }
-  .tip-box {
-    background: #e8f5e9; border: 2px solid var(--accent);
-    border-radius: 8px; padding: 15px; margin: 20px 0;
-  }
-  .tip-box h4 { color: var(--accent); margin-bottom: 8px; }
-  .definition {
-    background: #fce4ec; padding: 12px 15px; border-radius: 6px;
-    margin: 10px 0; border-left: 3px solid #c2185b;
-  }
-  .definition .term { font-weight: 700; color: #c2185b; }
-  .timeline {
-    position: relative; padding-left: 30px; margin: 20px 0;
-  }
-  .timeline::before {
-    content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
-    width: 2px; background: var(--primary);
-  }
-  .timeline-event {
-    position: relative; margin-bottom: 20px; padding: 10px 15px;
-    background: white; border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  .timeline-event::before {
-    content: ''; position: absolute; left: -25px; top: 15px;
-    width: 12px; height: 12px; border-radius: 50%;
-    background: var(--primary); border: 2px solid white;
-  }
-  .timeline-event .year { font-weight: 700; color: var(--primary); }
-  .mind-map {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
-    margin: 20px 0;
-  }
-  .mind-map .center {
-    background: var(--primary); color: white; padding: 20px;
-    border-radius: 50%; width: 120px; height: 120px;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; font-weight: 700;
-  }
-  .mind-map .branch {
-    background: var(--card); border: 2px solid var(--primary);
-    padding: 12px 18px; border-radius: 20px;
-    font-size: 0.9rem;
-  }
-  .checklist {
-    background: white; padding: 15px 20px; border-radius: 6px;
-    margin: 15px 0;
-  }
-  .checklist label {
-    display: block; padding: 8px 0; cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .checklist input[type="checkbox"] { margin-right: 10px; }
-  .checklist label:last-child { border-bottom: none; }
-  .summary-card {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-radius: 10px; padding: 25px; margin: 25px 0;
-  }
-  .summary-card h2 { color: var(--primary); margin-bottom: 15px; }
-  .theory-ref-btn {
-    display: inline-block; background: var(--primary); color: white; padding: 14px 28px;
-    border-radius: 10px; cursor: pointer; font-size: 1.1rem; font-weight: 600;
-    text-align: center; margin: 20px 0; border: none; transition: all 0.3s;
-  }
-  .theory-ref-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13,71,161,0.3); }
-  .thesen-badge { font-size: 0.7rem; vertical-align: super; }
-  .theory-ref { display: none; }
-  .theory-ref.open { display: block; }
-  .theory-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px; margin: 20px 0;
-  }
-  .theory-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 18px; transition: all 0.2s;
-  }
-  .theory-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); border-color: var(--primary); }
-  .theory-card .tag {
-    display: inline-block; background: #e3f2fd; color: var(--primary); font-size: 0.7rem;
-    padding: 2px 8px; border-radius: 10px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.5px; margin-bottom: 6px;
-  }
-  .theory-card h4 { color: var(--primary); font-size: 1rem; margin-bottom: 4px; }
-  .theory-card .proponent { color: var(--muted); font-size: 0.8rem; margin-bottom: 6px; }
-  .theory-card p { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
-  .reveal { cursor: pointer; color: var(--primary); font-weight: 600; }
-  .reveal-content { display: none; margin-top: 10px; padding: 12px; background: #f5f5f5; border-radius: 6px; }
-  .tabs { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; }
-  .tab {
-    padding: 8px 16px; background: #e0e0e0; border-radius: 6px 6px 0 0;
-    cursor: pointer; font-size: 0.9rem;
-  }
-  .tab.active { background: var(--primary); color: white; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  @media (max-width: 600px) {
-    .hero h1 { font-size: 1.8rem; }
-    .nav-cards { grid-template-columns: 1fr 1fr; }
-  }
+.search-results-panel {
+  display: none;
+  background: var(--primary); color: white;
+  padding: 6px 20px; font-size: 0.82rem;
+  text-align: center;
+}
+.result-badge {
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  margin: 0 3px; font-size: 0.75rem; font-weight: 600;
+}
+.result-tight { background: #2e7d32; color: white; }
+.result-module { background: #1565c0; color: white; }
+.result-any { background: #6a1b9a; color: white; }
+.result-count { opacity: 0.7; font-size: 0.75rem; margin-left: 4px; }
 </style>
+
 </head>
 <body>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h2>📚 GH8 Guide</h2>
+    <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="section-label">Core Modules</li>
+    <li><a href="#m1">🔍 Module 1 — What is a Health System?</a></li>
+    <li><a href="#m2">📜 Module 2 — Historical Development</a></li>
+    <li><a href="#m3">🏛️ Module 3 — Health System Frameworks</a></li>
+    <li><a href="#m4">🩺 Module 4 — Service Delivery</a></li>
+    <li><a href="#m5">🏥 Module 5 — Prevention & Public Health</a></li>
+    <li><a href="#m6">📊 Module 6 — Performance Assessment</a></li>
+    <li><a href="#m7">⚖️ Module 7 — Governing Health Care</a></li>
+    <li><a href="#m8">🔄 Module 8 — Path Dependency & ACI</a></li>
+    <li><a href="#m9">💰 Module 9 — Political Economy</a></li>
+    <li class="section-label">Thesen Modules <span class="thesen-badge">📄</span></li>
+    <li><a href="#m11">🧩 Module 10 — Systems Theory <span class="thesen-badge">📄</span></a></li>
+    <li><a href="#m12">📈 Module 11 — Economics <span class="thesen-badge">📄</span></a></li>
+    <li><a href="#m10">🎓 Exam Preparation</a></li>
+    <li class="section-label">Reference</li>
+    <li><a href="#" onclick="event.preventDefault(); toggleTheoryRef();">📚 Theories & Frameworks <span class="thesen-badge">📄</span></a></li>
+  </ul>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 
 <div class="top-nav">
-  <h1>📚 GH 8 Mastery Learning Guide</h1>
+  <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+  <h1>📚 GH 8 Guide</h1>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Search modules..." oninput="searchModules()">
+    <input type="text" id="searchInput" placeholder="🔍 Search..." oninput="searchModules()">
     <span class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</span>
   </div>
   <div class="search-nav" id="searchNav">
@@ -281,6 +63,7 @@
     <span class="count" id="matchCount">0/0</span>
     <button onclick="nextMatch()">▶</button>
   </div>
+  <button class="dark-toggle" id="darkToggle" onclick="toggleDark()">🌙</button>
 </div>
 
 <header class="hero">
@@ -293,8 +76,9 @@
     <div class="meta-item">👨‍🏫 <strong>Prof. Dr. Kai Michelsen</strong></div>
   </div>
 </header>
+<div id="searchResultsPanel" class="search-results-panel"></div>
 
-<div class="container">
+<div class="main-content"><div class="container">
 
 
   
@@ -4754,350 +4538,10 @@
     <p style="margin-top: 6px; font-size: 0.85rem; color: #666; text-align:center;">📌 This guide is a living document. Use the search function (top of page) to find any concept instantly.</p>
   </div>
 
-</div> <!-- end container -->
+</div></div> <!-- end container + main-content -->
 
-<script>
-function toggleModule(id) {
-  var content = document.getElementById(id + '-content');
-  content.classList.toggle('collapsed');
-  var toggle = content.parentElement.querySelector('.toggle');
-  if (content.classList.contains('collapsed')) {
-    toggle.textContent = '\u25B6';
-  } else {
-    toggle.textContent = '\u25BC';
-  }
-  updateProgress();
-}
+<script src="script.js"></script>
 
-function checkAnswer(el, correct, questionId) {
-  var options = el.parentElement.querySelectorAll('.option');
-  for (var i = 0; i < options.length; i++) {
-    options[i].style.pointerEvents = 'none';
-  }
-  if (correct) {
-    el.classList.add('correct');
-  } else {
-    el.classList.add('wrong');
-  }
-  var feedback = document.getElementById(questionId + '-feedback');
-  if (feedback) {
-    feedback.classList.add('show');
-  }
-}
-
-window.onload = function() {
-  // Start with all modules collapsed except first
-  var modules = document.querySelectorAll('.module');
-  for (var i = 0; i < modules.length; i++) {
-    var content = modules[i].querySelector('.module-content');
-    if (i === 0) {
-      content.classList.remove('collapsed');
-    } else {
-      content.classList.add('collapsed');
-    }
-  }
-};
-
-var _searchMatches = [];
-var _searchCurrent = -1;
-var _searchQuery = '';
-
-function _sameSentence(text, terms) {
-  var sentences = text.split(/[.!?]\s+/);
-  for (var s = 0; s < sentences.length; s++) {
-    var allHere = true;
-    for (var t = 0; t < terms.length; t++) {
-      if (sentences[s].indexOf(terms[t]) === -1) { allHere = false; break; }
-    }
-    if (allHere) return true;
-  }
-  return false;
-}
-
-function searchModules() {
-  var q = document.getElementById('searchInput').value.toLowerCase().trim();
-  var terms = q ? q.split(/\s+/).filter(function(t) { return t.length > 0; }) : [];
-  var clearBtn = document.getElementById('clearBtn');
-  var searchNav = document.getElementById('searchNav');
-  clearBtn.style.display = q ? 'inline' : 'none';
-
-  var highlights = document.querySelectorAll('.search-highlight');
-  for (var h = 0; h < highlights.length; h++) {
-    var parent = highlights[h].parentNode;
-    parent.replaceChild(document.createTextNode(highlights[h].textContent), highlights[h]);
-    parent.normalize();
-  }
-  _searchMatches = [];
-  _searchCurrent = -1;
-  _searchQuery = q;
-
-  if (!q || terms.length === 0) {
-    var mods = document.querySelectorAll('.module');
-    for (var m = 0; m < mods.length; m++) { mods[m].style.display = ''; }
-    var noRes = document.getElementById('noSearchResults');
-    if (noRes) noRes.style.display = 'none';
-    searchNav.style.display = 'none';
-    return;
-  }
-
-  var multiTerm = terms.length > 1;
-  mods = document.querySelectorAll('.module');
-  var tightMatches = [];  // same sentence
-  var allMatches = [];    // same module, different sentences
-  var anyMatches = [];    // any term in module
-
-  for (var m = 0; m < mods.length; m++) {
-    var text = mods[m].textContent.toLowerCase();
-
-    if (multiTerm) {
-      var allInModule = true;
-      var anyInModule = false;
-      for (var ti = 0; ti < terms.length; ti++) {
-        var found = text.indexOf(terms[ti]) !== -1;
-        if (!found) allInModule = false;
-        if (found) anyInModule = true;
-      }
-
-      if (allInModule) {
-        if (_sameSentence(text, terms)) {
-          tightMatches.push(m);
-        } else {
-          allMatches.push(m);
-        }
-      } else if (anyInModule) {
-        anyMatches.push(m);
-      }
-    } else {
-      if (text.indexOf(terms[0]) !== -1) {
-        tightMatches.push(m);
-      }
-    }
-  }
-
-  var orderedMods = tightMatches.concat(allMatches, multiTerm ? anyMatches : []);
-  var shown = {};
-  for (var i = 0; i < orderedMods.length; i++) shown[orderedMods[i]] = true;
-
-  for (var m = 0; m < mods.length; m++) {
-    if (shown[m]) {
-      mods[m].style.display = '';
-      var content = mods[m].querySelector('.module-content');
-      if (content) content.classList.remove('collapsed');
-      var toggle = mods[m].querySelector('.toggle');
-      if (toggle) toggle.textContent = '\u25BC';
-
-      var mc = mods[m].querySelector('.module-content');
-      var h2 = mods[m].querySelector('.module-header h2');
-      var headerText = h2 ? h2.textContent.toLowerCase() : '';
-      for (var ti = 0; ti < terms.length; ti++) {
-        if (headerText.indexOf(terms[ti]) !== -1 && h2) {
-          _collectMatches(h2, terms[ti]);
-        }
-        if (mc) _collectMatches(mc, terms[ti]);
-      }
-    } else {
-      mods[m].style.display = 'none';
-    }
-  }
-
-  var found = orderedMods.length;
-  var tightCount = tightMatches.length;
-  var allCount = allMatches.length;
-  var anyCount = anyMatches.length;
-
-  _applyHighlights(q);
-
-  var noRes = document.getElementById('noSearchResults');
-  if (found === 0) {
-    if (!noRes) {
-      noRes = document.createElement('div');
-      noRes.id = 'noSearchResults';
-      noRes.className = 'no-search-results';
-      noRes.textContent = 'No results found for "' + q + '"';
-      document.querySelector('.container').appendChild(noRes);
-    } else {
-      noRes.style.display = 'block';
-      noRes.textContent = 'No results found for "' + q + '"';
-    }
-    searchNav.style.display = 'none';
-  } else {
-    if (noRes) noRes.style.display = 'none';
-    var info = document.getElementById('searchInfo');
-    if (multiTerm && (tightCount > 0 || allCount > 0 || anyCount > 0)) {
-      if (!info) {
-        info = document.createElement('div');
-        info.id = 'searchInfo';
-        info.style.cssText = 'text-align:center; font-size:0.85rem; color:#666; margin:4px 0;';
-        var container = document.querySelector('.container');
-        container.insertBefore(info, container.firstChild);
-      }
-      var parts = [];
-      if (tightCount > 0) parts.push(tightCount + ' with both in same sentence');
-      if (allCount > 0) parts.push(allCount + ' in same module');
-      if (anyCount > 0) parts.push(anyCount + ' with some terms');
-      info.textContent = '\uD83D\uDD0D ' + parts.join(' \u00B7 ');
-      info.style.display = 'block';
-    } else {
-      if (info) info.style.display = 'none';
-    }
-    if (_searchMatches.length > 1) {
-      searchNav.style.display = 'flex';
-    } else {
-      searchNav.style.display = 'none';
-    }
-    if (_searchMatches.length > 0) {
-      _searchCurrent = 0;
-      _scrollToMatch(0);
-      _updateMatchCount();
-    }
-  }
-}
-
-function _collectMatches(el, q) {
-  var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-  var nodes = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  for (var n = 0; n < nodes.length; n++) {
-    var node = nodes[n];
-    var text = node.textContent;
-    var lower = text.toLowerCase();
-    var idx = lower.indexOf(q);
-    while (idx !== -1) {
-      _searchMatches.push({ node: node, start: idx, len: q.length });
-      idx = lower.indexOf(q, idx + q.length);
-    }
-  }
-}
-
-function _applyHighlights(q) {
-  if (!_searchMatches.length) return;
-  // Sort in reverse document order so we don't invalidate offsets
-  var sorted = [];
-  for (var i = 0; i < _searchMatches.length; i++) sorted.push(i);
-  sorted.sort(function(a, b) {
-    var na = _searchMatches[a].node;
-    var nb = _searchMatches[b].node;
-    if (na === nb) return _searchMatches[b].start - _searchMatches[a].start;
-    var posA = _nodePosition(na);
-    var posB = _nodePosition(nb);
-    return posB - posA;
-  });
-  for (var s = 0; s < sorted.length; s++) {
-    var m = _searchMatches[sorted[s]];
-    var text = m.node.textContent;
-    var span = document.createElement('span');
-    span.className = 'search-highlight';
-    span.textContent = text.substring(m.start, m.start + m.len);
-    var after = document.createTextNode(text.substring(m.start + m.len));
-    var before = text.substring(0, m.start);
-    var frag = document.createDocumentFragment();
-    if (before) frag.appendChild(document.createTextNode(before));
-    frag.appendChild(span);
-    if (after) frag.appendChild(after);
-    m.node.parentNode.replaceChild(frag, m.node);
-    // Update reference to the span
-    _searchMatches[sorted[s]].span = span;
-  }
-}
-
-function _nodePosition(node) {
-  var pos = 0;
-  while (node) {
-    pos++;
-    node = node.previousSibling || node.parentNode;
-    if (node && node.classList && (node.classList.contains('module') || node.classList.contains('module-header') || node.classList.contains('module-content'))) break;
-  }
-  return pos;
-}
-
-function _scrollToMatch(idx) {
-  if (idx < 0 || idx >= _searchMatches.length) return;
-  var m = _searchMatches[idx];
-  var el = m.span;
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-  // Update active highlight
-  var allSpans = document.querySelectorAll('.search-highlight');
-  for (var i = 0; i < allSpans.length; i++) {
-    allSpans[i].classList.remove('active');
-  }
-  if (m.span) m.span.classList.add('active');
-}
-
-function _updateMatchCount() {
-  document.getElementById('matchCount').textContent = (_searchCurrent + 1) + '/' + _searchMatches.length;
-}
-
-function nextMatch() {
-  if (_searchMatches.length === 0) return;
-  _searchCurrent = (_searchCurrent + 1) % _searchMatches.length;
-  _scrollToMatch(_searchCurrent);
-  _updateMatchCount();
-}
-
-function prevMatch() {
-  if (_searchMatches.length === 0) return;
-  _searchCurrent = (_searchCurrent - 1 + _searchMatches.length) % _searchMatches.length;
-  _scrollToMatch(_searchCurrent);
-  _updateMatchCount();
-}
-
-function highlightText(el, q) {
-  var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-  var nodes = [];
-  while (walker.nextNode()) nodes.push(walker.currentNode);
-  for (var n = 0; n < nodes.length; n++) {
-    var node = nodes[n];
-    var idx = node.textContent.toLowerCase().indexOf(q);
-    if (idx === -1) continue;
-    var span = document.createElement('span');
-    span.className = 'search-highlight';
-    span.textContent = node.textContent.substring(idx, idx + q.length);
-    var rest = node.textContent.substring(idx + q.length);
-    var before = node.textContent.substring(0, idx);
-    var frag = document.createDocumentFragment();
-    if (before) frag.appendChild(document.createTextNode(before));
-    frag.appendChild(span);
-    if (rest) frag.appendChild(document.createTextNode(rest));
-    node.parentNode.replaceChild(frag, node);
-  }
-}
-
-function highlightInElement(el, q) {
-  // highlight only in non-header, non-script parts
-  var children = el.querySelectorAll(':scope > *');
-  for (var c = 0; c < children.length; c++) {
-    var child = children[c];
-    if (child.classList && (child.classList.contains('module-header') || child.tagName === 'SCRIPT')) continue;
-    highlightText(child, q);
-  }
-}
-
-function switchTab(tabId, el) {
-  var parent = el.parentElement;
-  var tabs = parent.querySelectorAll('.tab');
-  for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
-  el.classList.add('active');
-  var contents = parent.parentElement.querySelectorAll('.tab-content');
-  for (var i = 0; i < contents.length; i++) { contents[i].classList.remove('active'); }
-  document.getElementById(tabId).classList.add('active');
-}
-
-function toggleTheoryRef() {
-  var ref = document.getElementById('theoryRef');
-  ref.classList.toggle('open');
-  if (ref.classList.contains('open')) {
-    ref.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  searchModules();
-  document.getElementById('searchInput').focus();
-}
-</script>
 
 </body>
 </html>
