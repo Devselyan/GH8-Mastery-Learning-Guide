@@ -27,23 +27,24 @@
 <div class="sidebar" id="sidebar">
   <div class="sidebar-header">
     <h2>📚 GH8 Guide</h2>
+    <button class="sidebar-pin" onclick="toggleSidebar()" title="Toggle sidebar">📌</button>
     <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
   </div>
   <ul class="sidebar-nav">
     <li class="section-label">Core Modules</li>
-    <li><a href="#m1">🔍 Module 1 — What is a Health System?</a></li>
-    <li><a href="#m2">📜 Module 2 — Historical Development</a></li>
-    <li><a href="#m3">🏛️ Module 3 — Health System Frameworks</a></li>
-    <li><a href="#m4">🩺 Module 4 — Service Delivery</a></li>
-    <li><a href="#m5">🏥 Module 5 — Prevention & Public Health</a></li>
-    <li><a href="#m6">📊 Module 6 — Performance Assessment</a></li>
-    <li><a href="#m7">⚖️ Module 7 — Governing Health Care</a></li>
-    <li><a href="#m8">🔄 Module 8 — Path Dependency & ACI</a></li>
-    <li><a href="#m9">💰 Module 9 — Political Economy</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m1')">🔍 Module 1 — What is a Health System?</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m2')">📜 Module 2 — Historical Development</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m3')">🏛️ Module 3 — Health System Frameworks</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m4')">🩺 Module 4 — Service Delivery</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m5')">🏥 Module 5 — Prevention & Public Health</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m6')">📊 Module 6 — Performance Assessment</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m7')">⚖️ Module 7 — Governing Health Care</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m8')">🔄 Module 8 — Path Dependency & ACI</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m9')">💰 Module 9 — Political Economy</a></li>
     <li class="section-label">Thesen Modules <span class="thesen-badge">📄</span></li>
-    <li><a href="#m11">🧩 Module 10 — Systems Theory <span class="thesen-badge">📄</span></a></li>
-    <li><a href="#m12">📈 Module 11 — Economics <span class="thesen-badge">📄</span></a></li>
-    <li><a href="#m10">🎓 Exam Preparation</a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m11')">🧩 Module 10 — Systems Theory <span class="thesen-badge">📄</span></a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m12')">📈 Module 11 — Economics <span class="thesen-badge">📄</span></a></li>
+    <li><a href="#" onclick="event.preventDefault(); focusModule('m10')">🎓 Exam Preparation</a></li>
     <li class="section-label">Reference</li>
     <li><a href="#" onclick="event.preventDefault(); toggleTheoryRef();">📚 Theories & Frameworks <span class="thesen-badge">📄</span></a></li>
   </ul>
@@ -78,6 +79,7 @@
 </header>
 <div id="searchResultsPanel" class="search-results-panel"></div>
 
+<div class="focus-banner" id="focusBanner"></div>
 <div class="container">
 
   

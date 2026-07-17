@@ -353,6 +353,27 @@ body.dark .reveal-content { background: #2a2a2a; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
+/* Focus mode banner */
+.focus-banner {
+  display: none; text-align: center; padding: 6px 16px;
+  background: var(--accent); color: white; font-size: 0.82rem;
+}
+.focus-banner a {
+  color: white; font-weight: 700; text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Sidebar collapsed state (desktop) */
+.sidebar.collapsed { transform: translateX(-100%); }
+.sidebar.collapsed + .sidebar-overlay { display: block; }
+body.sidebar-hidden .main-content { margin-left: 0; }
+.sidebar-pin {
+  background: none; border: none; color: var(--sidebar-text);
+  cursor: pointer; font-size: 0.9rem; opacity: 0.5; padding: 4px;
+  margin-left: auto;
+}
+.sidebar-pin:hover { opacity: 1; }
+
 /* Mobile sidebar */
 .sidebar-overlay {
   display: none; position: fixed; inset: 0; z-index: 998;

@@ -28,8 +28,52 @@ function checkAnswer(el, correct, questionId) {
 
 function updateProgress() {}
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
+  var sb = document.getElementById('sidebar');
+  sb.classList.toggle('open');
+  sb.classList.toggle('collapsed');
   document.getElementById('sidebarOverlay').classList.toggle('show');
+  document.body.classList.toggle('sidebar-hidden');
+}
+
+function focusModule(id) {
+  var mods = document.querySelectorAll('.module');
+  for (var i = 0; i < mods.length; i++) {
+    mods[i].style.display = mods[i].id === id ? '' : 'none';
+    if (mods[i].id === id) {
+      var content = mods[i].querySelector('.module-content');
+      if (content) content.classList.remove('collapsed');
+      var toggle = mods[i].querySelector('.toggle');
+      if (toggle) toggle.textContent = '\u25BC';
+    }
+  }
+  // Close sidebar on mobile
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+  }
+  // Show "show all" banner
+  var banner = document.getElementById('focusBanner');
+  banner.style.display = 'block';
+  var label = document.querySelector('.module[id="' + id + '"] .module-header h2');
+  banner.innerHTML = 'Showing: <strong>' + (label ? label.textContent : id) + '</strong> &middot; <a href="#" onclick="event.preventDefault(); showAllModules()">Show all modules</a>';
+  // Scroll to the module
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Update sidebar active
+  var links = document.querySelectorAll('.sidebar-nav a');
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.toggle('active', links[i].getAttribute('onclick') && links[i].getAttribute('onclick').indexOf(id) !== -1);
+  }
+}
+
+function showAllModules() {
+  var mods = document.querySelectorAll('.module');
+  for (var i = 0; i < mods.length; i++) {
+    mods[i].style.display = '';
+  }
+  document.getElementById('focusBanner').style.display = 'none';
+  // Clear sidebar active
+  var links = document.querySelectorAll('.sidebar-nav a');
+  for (var i = 0; i < links.length; i++) links[i].classList.remove('active');
 }
 
 var _searchMatches = [];
