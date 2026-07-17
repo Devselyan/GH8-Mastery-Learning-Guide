@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GH 10: Evidence-Informed Full Summary</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border-color: #334155;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, #a78bfa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            border-left: 4px solid var(--accent-purple);
+            padding-left: 15px;
+            margin: 40px 0 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+        }
+
+        .summary-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .deadline-box {
+            border: 1px solid var(--warning);
+            background-color: rgba(245, 158, 11, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+        .picos-pill {
+            display: inline-block;
+            background: #0f172a;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-blue);
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        .picos-letter { color: var(--accent-blue); font-size: 1.2rem; margin-right: 8px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        th { color: var(--accent-blue); }
+
+        b { color: var(--accent-purple); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GH 10: Evidence-Informed Decision Making</h1>
+
+        <div class="deadline-box">
+            <h3 style="margin-top:0; color: var(--warning);">⚠️ Term Paper Deadlines</h3>
+            <ul>
+                <li><b>15th May:</b> Topic Selection & Moodle Announcement</li>
+                <li><b>1st July:</b> Mandatory Upload of Interim Results (PICOS & Search Strategy)</li>
+                <li><b>15th August:</b> Final Submission (Max 12 pages + Systematic Review + Primary Study)</li>
+            </ul>
+        </div>
+
+        <div class="section-header">1. The Research Funnel</div>
+        <div class="summary-card">
+            <p>Evidence-Informed Decision Making (EiDM) is the process of using the best available research to make healthcare choices. We select literature using a two-step approach:</p>
+            <div class="grid">
+                <div>
+                    <b>Step 1: Ti/Ab Screening</b>
+                    <p>Quickly reading Titles and Abstracts to discard irrelevant studies.</p>
+                </div>
+                <div>
+                    <b>Step 2: Full-Text Screening</b>
+                    <p>Reading the entire paper to ensure it meets your specific criteria.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">2. The PICOS Framework</div>
+        <div class="summary-card">
+            <p>Every research question must be structured using PICOS to ensure it is precise and searchable.</p>
+            <div class="picos-pill"><span class="picos-letter">P</span> Population</div>
+            <div class="picos-pill"><span class="picos-letter">I</span> Intervention</div>
+            <div class="picos-pill"><span class="picos-letter">C</span> Comparator</div>
+            <div class="picos-pill"><span class="picos-letter">O</span> Outcome</div>
+            <div class="picos-pill"><span class="picos-letter">S</span> Study Type</div>
+        </div>
+
+        <div class="section-header">3. Prioritizing Endpoints (GRADE)</div>
+        <div class="summary-card">
+            <p>Outcomes (Endpoints) are ranked 1 to 9 based on their importance for decision-making from the <b>patient's perspective</b>.</p>
+            <table>
+                <tr><th>Rank</th><th>Category</th><th>Examples</th></tr>
+                <tr><td>7-9</td><td><b>Essential</b></td><td>Mortality, major illness, quality of life.</td></tr>
+                <tr><td>4-6</td><td><b>Important</b></td><td>Side effects, minor symptoms, hospital stay duration.</td></tr>
+                <tr><td>1-3</td><td><b>Not Important</b></td><td>Laboratory markers (HbA1c, Cortisol), surrogate outcomes.</td></tr>
+            </table>
+        </div>
+
+        <div class="section-header">4. Case Study: The "Running Problem"</div>
+        <div class="summary-card">
+            <p><b>Study:</b> Roessler et al. 2017 (Exercise for Alcohol Use Disorder)</p>
+            <ul>
+                <li><b>Design:</b> Randomized Controlled Trial (RCT).</li>
+                <li><b>Finding:</b> Simply *assigning* people to exercise had no effect (Intention-to-Treat).</li>
+                <li><b>Finding:</b> People who *actually* exercised showed a massive reduction in drinking (Dose-Response).</li>
+                <li><b>Lesson:</b> Evidence must distinguish between the "Offer" of treatment and the "Action" of treatment.</li>
+            </ul>
+        </div>
+
+        <div class="section-header">5. Critical Appraisal Tools</div>
+        <div class="summary-card">
+            <div class="grid">
+                <div>
+                    <b>CONSORT Checklist</b>
+                    <p>Used to ensure <b>Randomized Controlled Trials (RCTs)</b> are reported transparently. It checks if the "Fair Test" was actually fair.</p>
+                </div>
+                <div>
+                    <b>AMSTAR Tool</b>
+                    <p>Used specifically to judge the quality of <b>Systematic Reviews</b>.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GH 9b — Exercise Bank | Quantitative Research Methods</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1565c0;
+    --secondary: #c62828;
+    --accent: #2e7d32;
+    --orange: #ef6c00;
+    --purple: #6a1b9a;
+    --teal: #00897b;
+    --bg: #f5f5f5;
+    --text: #212121;
+    --muted: #616161;
+    --card: #ffffff;
+    --border: #e0e0e0;
+    --highlight: #fff59d;
+    --important: #ffcdd2;
+    --success: #c8e6c9;
+    --info: #e1f5fe;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .top-bar {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--primary); color: white;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .top-bar h1 { font-size: 1.2rem; display: inline-block; }
+  .top-bar .subtitle { float: right; font-size: 0.85rem; opacity: 0.9; padding-top: 4px; }
+  .hero {
+    background: linear-gradient(135deg, #00897b, #26a69a);
+    color: white; padding: 40px 20px; text-align: center;
+  }
+  .hero h1 { font-size: 2.2rem; margin-bottom: 8px; }
+  .hero p { font-size: 1.05rem; opacity: 0.95; max-width: 700px; margin: 0 auto; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+  .filters {
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    margin: 20px 0; padding: 15px; background: var(--card);
+    border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .filters select, .filters button {
+    padding: 8px 16px; border: 2px solid var(--border);
+    border-radius: 6px; font-size: 0.9rem; background: white;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filters select:hover, .filters button:hover { border-color: var(--primary); }
+  .filters button {
+    background: var(--primary); color: white; border-color: var(--primary);
+    font-weight: 600;
+  }
+  .filters button:hover { background: #0d47a1; border-color: #0d47a1; }
+
+  .section-header {
+    color: var(--primary); font-size: 1.3rem; margin: 30px 0 15px;
+    padding-bottom: 8px; border-bottom: 3px solid var(--primary);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .section-header .badge {
+    font-size: 0.75rem; background: var(--primary); color: white;
+    padding: 3px 10px; border-radius: 12px;
+  }
+
+  .exam-tag {
+    display: inline-block; background: var(--secondary); color: #fff;
+    padding: 2px 10px; border-radius: 10px; font-size: 0.7rem;
+    font-weight: 700; margin-left: 8px; text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .question-card {
+    background: var(--card); border-radius: 10px;
+    margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden; border-left: 5px solid var(--primary);
+  }
+  .question-card.mcq { border-left-color: var(--accent); }
+  .question-card.short { border-left-color: var(--purple); }
+  .question-card.case { border-left-color: var(--orange); }
+  .question-card.calc { border-left-color: var(--teal); }
+  .question-card.tf { border-left-color: #78909c; }
+
+  .q-header {
+    padding: 15px 20px; background: #fafafa;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .q-header .q-num { font-weight: 700; color: var(--primary); }
+  .q-header .q-type {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 2px 10px; border-radius: 10px; font-weight: 600;
+  }
+  .q-type.mcq { background: #e8f5e9; color: var(--accent); }
+  .q-type.short { background: #f3e5f5; color: var(--purple); }
+  .q-type.case { background: #fff3e0; color: var(--orange); }
+  .q-type.calc { background: #e0f2f1; color: var(--teal); }
+  .q-type.tf { background: #eceff1; color: #546e7a; }
+
+  .q-body { padding: 20px; }
+  .q-body .scenario {
+    background: #fff8e1; padding: 12px 15px; border-radius: 6px;
+    margin-bottom: 15px; border-left: 3px solid #ffb300;
+    font-size: 0.95rem;
+  }
+  .q-body .scenario strong { color: #e65100; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+  .options label {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 15px; border: 2px solid #e0e0e0;
+    border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    font-weight: 400;
+  }
+  .options label:hover { border-color: var(--primary); background: #f5f5f5; }
+  .options input[type="radio"], .options input[type="checkbox"] {
+    margin-top: 5px; flex-shrink: 0;
+  }
+
+  .show-answer-btn {
+    margin-top: 12px; padding: 8px 20px; background: var(--primary);
+    color: white; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; transition: background 0.2s;
+  }
+  .show-answer-btn:hover { background: #0d47a1; }
+  .show-answer-btn:disabled { background: #90a4ae; cursor: default; }
+
+  .answer-box {
+    display: none; margin-top: 15px; padding: 18px 20px;
+    background: #f0f8f0; border-left: 4px solid var(--accent);
+    border-radius: 6px;
+  }
+  .answer-box .correct-label {
+    color: var(--accent); font-weight: 700; font-size: 0.9rem;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .answer-box .explanation { margin-top: 8px; }
+  .answer-box .explanation ul { margin: 6px 0 0 18px; }
+  .answer-box .explanation li { margin-bottom: 4px; }
+
+  .reset-btn {
+    background: var(--card); border: 2px solid var(--border);
+    padding: 8px 20px; border-radius: 6px; cursor: pointer;
+    font-size: 0.85rem; transition: all 0.2s; margin-left: 8px;
+  }
+  .reset-btn:hover { border-color: var(--secondary); color: var(--secondary); }
+
+  .stats-bar {
+    background: var(--card); border-radius: 10px; padding: 15px 20px;
+    margin: 20px 0; display: flex; gap: 25px; flex-wrap: wrap;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .stats-bar .stat { text-align: center; }
+  .stats-bar .stat .num { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+  .stats-bar .stat .label { font-size: 0.8rem; color: var(--muted); }
+
+  .footer {
+    text-align: center; padding: 30px; color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.6rem; }
+    .filters { flex-direction: column; }
+    .filters select, .filters button { width: 100%; }
+    .top-bar .subtitle { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>GH 9b Exercise Bank</h1>
+  <span class="subtitle">Quantitative Research Methods</span>
+</div>
+
+<header class="hero">
+  <h1>Exercise Bank</h1>
+  <p>Practice questions covering all 12 modules. Use the filters to focus on specific topics or question types. Click any question to reveal the answer.</p>
+</header>
+
+<div class="container">
+
+  <div class="stats-bar" id="statsBar">
+    <div class="stat"><div class="num" id="totalQ">0</div><div class="label">Total Questions</div></div>
+    <div class="stat"><div class="num" id="answeredQ">0</div><div class="label">Answered</div></div>
+    <div class="stat"><div class="num" id="correctQ">0</div><div class="label">Correct</div></div>
+  </div>
+
+  <div class="filters">
+    <select id="moduleFilter" onchange="filterQuestions()">
+      <option value="all">All Modules</option>
+      <option value="m1">Module 1: Basics &amp; Prevalence/Incidence</option>
+      <option value="m2">Module 2: Study Designs</option>
+      <option value="m3">Module 3: Effect Measures</option>
+      <option value="m4">Module 4: Bias &amp; Confounding</option>
+      <option value="m5">Module 5: Statistical Concepts</option>
+      <option value="m6">Module 6: CI &amp; P-values</option>
+      <option value="m7">Module 7: Regression</option>
+      <option value="m9">Module 9: cRCT Design Variants</option>
+      <option value="m10">Module 10: ICC &amp; Design Effect</option>
+      <option value="m11">Module 11: Survival Analysis</option>
+      <option value="m12">Module 12: Sample Size Planning</option>
+    </select>
+    <select id="typeFilter" onchange="filterQuestions()">
+      <option value="all">All Types</option>
+      <option value="mcq">Multiple Choice</option>
+      <option value="tf">True / False</option>
+      <option value="short">Short Answer</option>
+      <option value="case">Case Study</option>
+    </select>
+    <button onclick="revealAll()">Reveal All Answers</button>
+    <button class="reset-btn" onclick="resetAll()">Reset All</button>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 1: BASICS & PREVALENCE/INCIDENCE                       -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m1">
+    <span>Module 1: Basics — Prevalence vs. Incidence</span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m1" data-type="mcq" data-id="1">
+    <div class="q-header">
+      <span class="q-num">Question 1</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which of the following BEST describes <strong>prevalence</strong>?</p>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"> The number of NEW cases of a disease occurring over a specified time period</label>
+        <label><input type="radio" name="q1" value="b"> The total number of EXISTING cases of a disease at a specific point in time</label>
+        <label><input type="radio" name="q1" value="c"> The speed at which a disease spreads through a population</label>
+        <label><input type="radio" name="q1" value="d"> The number of deaths caused by a disease</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a1')">Check Answer</button>
+      <div class="answer-box" id="a1">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Prevalence measures all <strong>existing</strong> cases (old + new) at one point in time — a "snapshot" of disease burden. Incidence (option A) tracks only <strong>new</strong> cases over time.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m1" data-type="mcq" data-id="2">
+    <div class="q-header">
+      <span class="q-num">Question 2</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which study design is BEST suited for measuring <strong>incidence</strong>?</p>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"> Cross-sectional study</label>
+        <label><input type="radio" name="q2" value="b"> Case-control study</label>
+        <label><input type="radio" name="q2" value="c"> Cohort study</label>
+        <label><input type="radio" name="q2" value="d"> Ecological study</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a2')">Check Answer</button>
+      <div class="answer-box" id="a2">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          Incidence measures <strong>new cases over time</strong>, which requires following a population forward. Only cohort (and experimental) studies can do this. Cross-sectional studies measure prevalence; case-control studies calculate odds ratios.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m1" data-type="tf" data-id="3">
+    <div class="q-header">
+      <span class="q-num">Question 3</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>Prevalence can increase even if incidence stays the same, because people with the disease are living longer.</p>
+      <div class="options">
+        <label><input type="radio" name="q3" value="true"> True</label>
+        <label><input type="radio" name="q3" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a3')">Check Answer</button>
+      <div class="answer-box" id="a3">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          If people with a disease live longer (due to better treatment), existing cases accumulate, raising prevalence even if the rate of new cases (incidence) is unchanged. Prevalence and incidence are related — prevalence depends on both how many new cases occur (incidence) and how long people live with the disease (duration).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m1" data-type="short" data-id="4">
+    <div class="q-header">
+      <span class="q-num">Question 4</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>In a town of 10,000 people, 500 have diabetes on January 1st. During the year, 200 new cases are diagnosed. Explain the <strong>conceptual difference</strong> between prevalence and incidence using this example. Why would the denominator for incidence differ from the denominator for prevalence?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a4')">Check Answer</button>
+      <div class="answer-box" id="a4">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Prevalence</strong> is a snapshot — all existing cases at a point in time (the 500 people with diabetes on Jan 1). It describes the total disease burden in the population.</p>
+          <p><strong>Incidence</strong> tracks <strong>new</strong> cases developing over a period (the 200 newly diagnosed during the year). It measures the rate at which healthy people become ill.</p>
+          <p>The denominator differs because incidence only concerns the <strong>population at risk</strong> — people who do NOT already have the disease and could potentially develop it. The 500 people who already have diabetes on Jan 1 cannot develop it again, so they are excluded from the incidence denominator. Prevalence includes the whole population because it counts all cases regardless of when they started.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m1" data-type="case" data-id="5">
+    <div class="q-header">
+      <span class="q-num">Question 5</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case: Period Poverty in India (Alam et al. 2024)</strong><br>
+        Researchers used the National Family Health Survey-5 to determine the percentage of women experiencing period poverty at the time of the survey.
+      </div>
+      <p>Does this study measure <strong>prevalence</strong> or <strong>incidence</strong>? Explain why.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a5')">Check Answer</button>
+      <div class="answer-box" id="a5">
+        <div class="correct-label">Answer</div>
+        <div class="explanation">
+          <p>This measures <strong>prevalence</strong>.</p>
+          <ul>
+            <li>The NHFS-5 is a cross-sectional survey — it captures data at <strong>one point in time</strong>.</li>
+            <li>It asks about <strong>current</strong> menstruation-related challenges, not new cases developing over time.</li>
+            <li>The result is a <strong>proportion</strong> of women experiencing period poverty at that moment, which is a prevalence estimate.</li>
+            <li>To measure incidence, researchers would need to follow women over time and track <strong>new onset</strong> of period poverty.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m1" data-type="tf" data-id="51">
+    <div class="q-header">
+      <span class="q-num">Question 6</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>Prevalence is useful for understanding the burden of chronic diseases in a population, while incidence is more useful for studying disease aetiology.</p>
+      <div class="options">
+        <label><input type="radio" name="q51" value="true"> True</label>
+        <label><input type="radio" name="q51" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a51')">Check Answer</button>
+      <div class="answer-box" id="a51">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          Prevalence is a snapshot of existing cases — ideal for planning healthcare resources for chronic conditions. Incidence tracks new cases over time — better for identifying risk factors and causes because it captures the rate at which healthy people become ill.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m1" data-type="short" data-id="52">
+    <div class="q-header">
+      <span class="q-num">Question 7</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>A health minister needs to decide how many diabetes clinics to build. Should she look at prevalence data or incidence data? Explain why.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a52')">Check Answer</button>
+      <div class="answer-box" id="a52">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          She should look at <strong>prevalence</strong> — the total number of existing diabetes cases in the population. Prevalence tells her how many people currently need care, which determines the required capacity of clinics. Incidence would tell her how many new cases develop each year, which is useful for forecasting future demand but doesn't capture the existing treatment burden.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m1" data-type="short" data-id="53">
+    <div class="q-header">
+      <span class="q-num">Question 8</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Why can't cross-sectional studies measure incidence? What study design would you need instead?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a53')">Check Answer</button>
+      <div class="answer-box" id="a53">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Cross-sectional studies measure exposure and outcome at a <strong>single point in time</strong>. Incidence requires tracking people forward over time to observe when new cases develop, which cross-sectional designs cannot do because they lack a time dimension. To measure incidence, you need a <strong>cohort study</strong> (or experimental study) that follows a disease-free population forward and records new cases as they occur.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m1" data-type="mcq" data-id="54">
+    <div class="q-header">
+      <span class="q-num">Question 9</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which scenario would cause prevalence to increase <strong>without</strong> a change in incidence?</p>
+      <div class="options">
+        <label><input type="radio" name="q54" value="a"> A new environmental toxin increases the rate of new lung cancer cases</label>
+        <label><input type="radio" name="q54" value="b"> A new treatment extends the survival time of people with a chronic disease</label>
+        <label><input type="radio" name="q54" value="c"> A vaccination campaign reduces the number of new infections</label>
+        <label><input type="radio" name="q54" value="d"> A health education programme reduces risk behaviour</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a54')">Check Answer</button>
+      <div class="answer-box" id="a54">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          If people live longer with a disease (better treatment), existing cases accumulate over time, raising prevalence even if the rate of new cases (incidence) stays the same. Options A increases incidence. Options C and D decrease incidence — both would eventually lower prevalence.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m1" data-type="mcq" data-id="55">
+    <div class="q-header">
+      <span class="q-num">Question 10</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A study recruits 5,000 cancer-free adults and follows them for 15 years to see who develops cancer. Which measure can this study directly estimate?</p>
+      <div class="options">
+        <label><input type="radio" name="q55" value="a"> Prevalence of cancer at baseline</label>
+        <label><input type="radio" name="q55" value="b"> Cumulative incidence of cancer over 15 years</label>
+        <label><input type="radio" name="q55" value="c"> Point prevalence of cancer at the end of follow-up</label>
+        <label><input type="radio" name="q55" value="d"> Prevalence odds ratio</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a55')">Check Answer</button>
+      <div class="answer-box" id="a55">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The study starts with a disease-free cohort and follows them forward, recording <strong>new</strong> cases over 15 years — this is a cohort study that directly measures <strong>cumulative incidence</strong>. Prevalence at baseline would be 0 (all were cancer-free by design). Point prevalence at the end would be confounded by deaths and loss to follow-up.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 2: STUDY DESIGNS                                       -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m2">
+    <span>Module 2: Study Designs <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m2" data-type="mcq" data-id="6">
+    <div class="q-header">
+      <span class="q-num">Question 6</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A study identifies 200 people who exercise regularly and 200 who do not, then follows both groups for 10 years to see who develops heart disease. What study design is this?</p>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"> Cross-sectional</label>
+        <label><input type="radio" name="q6" value="b"> Case-control</label>
+        <label><input type="radio" name="q6" value="c"> Cohort</label>
+        <label><input type="radio" name="q6" value="d"> Randomized controlled trial</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a6')">Check Answer</button>
+      <div class="answer-box" id="a6">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          Starting with <strong>exposure status</strong> (exercisers vs. non-exercisers) and following <strong>forward in time</strong> to see who develops the outcome = <strong>cohort study</strong>. The key features are: exposure-based grouping + prospective follow-up.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m2" data-type="mcq" data-id="7">
+    <div class="q-header">
+      <span class="q-num">Question 7</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Which measure is the PRIMARY or ONLY measure possible in a case-control study?</p>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"> Relative Risk (RR)</label>
+        <label><input type="radio" name="q7" value="b"> Prevalence</label>
+        <label><input type="radio" name="q7" value="c"> Odds Ratio (OR)</label>
+        <label><input type="radio" name="q7" value="d"> Attributable Risk (AR)</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a7')">Check Answer</button>
+      <div class="answer-box" id="a7">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          In case-control studies, you select based on <strong>disease status</strong> (cases vs. controls), so you cannot calculate incidence or risk directly. The <strong>Odds Ratio</strong> is the only valid ratio measure. For rare diseases, the OR approximates the RR — but this is an approximation, not a direct calculation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m2" data-type="tf" data-id="8">
+    <div class="q-header">
+      <span class="q-num">Question 8</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>A cross-sectional study can establish causality because it measures exposure and outcome at the same point in time.</p>
+      <div class="options">
+        <label><input type="radio" name="q8" value="true"> True</label>
+        <label><input type="radio" name="q8" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a8')">Check Answer</button>
+      <div class="answer-box" id="a8">
+        <div class="correct-label">Correct Answer: False</div>
+        <div class="explanation">
+          Cross-sectional studies suffer from <strong>temporal ambiguity</strong> — because exposure and outcome are measured simultaneously, you cannot determine which came first. This is the key limitation that prevents establishing causality.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m2" data-type="short" data-id="9">
+    <div class="q-header">
+      <span class="q-num">Question 9</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>List the <strong>three main observational study designs</strong> and state <strong>one advantage</strong> of each.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a9')">Check Answer</button>
+      <div class="answer-box" id="a9">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ol>
+            <li><strong>Cross-sectional:</strong> Quick and cheap; good for describing disease burden (prevalence) in a population</li>
+            <li><strong>Case-control:</strong> Efficient for rare diseases; requires fewer participants; faster than cohort studies</li>
+            <li><strong>Cohort:</strong> Best for establishing causality; can measure incidence and multiple outcomes; less prone to recall bias</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m2" data-type="case" data-id="10">
+    <div class="q-header">
+      <span class="q-num">Question 10</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Scenario:</strong> You want to investigate whether drinking sugary beverages is associated with pancreatic cancer — a relatively rare disease. You have limited funding and need results within 2 years.
+      </div>
+      <p>Which study design would you choose? Justify your answer.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a10')">Check Answer</button>
+      <div class="answer-box" id="a10">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Best choice: Case-control study</strong></p>
+          <ul>
+            <li><strong>Rare disease:</strong> Pancreatic cancer is rare, so a cohort study would need to follow a huge population for many years to get enough cases.</li>
+            <li><strong>Limited resources &amp; time:</strong> Case-control is cheaper and faster — you identify existing cases and controls, then look back at their beverage consumption.</li>
+            <li><strong>Trade-off:</strong> You'll get an <strong>Odds Ratio</strong>, not a Relative Risk. You'll also need to watch for <strong>recall bias</strong> (cases may remember their diet differently than controls).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m2" data-type="mcq" data-id="11">
+    <div class="q-header">
+      <span class="q-num">Question 11</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>What is the primary measure of association in a <strong>cross-sectional</strong> study?</p>
+      <div class="options">
+        <label><input type="radio" name="q11" value="a"> Relative Risk (RR)</label>
+        <label><input type="radio" name="q11" value="b"> Odds Ratio (OR) — specifically a Prevalence OR</label>
+        <label><input type="radio" name="q11" value="c"> Hazard Ratio (HR)</label>
+        <label><input type="radio" name="q11" value="d"> Number Needed to Treat (NNT)</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a11')">Check Answer</button>
+      <div class="answer-box" id="a11">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Cross-sectional studies primarily measure <strong>prevalence</strong>. For association, they calculate a <strong>Prevalence Odds Ratio</strong> (or Prevalence Ratio). RR, HR, and NNT all require following people forward in time, which cross-sectional designs cannot do.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m2" data-type="short" data-id="56">
+    <div class="q-header">
+      <span class="q-num">Question 12</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Explain why <strong>randomisation</strong> is considered the gold standard for establishing causality. What does it achieve that observational designs cannot?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a56')">Check Answer</button>
+      <div class="answer-box" id="a56">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Randomisation balances <strong>both known and unknown confounders</strong> between treatment and control groups. Observational designs can only adjust for measured confounders — unmeasured or unknown confounders may still bias the results. By creating exchangeable groups, randomisation ensures that any difference in outcome can be attributed to the intervention rather than pre-existing differences. This is why RCTs sit at the top of the evidence hierarchy.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m2" data-type="mcq" data-id="57">
+    <div class="q-header">
+      <span class="q-num">Question 13</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Which type of bias is of greatest concern in case-control studies when participants are asked about past exposures?</p>
+      <div class="options">
+        <label><input type="radio" name="q57" value="a"> Selection bias</label>
+        <label><input type="radio" name="q57" value="b"> Recall bias</label>
+        <label><input type="radio" name="q57" value="c"> Loss to follow-up bias</label>
+        <label><input type="radio" name="q57" value="d"> Lead-time bias</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a57')">Check Answer</button>
+      <div class="answer-box" id="a57">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Case-control studies rely on <strong>retrospective recall</strong> of past exposures. Cases (who already have the disease) may remember exposures differently than healthy controls — they might search their memory more thoroughly or over-report exposures they believe caused their illness. This differential recall between cases and controls is <strong>recall bias</strong>, a form of information bias.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m2" data-type="short" data-id="58">
+    <div class="q-header">
+      <span class="q-num">Question 14</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>What is the main advantage of a <strong>cohort study</strong> over a case-control study for studying the causes of a disease? What is one disadvantage?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a58')">Check Answer</button>
+      <div class="answer-box" id="a58">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <strong>Advantage:</strong> Cohort studies follow people forward in time, so they can measure <strong>incidence</strong> and calculate <strong>Relative Risk</strong> directly. They are also less prone to recall bias because exposure information is collected before the outcome develops. They can study multiple outcomes from a single exposure.<br>
+          <strong>Disadvantage:</strong> Cohort studies are <strong>expensive and time-consuming</strong>, especially for rare diseases or diseases with long latency periods. They require large sample sizes and long follow-up, and can suffer from loss to follow-up.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m2" data-type="tf" data-id="59">
+    <div class="q-header">
+      <span class="q-num">Question 15</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>An ecological study uses groups (e.g., countries or regions) as the unit of analysis, which means its findings may not apply to individuals within those groups.</p>
+      <div class="options">
+        <label><input type="radio" name="q59" value="true"> True</label>
+        <label><input type="radio" name="q59" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a59')">Check Answer</button>
+      <div class="answer-box" id="a59">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          This is the <strong>ecological fallacy</strong> — associations observed at the group level may not hold at the individual level. For example, a country with high meat consumption may have high cancer rates, but that doesn't mean every individual who eats meat will get cancer. Ecological studies are useful for generating hypotheses but cannot establish individual-level causation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 3: EFFECT MEASURES                                     -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m3">
+    <span>Module 3: Effect Measures — RR, OR, AR, NNT <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m3" data-type="mcq" data-id="12">
+    <div class="q-header">
+      <span class="q-num">Question 12</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A study finds RR = 0.4 for a new vaccine against malaria. How do you interpret this?</p>
+      <div class="options">
+        <label><input type="radio" name="q12" value="a"> The vaccine increases the risk of malaria by 40%</label>
+        <label><input type="radio" name="q12" value="b"> Vaccinated people have 0.4 times the risk — a 60% reduction in risk</label>
+        <label><input type="radio" name="q12" value="c"> 40% of vaccinated people get malaria</label>
+        <label><input type="radio" name="q12" value="d"> The vaccine has no effect</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a12')">Check Answer</button>
+      <div class="answer-box" id="a12">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>RR = 0.4</strong> means the risk in the vaccinated group is 0.4 times (40% of) the risk in the unvaccinated group. This is a <strong>protective effect</strong> — a 60% reduction (1 − 0.4 = 0.6 = 60%). Option A is wrong because RR &lt; 1 means protection, not increased risk.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m3" data-type="mcq" data-id="13">
+    <div class="q-header">
+      <span class="q-num">Question 13</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>When the disease is <strong>common</strong> (e.g., 30% prevalence), the Odds Ratio will tend to:</p>
+      <div class="options">
+        <label><input type="radio" name="q13" value="a"> Underestimate the Relative Risk</label>
+        <label><input type="radio" name="q13" value="b"> Equal the Relative Risk</label>
+        <label><input type="radio" name="q13" value="c"> Overestimate the Relative Risk</label>
+        <label><input type="radio" name="q13" value="d"> Be impossible to calculate</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a13')">Check Answer</button>
+      <div class="answer-box" id="a13">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          The OR approximates the RR well only when the disease is <strong>rare</strong> (&lt;10% prevalence). For common outcomes, the OR <strong>overestimates</strong> the RR. This is because odds are always larger than probabilities when the event is common. This is a frequent exam trap!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m3" data-type="short" data-id="14">
+    <div class="q-header">
+      <span class="q-num">Question 14</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Explain the <strong>conceptual difference</strong> between Relative Risk (RR) and Attributable Risk (AR). Why might a public health official care more about AR than RR?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a14')">Check Answer</button>
+      <div class="answer-box" id="a14">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>RR</strong> is a <strong>ratio</strong> — it tells you how many times more (or less) likely the outcome is in the exposed group. It measures the <strong>strength of association</strong> but not the absolute burden.</li>
+            <li><strong>AR</strong> is a <strong>difference</strong> — it tells you the <strong>absolute excess risk</strong> in the exposed group (e.g., "15 extra cases per 1,000 people").</li>
+            <li><strong>Why public health cares about AR:</strong> AR tells you the <strong>actual impact</strong> — how many cases could be prevented if the exposure were removed. An exposure with RR = 20 (very strong) might have a small AR if the disease is rare, while an exposure with RR = 2 might have a large AR if the disease is common.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m3" data-type="short" data-id="15">
+    <div class="q-header">
+      <span class="q-num">Question 15</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>A cohort study finds that people exposed to air pollution have a higher risk of asthma than unexposed people. The RR is 4.0 and the AR (risk difference) is 6%.</p>
+      <p>Explain the <strong>conceptual difference</strong> between RR and AR. Why might a public health official care more about the AR than the RR when deciding whether to intervene?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a15')">Check Answer</button>
+      <div class="answer-box" id="a15">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>RR (Relative Risk)</strong> is a ratio — it tells you how many times more likely the outcome is in the exposed group. RR = 4.0 means exposed people have 4× the risk. This measures the <strong>strength of association</strong> but not the absolute burden.</li>
+            <li><strong>AR (Attributable Risk / Risk Difference)</strong> tells you the <strong>absolute excess risk</strong> — how many extra cases occur in the exposed group. AR = 6% means 6 out of every 100 exposed people develop asthma due to air pollution.</li>
+            <li><strong>Why public health cares about AR:</strong> AR tells you the <strong>actual impact</strong> — how many cases could be prevented if the exposure were removed. An exposure with RR = 20 (very strong) might have a small AR if the disease is rare, while an exposure with RR = 2 might have a large AR if the disease is common. For policy decisions, the number of preventable cases (AR) often matters more than the strength of association (RR).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m3" data-type="mcq" data-id="16">
+    <div class="q-header">
+      <span class="q-num">Question 16</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A new drug has NNT = 100 over 5 years to prevent one heart attack. Which statement is correct?</p>
+      <div class="options">
+        <label><input type="radio" name="q16" value="a"> The drug prevents 100 heart attacks per 100 patients</label>
+        <label><input type="radio" name="q16" value="b"> 100 people must take the drug for 5 years to prevent one heart attack</label>
+        <label><input type="radio" name="q16" value="c"> The drug is highly effective because NNT is large</label>
+        <label><input type="radio" name="q16" value="d"> NNT = 100 means there is no benefit</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a16')">Check Answer</button>
+      <div class="answer-box" id="a16">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          NNT is the number of people who need to receive the intervention for <strong>one person to benefit</strong>. NNT = 100 means you treat 100 people for 5 years and 1 heart attack is prevented. A <strong>small</strong> NNT means highly effective; a <strong>large</strong> NNT means modest benefit.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m3" data-type="case" data-id="17">
+    <div class="q-header">
+      <span class="q-num">Question 17</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case: Diet and Cancer in Spain</strong><br>
+        A cohort study finds that people who eat a Mediterranean diet have RR = 0.7 for colorectal cancer compared to those who eat a Western diet. The 10-year risk of colorectal cancer in the Western diet group is 3%.
+      </div>
+      <p>Interpret these findings. Why is it important to consider <strong>both</strong> the RR and the baseline risk when evaluating the clinical or public health importance of this result?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a17')">Check Answer</button>
+      <div class="answer-box" id="a17">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p>RR = 0.7 means people on a Mediterranean diet have 0.7 times the risk of those on a Western diet — a 30% relative risk reduction. However, the baseline risk in the Western diet group is 3% over 10 years, which is relatively low. This means the <strong>absolute risk reduction</strong> is modest.</p>
+          <p>A 30% relative reduction sounds impressive, but applied to a low baseline risk it translates to a small absolute benefit. Conversely, the same RR = 0.7 applied to a disease with 50% baseline risk would mean a large absolute benefit.</p>
+          <p><strong>Key point:</strong> RR tells you the strength of the association but not the actual impact. For clinical and policy decisions, you need to consider the baseline risk to understand how many people would actually benefit. A large RR with a rare outcome may matter less than a modest RR with a common outcome.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m3" data-type="case" data-id="60">
+    <div class="q-header">
+      <span class="q-num">Question 16</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Scenario:</strong> A team of global health experts is investigating a new insecticide-treated net distribution programme in a rural region of Malawi. They compare malaria incidence in villages that received the nets (n = 2,000) vs. villages that did not (n = 2,000). The study reports RR = 0.5.
+      </div>
+      <p>The minister of health asks your team: "Does this mean the programme works? And how should I explain this to parliament?" Based on the RR alone, what would you tell her — and what else would you want to know before making a funding recommendation?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a60')">Check Answer</button>
+      <div class="answer-box" id="a60">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          RR = 0.5 means villages with the nets have half the malaria risk of villages without them — a 50% relative reduction. This suggests the programme is effective. However, before recommending funding, you need: <strong>(1)</strong> the absolute risk/baseline incidence — a 50% reduction from 2% to 1% is very different from 50% to 25%; <strong>(2)</strong> the 95% CI — is the estimate precise or could the true effect be much smaller?; <strong>(3)</strong> the study quality — were villages comparable? Was there adequate blinding of outcome assessment?; <strong>(4)</strong> cost and feasibility — is the programme scalable and cost-effective compared to alternatives?
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m3" data-type="case" data-id="61">
+    <div class="q-header">
+      <span class="q-num">Question 17</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Scenario:</strong> A team investigates whether pesticide exposure in field workers is associated with Glioblastoma, a rare brain cancer. They identify 50 patients with Glioblastoma (cases) and 200 healthy controls from the same region, then ask both groups about past pesticide exposure. The team reports an Odds Ratio of 2.8.
+      </div>
+      <p>At a conference, a colleague argues: "Why didn't you calculate a Relative Risk? That would be more interpretable!" As a member of the research team, how would you respond? Justify why an OR was the correct choice and what the colleague misunderstands about study designs.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a61')">Check Answer</button>
+      <div class="answer-box" id="a61">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          In a case-control study, the <strong>investigator determines the ratio of cases to controls</strong> (here 50:200, but they could have chosen 50:400). Because this sampling ratio is investigator-controlled, the proportion of cases in the study does not reflect the true disease risk in the population. Without knowing the true risk, you cannot calculate a Risk Ratio, which requires risk in exposed ÷ risk in unexposed.<br>
+          The <strong>Odds Ratio</strong> is valid because it compares the <strong>odds of exposure</strong> in cases vs. controls — a comparison that is unaffected by the case-control sampling ratio. The colleague misunderstands that each study design has its own valid effect measure, and case-control studies inherently estimate ORs, not RRs. For rare diseases like Glioblastoma, the OR approximates the RR, but it remains an OR.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m3" data-type="tf" data-id="62">
+    <div class="q-header">
+      <span class="q-num">Question 18</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>Number Needed to Treat (NNT) depends on the baseline risk of the outcome — the same relative risk reduction can produce very different NNT values depending on how common the disease is.</p>
+      <div class="options">
+        <label><input type="radio" name="q62" value="true"> True</label>
+        <label><input type="radio" name="q62" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a62')">Check Answer</button>
+      <div class="answer-box" id="a62">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          NNT is the inverse of the absolute risk reduction. A treatment that reduces risk by 50% (RR = 0.5) will have a small NNT if the baseline risk is high (many events prevented) but a large NNT if the baseline risk is low (few events prevented). This is why clinicians need to consider baseline risk when applying trial results to their patients — the same treatment may have very different NNTs in different populations.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m3" data-type="case" data-id="63">
+    <div class="q-header">
+      <span class="q-num">Question 19</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> Two news articles report on the same medication:<br>
+        Article A: "New drug reduces heart attack risk by 40%!"<br>
+        Article B: "New drug prevents 2 heart attacks per 1,000 patients treated."
+      </div>
+      <p>Both articles are factually correct. Why might they report such different numbers? Which number is more relevant for a patient deciding whether to take the medication?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a63')">Check Answer</button>
+      <div class="answer-box" id="a63">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Article A reports the <strong>relative risk reduction</strong> (RRR = 40%), which always sounds impressive regardless of baseline risk. Article B reports the <strong>absolute risk reduction</strong> (ARR = 0.2% or 2 per 1,000), which is modest. Both can be true simultaneously — a 40% relative reduction applied to a low baseline risk yields a small absolute benefit.<br>
+          For a patient deciding whether to take the medication, the <strong>absolute benefit</strong> (Article B) is more relevant — it tells them how likely they are to actually benefit. The relative risk reduction can be misleading when the baseline risk is low. This is a common issue in health communication and shared decision-making.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 4: BIAS & CONFOUNDING                                  -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m4">
+    <span>Module 4: Bias, Confounding &amp; Effect Modification <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m4" data-type="mcq" data-id="18">
+    <div class="q-header">
+      <span class="q-num">Question 18</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which of the following is <strong>NOT</strong> a criterion for a variable to be a confounder?</p>
+      <div class="options">
+        <label><input type="radio" name="q18" value="a"> Associated with the exposure</label>
+        <label><input type="radio" name="q18" value="b"> An independent risk factor for the outcome</label>
+        <label><input type="radio" name="q18" value="c"> On the causal pathway between exposure and outcome</label>
+        <label><input type="radio" name="q18" value="d"> Not an intermediate variable</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a18')">Check Answer</button>
+      <div class="answer-box" id="a18">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          A confounder must <strong>NOT</strong> be on the causal pathway. If it is on the pathway (an intermediate variable), adjusting for it would <strong>over-adjust</strong> and bias the effect estimate. The three criteria are: (1) associated with exposure, (2) independent risk factor for outcome, and (3) <strong>not</strong> an intermediate variable.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m4" data-type="mcq" data-id="19">
+    <div class="q-header">
+      <span class="q-num">Question 19</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>A study finds that coffee drinkers have a higher risk of lung cancer. After adjusting for smoking, the effect disappears. This is an example of:</p>
+      <div class="options">
+        <label><input type="radio" name="q19" value="a"> Effect modification</label>
+        <label><input type="radio" name="q19" value="b"> Confounding by smoking</label>
+        <label><input type="radio" name="q19" value="c"> Selection bias</label>
+        <label><input type="radio" name="q19" value="d"> Information bias</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a19')">Check Answer</button>
+      <div class="answer-box" id="a19">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Smoking is associated with coffee drinking (coffee drinkers smoke more) AND smoking causes lung cancer. When you adjust for smoking, the coffee-lung cancer association disappears — meaning the original association was <strong>confounded</strong> by smoking. This is the <strong>classic confounding example</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m4" data-type="tf" data-id="20">
+    <div class="q-header">
+      <span class="q-num">Question 20</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>Effect modification and confounding are the same thing — both distort the exposure-outcome relationship.</p>
+      <div class="options">
+        <label><input type="radio" name="q20" value="true"> True</label>
+        <label><input type="radio" name="q20" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a20')">Check Answer</button>
+      <div class="answer-box" id="a20">
+        <div class="correct-label">Correct Answer: False</div>
+        <div class="explanation">
+          <strong>Confounding</strong> distorts the association — you want to <strong>remove</strong> it.<br>
+          <strong>Effect modification (interaction)</strong> means the effect differs across strata — you want to <strong>report it</strong>, not remove it.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m4" data-type="short" data-id="21">
+    <div class="q-header">
+      <span class="q-num">Question 21</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>List <strong>three strategies</strong> for managing confounders at the <strong>design stage</strong> and <strong>three</strong> at the <strong>analysis stage</strong>.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a21')">Check Answer</button>
+      <div class="answer-box" id="a21">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Design stage (before data collection):</strong></p>
+          <ol>
+            <li><strong>Randomization</strong> — balances known and unknown confounders (gold standard, but only in experimental studies)</li>
+            <li><strong>Restriction</strong> — limit study to one level of the confounder (e.g., only non-smokers)</li>
+            <li><strong>Matching</strong> — select controls with same confounder distribution as cases (common in case-control studies)</li>
+          </ol>
+          <p><strong>Analysis stage (after data collection):</strong></p>
+          <ol>
+            <li><strong>Stratification</strong> — split data into confounder levels and compare effect estimates</li>
+            <li><strong>Multivariable regression</strong> — include confounders as covariates to get an "adjusted" effect</li>
+            <li><strong>Standardization</strong> — apply standard population weights to remove structural differences</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m4" data-type="case" data-id="22">
+    <div class="q-header">
+      <span class="q-num">Question 22</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case: Malaria in Mozambique</strong><br>
+        A study finds that children living near swamps have higher malaria rates. However, families near swamps also have lower incomes, and lower income is associated with less access to bed nets and antimalarial treatment.
+      </div>
+      <p>Identify the potential confounder(s). How might you control for them?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a22')">Check Answer</button>
+      <div class="answer-box" id="a22">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Potential confounders:</strong> Income / socioeconomic status (SES)</p>
+          <ul>
+            <li>Income is associated with <strong>exposure</strong> (living near swamps — poorer families live in less desirable areas)</li>
+            <li>Income is an independent risk factor for <strong>outcome</strong> (lower income → less prevention/treatment → more malaria)</li>
+            <li>Income is <strong>not on the causal pathway</strong> between swamp proximity and malaria</li>
+          </ul>
+          <p><strong>Control strategies:</strong></p>
+          <ul>
+            <li><strong>Design:</strong> Match children from similar income levels; restrict to one income group</li>
+            <li><strong>Analysis:</strong> Stratify by income; include income in a multivariable regression model to get an adjusted effect of swamp proximity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m4" data-type="mcq" data-id="64">
+    <div class="q-header">
+      <span class="q-num">Question 23</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>A study finds that people who drink red wine live longer than non-drinkers. However, red wine drinkers tend to have higher incomes and better education. Which type of bias is this?</p>
+      <div class="options">
+        <label><input type="radio" name="q64" value="a"> Selection bias</label>
+        <label><input type="radio" name="q64" value="b"> Confounding</label>
+        <label><input type="radio" name="q64" value="c"> Information bias</label>
+        <label><input type="radio" name="q64" value="d"> Recall bias</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a64')">Check Answer</button>
+      <div class="answer-box" id="a64">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Socioeconomic status (income, education) is associated with both the exposure (red wine drinking) and the outcome (longer life), but is not on the causal pathway. This is the classic <strong>confounding</strong> pattern — the apparent wine-longevity association may be partly or entirely due to the confounder. Adjusting for SES in the analysis would give a less biased estimate of wine's true effect.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m4" data-type="mcq" data-id="65">
+    <div class="q-header">
+      <span class="q-num">Question 24</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which study design is <strong>least</strong> susceptible to selection bias?</p>
+      <div class="options">
+        <label><input type="radio" name="q65" value="a"> Case-control study</label>
+        <label><input type="radio" name="q65" value="b"> Cohort study with high follow-up</label>
+        <label><input type="radio" name="q65" value="c"> Cross-sectional study</label>
+        <label><input type="radio" name="q65" value="d"> Ecological study</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a65')">Check Answer</button>
+      <div class="answer-box" id="a65">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          A <strong>cohort study with high follow-up</strong> starts with a defined population and tracks them forward, minimising selection bias because exposure is measured before the outcome and the investigator does not select participants based on disease status. Case-control studies are especially vulnerable to selection bias because the choice of controls can introduce systematic differences. Cross-sectional studies can suffer from non-response bias.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m4" data-type="case" data-id="66">
+    <div class="q-header">
+      <span class="q-num">Question 25</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Scenario:</strong> A study in rural India finds that children who participate in a school-based nutrition programme have lower rates of anaemia (RR = 0.6). However, participating schools have better water sanitation infrastructure than non-participating schools. Separate analyses show that the nutrition programme effect is RR = 0.55 in schools with good sanitation and RR = 0.58 in schools with poor sanitation — nearly identical. Meanwhile, children in participating schools also tend to come from higher-income families, which independently predicts lower anaemia.
+      </div>
+      <p>Which of these two factors — water sanitation and family income — represents <strong>confounding</strong> and which might be <strong>effect modification</strong>? How would you handle each in your analysis? Justify.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a66')">Check Answer</button>
+      <div class="answer-box" id="a66">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <strong>Family income is a confounder:</strong> It is associated with programme participation (higher-income families more likely to enrol) AND independently predicts anaemia — but the RR does not differ across income strata. You want to <strong>adjust for it</strong> (e.g., include income in a regression model) to isolate the programme's independent effect.<br>
+          <strong>Water sanitation is NOT a confounder or effect modifier:</strong> The effect is nearly identical across sanitation levels (RR ≈ 0.55–0.58), meaning sanitation does not modify the effect. However, if participating schools systematically have better sanitation, and sanitation independently affects anaemia, it could still be a confounder and should be adjusted for.<br>
+          <strong>Key distinction:</strong> Confounding distorts the estimate (adjust for it). Effect modification means the effect truly differs across groups (report it — don't adjust it away). Here, the nearly identical RRs suggest no effect modification by sanitation. The practical step: include both income and sanitation in a multivariable model to get the adjusted programme effect.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m4" data-type="tf" data-id="67">
+    <div class="q-header">
+      <span class="q-num">Question 26</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>If a confounder is measured in a study, it can be controlled for during the analysis stage using multivariable regression.</p>
+      <div class="options">
+        <label><input type="radio" name="q67" value="true"> True</label>
+        <label><input type="radio" name="q67" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a67')">Check Answer</button>
+      <div class="answer-box" id="a67">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          If a confounder is measured accurately, it can be included as a covariate in a regression model to obtain an <strong>adjusted</strong> effect estimate. This is one of the main reasons multivariable regression is widely used in epidemiology. However, unmeasured or poorly measured confounders cannot be controlled for in analysis, which is why randomisation at the design stage is the gold standard — it balances both measured and unmeasured confounders.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m4" data-type="short" data-id="68">
+    <div class="q-header">
+      <span class="q-num">Question 27</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>What is <strong>selection bias</strong> and when is it most likely to occur in epidemiological studies? Give an example.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a68')">Check Answer</button>
+      <div class="answer-box" id="a68">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Selection bias occurs when the association between exposure and outcome differs between those who participate in the study and those who would have been eligible but did not participate. It is most likely when participation is related to both exposure and outcome.<br>
+          <strong>Example:</strong> A case-control study of a rare disease recruits controls from a hospital. If the disease is related to lifestyle factors and the hospital controls are also more health-conscious than the general population, the exposure distribution in controls may be biased, distorting the OR. This is why control selection is critical in case-control studies.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 5: STATISTICAL CONCEPTS                                -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m5">
+    <span>Module 5: Statistical Concepts</span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m5" data-type="mcq" data-id="23">
+    <div class="q-header">
+      <span class="q-num">Question 23</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A researcher measures income in categories: &lt;€20k, €20k–€40k, €40k–€60k, &gt;€60k. What type of variable is this?</p>
+      <div class="options">
+        <label><input type="radio" name="q23" value="a"> Continuous numerical</label>
+        <label><input type="radio" name="q23" value="b"> Categorical nominal</label>
+        <label><input type="radio" name="q23" value="c"> Ordinal</label>
+        <label><input type="radio" name="q23" value="d"> Binary</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a23')">Check Answer</button>
+      <div class="answer-box" id="a23">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          The categories have a <strong>natural order</strong> (low → high), so this is <strong>ordinal</strong>, not nominal (unordered categories). If actual income in euros were recorded, it would be continuous numerical. The grouping into ordered categories makes it ordinal.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m5" data-type="mcq" data-id="24">
+    <div class="q-header">
+      <span class="q-num">Question 24</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>You have data on hospital stay duration (in days) that is <strong>right-skewed</strong> with several extreme outliers. Which measure of central tendency and dispersion should you report?</p>
+      <div class="options">
+        <label><input type="radio" name="q24" value="a"> Mean ± Standard Deviation</label>
+        <label><input type="radio" name="q24" value="b"> Median ± Interquartile Range (IQR)</label>
+        <label><input type="radio" name="q24" value="c"> Mode ± Range</label>
+        <label><input type="radio" name="q24" value="d"> Mean ± Range</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a24')">Check Answer</button>
+      <div class="answer-box" id="a24">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          For <strong>skewed data with outliers</strong>, the mean is pulled in the direction of the skew and SD becomes misleading. The <strong>median</strong> (resistant to outliers) with <strong>IQR</strong> is the correct choice. Mean ± SD is appropriate only for approximately normally distributed data.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m5" data-type="short" data-id="25">
+    <div class="q-header">
+      <span class="q-num">Question 25</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>A study reports that "the mean age of participants was 45 years (SD = 12)" and the data is approximately normally distributed. Explain what the <strong>standard deviation</strong> tells you about the age distribution. Why is the mean ± SD more informative than reporting the mean alone?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a25')">Check Answer</button>
+      <div class="answer-box" id="a25">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p>The <strong>standard deviation (SD)</strong> measures the spread or dispersion of the data around the mean. SD = 12 means that ages typically vary by about 12 years above or below the average of 45.</p>
+          <p>Without the SD, you only know the central tendency (45 years) but have no idea whether participants ranged from 30 to 60 or from 20 to 80. The SD gives you a sense of the <strong>variability</strong> — a larger SD means more heterogeneous participants.</p>
+          <p>The mean alone can be misleading: two studies could both report mean age = 45, but one with SD = 3 (very homogeneous, mostly 42–48) and another with SD = 15 (very spread out, 30–60 range). Reporting both mean and SD gives a much more complete picture of the sample.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m5" data-type="mcq" data-id="69">
+    <div class="q-header">
+      <span class="q-num">Question 28</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which type of variable is <strong>blood type</strong> (A, B, AB, O)?</p>
+      <div class="options">
+        <label><input type="radio" name="q69" value="a"> Continuous numerical</label>
+        <label><input type="radio" name="q69" value="b"> Ordinal</label>
+        <label><input type="radio" name="q69" value="c"> Categorical nominal</label>
+        <label><input type="radio" name="q69" value="d"> Discrete numerical</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a69')">Check Answer</button>
+      <div class="answer-box" id="a69">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          Blood types have <strong>no natural order</strong> (A is not "greater than" B, etc.) — they are categories without ranking. This makes them <strong>nominal categorical</strong> variables. Ordinal variables (like cancer stage I–IV) do have a meaningful order. Numerical variables are measured on a numeric scale.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m5" data-type="tf" data-id="70">
+    <div class="q-header">
+      <span class="q-num">Question 29</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>For a right-skewed distribution, the mean is typically greater than the median.</p>
+      <div class="options">
+        <label><input type="radio" name="q70" value="true"> True</label>
+        <label><input type="radio" name="q70" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a70')">Check Answer</button>
+      <div class="answer-box" id="a70">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          In a right-skewed distribution, the tail extends to the right (higher values). The mean is pulled in the direction of the skew, making it larger than the median. The median, being resistant to extreme values, remains closer to the centre. This is why median is preferred for skewed data — it better represents the "typical" value.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m5" data-type="short" data-id="71">
+    <div class="q-header">
+      <span class="q-num">Question 30</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Why is it misleading to report only the <strong>mean</strong> without a measure of dispersion? What could go wrong in interpretation?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a71')">Check Answer</button>
+      <div class="answer-box" id="a71">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The mean alone tells you the central tendency but nothing about the spread or variability of the data. Two datasets can have identical means but very different distributions — one tightly clustered around the mean, another widely spread out. For example, two hospitals could both report mean patient satisfaction of 7/10, but one has all scores between 6-8 while the other has scores ranging from 1-10. Without a measure of dispersion (SD, IQR, range), you cannot assess the homogeneity of the data or the reliability of the mean.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m5" data-type="case" data-id="72">
+    <div class="q-header">
+      <span class="q-num">Question 31</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A study on hospital stay duration reports mean = 8 days, median = 5 days. The researchers used mean ± SD to describe their data.
+      </div>
+      <p>What does the difference between mean and median tell you about the distribution? Was the choice of mean ± SD appropriate? What would you recommend instead?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a72')">Check Answer</button>
+      <div class="answer-box" id="a72">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The mean (8) being higher than the median (5) indicates <strong>right-skew</strong> — a minority of patients with very long stays are pulling the mean upward. Using mean ± SD is <strong>not appropriate</strong> for skewed data because the SD interpretation (symmetric spread around the mean) is misleading when the distribution is asymmetric. Recommend: report <strong>median ± IQR</strong> (or median and range). The median of 5 days better represents the typical patient, and the IQR shows the spread of the middle 50% of patients.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m5" data-type="mcq" data-id="73">
+    <div class="q-header">
+      <span class="q-num">Question 32</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>When would you use the <strong>mode</strong> as the preferred measure of central tendency?</p>
+      <div class="options">
+        <label><input type="radio" name="q73" value="a"> For normally distributed continuous data</label>
+        <label><input type="radio" name="q73" value="b"> For categorical data where you want to know the most common category</label>
+        <label><input type="radio" name="q73" value="c"> For highly skewed continuous data</label>
+        <label><input type="radio" name="q73" value="d"> For data with outliers</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a73')">Check Answer</button>
+      <div class="answer-box" id="a73">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The mode is the most frequently occurring value in a dataset. It is most useful for <strong>categorical data</strong> (e.g., "what is the most common blood type?") where mean and median cannot be meaningfully calculated. For continuous data, the mode is less useful because there may be many unique values.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m5" data-type="short" data-id="74">
+    <div class="q-header">
+      <span class="q-num">Question 33</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>If a variable is measured on an <strong>ordinal scale</strong> (e.g., pain level: none, mild, moderate, severe), which measures of central tendency and dispersion are appropriate?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a74')">Check Answer</button>
+      <div class="answer-box" id="a74">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          For ordinal data, the <strong>median and IQR</strong> (or frequency distributions) are appropriate. The <strong>mean and SD</strong> are not appropriate because they assume equal intervals between categories, which ordinal data does not guarantee (the difference between "none" and "mild" may not equal the difference between "moderate" and "severe"). The median identifies the middle category, and the IQR shows the spread of the middle 50%. Alternatively, presenting the proportion in each category is informative.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m5" data-type="tf" data-id="75">
+    <div class="q-header">
+      <span class="q-num">Question 34</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>A histogram can reveal the shape of a distribution — including whether it is symmetric, skewed, or has multiple peaks.</p>
+      <div class="options">
+        <label><input type="radio" name="q75" value="true"> True</label>
+        <label><input type="radio" name="q75" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a75')">Check Answer</button>
+      <div class="answer-box" id="a75">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          A histogram is a key graphical tool for understanding the distribution of a continuous variable. It shows the overall shape (symmetric, left-skewed, right-skewed), central tendency, spread, and whether there are multiple modes (peaks). Visualising data with a histogram should always be one of the first steps in data analysis — before calculating any summary statistics.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 6: CI & P-VALUES                                       -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m6">
+    <span>Module 6: Confidence Intervals &amp; P-values</span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m6" data-type="mcq" data-id="26">
+    <div class="q-header">
+      <span class="q-num">Question 26</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>What is the <strong>correct</strong> interpretation of a 95% confidence interval?</p>
+      <div class="options">
+        <label><input type="radio" name="q26" value="a"> There is a 95% probability that the true value lies in this interval</label>
+        <label><input type="radio" name="q26" value="b"> If we repeated the study 100 times, 95 of the resulting CIs would contain the true population parameter</label>
+        <label><input type="radio" name="q26" value="c"> 95% of the data falls within this interval</label>
+        <label><input type="radio" name="q26" value="d"> The result is clinically significant</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a26')">Check Answer</button>
+      <div class="answer-box" id="a26">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The CI is a property of the <strong>procedure</strong>, not the specific interval. Option A is the <strong>common misinterpretation</strong> (Bayesian interpretation, not frequentist). The correct frequentist interpretation is: under repeated sampling, 95% of such intervals will contain the true value.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m6" data-type="mcq" data-id="27">
+    <div class="q-header">
+      <span class="q-num">Question 27</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A study reports: <strong>OR = 2.0, 95% CI: 0.9 to 4.5</strong>. Is this result statistically significant?</p>
+      <div class="options">
+        <label><input type="radio" name="q27" value="a"> Yes, because the OR is greater than 1</label>
+        <label><input type="radio" name="q27" value="b"> No, because the CI includes 1</label>
+        <label><input type="radio" name="q27" value="c"> Yes, because the upper limit is greater than 1</label>
+        <label><input type="radio" name="q27" value="d"> No, because the lower limit is less than 1</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a27')">Check Answer</button>
+      <div class="answer-box" id="a27">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          For ratio measures (OR, RR, HR), statistical significance at α = 0.05 is determined by whether the 95% CI includes the <strong>null value (1)</strong>. Since the CI (0.9 to 4.5) includes 1, we <strong>cannot reject the null hypothesis</strong> — the result is NOT statistically significant, even though the point estimate (OR = 2.0) suggests increased risk.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m6" data-type="tf" data-id="28">
+    <div class="q-header">
+      <span class="q-num">Question 28</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>A p-value &lt; 0.05 means there is a 95% probability that the research hypothesis is true.</p>
+      <div class="options">
+        <label><input type="radio" name="q28" value="true"> True</label>
+        <label><input type="radio" name="q28" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a28')">Check Answer</button>
+      <div class="answer-box" id="a28">
+        <div class="correct-label">Correct Answer: False</div>
+        <div class="explanation">
+          This is a <strong>common misconception</strong>. A p-value is the probability of observing the data (or more extreme) assuming the <strong>null hypothesis</strong> is true. It does NOT tell you the probability that either hypothesis is true. p &lt; 0.05 means there is less than a 5% chance of seeing such extreme data if the null were true.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m6" data-type="short" data-id="29">
+    <div class="q-header">
+      <span class="q-num">Question 29</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>A trial of a new hypertension drug reports a statistically significant reduction in blood pressure (p = 0.003) but the effect size is only 2 mmHg. Is this finding <strong>clinically important</strong>? Explain.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a29')">Check Answer</button>
+      <div class="answer-box" id="a29">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Statistical significance ≠ clinical importance.</strong></p>
+          <ul>
+            <li>A <strong>large sample size</strong> can make even a tiny effect (2 mmHg) statistically significant (p = 0.003).</li>
+            <li>Whether 2 mmHg reduction is clinically important depends on context: for population-level prevention, even small reductions can be meaningful; for an individual patient, 2 mmHg may not justify medication side effects.</li>
+            <li>Always examine both the <strong>effect size</strong> and <strong>confidence interval</strong>, not just the p-value.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m6" data-type="mcq" data-id="76">
+    <div class="q-header">
+      <span class="q-num">Question 35</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>A 95% confidence interval for an odds ratio is 1.5 to 3.2. What can you conclude?</p>
+      <div class="options">
+        <label><input type="radio" name="q76" value="a"> The result is not statistically significant</label>
+        <label><input type="radio" name="q76" value="b"> The result is statistically significant and precise</label>
+        <label><input type="radio" name="q76" value="c"> The result is statistically significant (the interval does not include 1), but the width suggests uncertainty about the true effect size</label>
+        <label><input type="radio" name="q76" value="d"> The exposure is protective</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a76')">Check Answer</button>
+      <div class="answer-box" id="a76">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          Since the entire 95% CI (1.5 to 3.2) is above 1, the result is <strong>statistically significant</strong> (the null value is excluded). However, the interval ranges from 1.5 to 3.2 — from a modest to a strong effect — indicating <strong>imprecision</strong> in the estimate. A narrow CI would indicate more precision. This illustrates why CIs are more informative than p-values alone: they tell you both statistical significance and the range of plausible effect sizes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m6" data-type="short" data-id="77">
+    <div class="q-header">
+      <span class="q-num">Question 36</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>What factors influence the <strong>width</strong> of a confidence interval? Why is a narrow CI generally preferred?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a77')">Check Answer</button>
+      <div class="answer-box" id="a77">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <strong>Factors affecting CI width:</strong> (1) <strong>Sample size</strong> — larger samples produce narrower CIs (more precision); (2) <strong>Variability in the data</strong> — less variability produces narrower CIs; (3) <strong>Confidence level</strong> — higher confidence (e.g., 99%) produces wider CIs than lower confidence (e.g., 90%).<br>
+          A narrow CI is preferred because it indicates greater <strong>precision</strong> — the estimate is more reliable and the range of plausible true values is smaller. A wide CI means the study results are compatible with a broad range of possible effects, making the estimate less useful for decision-making.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m6" data-type="case" data-id="78">
+    <div class="q-header">
+      <span class="q-num">Question 37</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A large RCT (n = 50,000) finds that a new drug reduces cardiovascular events with RR = 0.95, p = 0.01. A smaller RCT (n = 500) of the same drug finds RR = 0.60, p = 0.10.
+      </div>
+      <p>Which result is more clinically meaningful? Why might the p-values differ?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a78')">Check Answer</button>
+      <div class="answer-box" id="a78">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The <strong>large trial</strong> (RR = 0.95, p = 0.01) found a statistically significant but <strong>clinically modest</strong> effect — only a 5% relative risk reduction. It achieved significance mainly because the massive sample size gave it high power to detect even tiny effects.<br>
+          The <strong>small trial</strong> (RR = 0.60, p = 0.10) found a <strong>clinically large</strong> effect (40% reduction) but was underpowered — the result was not statistically significant because the sample was too small.<br>
+          <strong>Key lesson:</strong> Statistical significance does not equal clinical importance. Always examine the effect size and CI, not just the p-value. The large trial's tiny effect may be real but trivial; the small trial's large effect may be important but uncertain.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m6" data-type="tf" data-id="79">
+    <div class="q-header">
+      <span class="q-num">Question 38</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>A Type I error (false positive) occurs when you reject the null hypothesis when it is actually true. The significance level (α) is the probability of making a Type I error.</p>
+      <div class="options">
+        <label><input type="radio" name="q79" value="true"> True</label>
+        <label><input type="radio" name="q79" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a79')">Check Answer</button>
+      <div class="answer-box" id="a79">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          <strong>Type I error (α):</strong> Concluding there is an effect when there really isn't — false positive. The significance level α (conventionally 0.05) is the probability of this error.<br>
+          <strong>Type II error (β):</strong> Concluding there is no effect when there really is — false negative. Power = 1 − β is the probability of correctly detecting a true effect. Researchers need to balance both types of error, which is reflected in sample size planning.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m6" data-type="short" data-id="80">
+    <div class="q-header">
+      <span class="q-num">Question 39</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Why is it problematic to rely solely on <strong>p-values</strong> for scientific decision-making? What additional information should researchers always report?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a80')">Check Answer</button>
+      <div class="answer-box" id="a80">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          P-values have several limitations: (1) They do not tell you about the <strong>size or importance</strong> of an effect — a tiny, clinically meaningless effect can be statistically significant with a large enough sample. (2) A non-significant p-value does not prove the null hypothesis — the study may be underpowered. (3) P-values are frequently misinterpreted as the probability that the null hypothesis is true. (4) They provide a binary (significant/not) that ignores the continuous nature of evidence.<br>
+          Researchers should always report: <strong>effect size</strong> (e.g., RR, OR, mean difference) and <strong>confidence interval</strong> alongside the p-value. The CI provides information about precision and the range of plausible effects, which is much more informative.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m6" data-type="mcq" data-id="81">
+    <div class="q-header">
+      <span class="q-num">Question 40</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>When multiple statistical tests are performed on the same data, the risk of at least one Type I error:</p>
+      <div class="options">
+        <label><input type="radio" name="q81" value="a"> Decreases</label>
+        <label><input type="radio" name="q81" value="b"> Increases (multiple testing problem)</label>
+        <label><input type="radio" name="q81" value="c"> Stays the same regardless of the number of tests</label>
+        <label><input type="radio" name="q81" value="d"> Is eliminated by using a stricter α level</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a81')">Check Answer</button>
+      <div class="answer-box" id="a81">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          With α = 0.05 for each test, performing 20 independent tests means the probability of at least one false positive is about 1 − (0.95)^20 ≈ 64%. This is the <strong>multiple testing problem</strong>. Corrections exist (Bonferroni, Benjamini-Hochberg) but they reduce power. This issue is especially important in subgroup analyses, where false positives can lead to incorrect conclusions about which patient groups benefit from treatment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 7: REGRESSION                                          -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m7">
+    <span>Module 7: Regression <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m7" data-type="mcq" data-id="30">
+    <div class="q-header">
+      <span class="q-num">Question 30</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which regression type should you use when the <strong>outcome</strong> is binary (disease yes/no)?</p>
+      <div class="options">
+        <label><input type="radio" name="q30" value="a"> Linear regression</label>
+        <label><input type="radio" name="q30" value="b"> Logistic regression</label>
+        <label><input type="radio" name="q30" value="c"> Poisson regression</label>
+        <label><input type="radio" name="q30" value="d"> Cox regression</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a30')">Check Answer</button>
+      <div class="answer-box" id="a30">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>Logistic regression</strong> is used for binary outcomes and produces an <strong>Odds Ratio (OR)</strong> for each predictor. Linear regression is for continuous outcomes (produces β coefficients). Cox regression is for time-to-event data (produces Hazard Ratios).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m7" data-type="mcq" data-id="31">
+    <div class="q-header">
+      <span class="q-num">Question 31</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>In a linear regression model: <strong>BP = 120 + 2.5 × coffee_cups</strong>, what does the coefficient 2.5 mean?</p>
+      <div class="options">
+        <label><input type="radio" name="q31" value="a"> Each cup of coffee increases BP by exactly 2.5 mmHg in all people</label>
+        <label><input type="radio" name="q31" value="b"> A person who drinks 0 coffee has BP of 2.5 mmHg</label>
+        <label><input type="radio" name="q31" value="c"> For each additional cup of coffee, BP increases by 2.5 mmHg on average</label>
+        <label><input type="radio" name="q31" value="d"> Coffee consumption explains 2.5% of the variation in BP</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a31')">Check Answer</button>
+      <div class="answer-box" id="a31">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          The slope (β = 2.5) represents the <strong>average change</strong> in the outcome for each one-unit increase in the predictor. The intercept (β₀ = 120) is the predicted BP when coffee = 0. Option A is wrong because it's an average, not a guarantee for every individual.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m7" data-type="short" data-id="32">
+    <div class="q-header">
+      <span class="q-num">Question 32</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Explain what it means to <strong>"adjust for confounders"</strong> in a regression model. Why might the adjusted effect estimate differ from the crude (unadjusted) estimate?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a32')">Check Answer</button>
+      <div class="answer-box" id="a32">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>Adjusting</strong> means including confounder variables as additional predictors in the regression model alongside the exposure.</li>
+            <li>The model then estimates the effect of the exposure <strong>"holding confounders constant"</strong> — i.e., comparing people with the same confounder values but different exposure levels.</li>
+            <li>The adjusted estimate differs from the crude estimate when <strong>confounding is present</strong>: the crude estimate includes the distorting effect of the confounder, while the adjusted estimate removes it.</li>
+            <li><strong>Example:</strong> Crude RR for coffee &amp; lung cancer = 2.5; adjusted RR (controlling for smoking) = 1.1. The change tells you that most of the original association was due to smoking, not coffee itself.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m7" data-type="case" data-id="33">
+    <div class="q-header">
+      <span class="q-num">Question 33</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case: Long-COVID in HICs vs LMICs</strong><br>
+        A regression model examines whether country income level (HIC vs. LMIC) predicts Long-COVID severity (measured on a continuous symptom score). The crude model shows LMIC patients have 5 points higher symptom scores. After adjusting for age, comorbidities, and healthcare access, the difference drops to 1.2 points.
+      </div>
+      <p>What does this tell you? What would you conclude about the relationship between country income and Long-COVID severity?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a33')">Check Answer</button>
+      <div class="answer-box" id="a33">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li>The large reduction (5 → 1.2 points) indicates <strong>substantial confounding</strong>: age, comorbidities, and healthcare access explain most of the apparent difference between HICs and LMICs.</li>
+            <li>The <strong>adjusted effect (1.2 points)</strong> is the independent effect of country income — what remains after accounting for these confounders.</li>
+            <li><strong>Conclusion:</strong> While there may be a small independent effect of country income, the main drivers of Long-COVID severity appear to be individual-level factors (age, comorbidities) and healthcare system factors, not country income per se.</li>
+            <li><strong>Public health implication:</strong> Interventions targeting comorbidities and healthcare access may be more impactful than focusing solely on country income level.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m7" data-type="short" data-id="82">
+    <div class="q-header">
+      <span class="q-num">Question 41</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>What type of regression would you use for each of these outcomes — and why?</p>
+      <ul>
+        <li>Blood pressure (continuous)</li>
+        <li>Stroke yes/no (binary)</li>
+        <li>Time until death (survival time)</li>
+      </ul>
+      <button class="show-answer-btn" onclick="toggleAnswer('a82')">Check Answer</button>
+      <div class="answer-box" id="a82">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>Blood pressure (continuous):</strong> <strong>Linear regression</strong> — used for continuous outcomes, produces β coefficients that represent the average change in the outcome per unit change in the predictor.</li>
+            <li><strong>Stroke yes/no (binary):</strong> <strong>Logistic regression</strong> — used for binary outcomes, produces Odds Ratios. Linear regression would be inappropriate because it could predict probabilities outside 0–1 and violates normality assumptions.</li>
+            <li><strong>Time until death (survival):</strong> <strong>Cox proportional hazards regression</strong> — used for time-to-event data with censoring, produces Hazard Ratios. Standard regression cannot handle censored observations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m7" data-type="mcq" data-id="83">
+    <div class="q-header">
+      <span class="q-num">Question 42</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>In a linear regression model, what does the <strong>intercept</strong> (β₀) represent?</p>
+      <div class="options">
+        <label><input type="radio" name="q83" value="a"> The slope of the regression line</label>
+        <label><input type="radio" name="q83" value="b"> The predicted outcome when all predictors are zero</label>
+        <label><input type="radio" name="q83" value="c"> The average change in the outcome per unit change in the predictor</label>
+        <label><input type="radio" name="q83" value="d"> The correlation between the predictor and the outcome</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a83')">Check Answer</button>
+      <div class="answer-box" id="a83">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The intercept is the predicted value of the outcome when <strong>all predictor variables are set to zero</strong>. In simple linear regression (one predictor), it is where the regression line crosses the y-axis. The slope (β coefficient) represents the average change in the outcome for each one-unit increase in the predictor. The intercept may not be clinically meaningful if zero values of predictors are not plausible.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m7" data-type="short" data-id="84">
+    <div class="q-header">
+      <span class="q-num">Question 43</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>What does it mean to say a regression model has been <strong>"adjusted for confounders"</strong>? How does an adjusted estimate differ from a crude (unadjusted) estimate?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a84')">Check Answer</button>
+      <div class="answer-box" id="a84">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Adjusting for confounders means including them as additional predictor variables in the regression model alongside the main exposure of interest. The model then estimates the effect of the exposure <strong>"holding the confounders constant"</strong> — comparing people with the same confounder values but different exposure levels.<br>
+          The adjusted estimate differs from the crude estimate when <strong>confounding is present</strong>. The crude estimate includes the distorting effect of the confounder(s), while the adjusted estimate isolates the independent effect of the exposure. If the crude and adjusted estimates are substantially different, it indicates that confounding was present and the crude estimate was biased.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m7" data-type="tf" data-id="85">
+    <div class="q-header">
+      <span class="q-num">Question 44</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>In a logistic regression model, the exponentiated coefficient (e^β) gives the Odds Ratio for a one-unit increase in the predictor.</p>
+      <div class="options">
+        <label><input type="radio" name="q85" value="true"> True</label>
+        <label><input type="radio" name="q85" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a85')">Check Answer</button>
+      <div class="answer-box" id="a85">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          In logistic regression, the model estimates log-odds (the natural logarithm of the odds). Exponentiating the coefficient (e^β) converts it to an Odds Ratio, which is easier to interpret. For example, β = 0.5 gives OR = e^0.5 ≈ 1.65 — a 65% increase in the odds of the outcome per unit increase in the predictor. This is why logistic regression results are typically reported as ORs with 95% CIs.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m7" data-type="mcq" data-id="86">
+    <div class="q-header">
+      <span class="q-num">Question 45</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>What is the key advantage of using multivariable regression over stratification for controlling confounding?</p>
+      <div class="options">
+        <label><input type="radio" name="q86" value="a"> Regression requires no assumptions</label>
+        <label><input type="radio" name="q86" value="b"> Regression can handle many confounders simultaneously, including continuous variables</label>
+        <label><input type="radio" name="q86" value="c"> Stratification is always more accurate</label>
+        <label><input type="radio" name="q86" value="d"> Regression eliminates the need for study design</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a86')">Check Answer</button>
+      <div class="answer-box" id="a86">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Stratification becomes impractical with many confounders or continuous variables — you quickly run out of strata or get very sparse data. <strong>Multivariable regression</strong> can include many confounders (both categorical and continuous) simultaneously in a single model, providing an adjusted estimate while using the data efficiently. It also provides estimates of the independent effect of each variable.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m7" data-type="case" data-id="87">
+    <div class="q-header">
+      <span class="q-num">Question 46</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A researcher examines the relationship between screen time (hours/day) and depression scores (continuous scale, higher = more depressed). The crude regression gives β = 1.2. After adjusting for physical activity, social support, and sleep quality, the adjusted β becomes 0.3.
+      </div>
+      <p>Interpret the change in β. What does this tell you about the relationship between screen time and depression?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a87')">Check Answer</button>
+      <div class="answer-box" id="a87">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The crude β = 1.2 suggests that each additional hour of screen time is associated with a 1.2-point increase in depression scores. After adjusting for physical activity, social support, and sleep quality, the effect drops to β = 0.3 — a 75% reduction.<br>
+          This indicates that much of the apparent screen time-depression association was due to <strong>confounding</strong> by these lifestyle factors. People with high screen time may also have less physical activity, weaker social support, and poorer sleep — and these factors are what actually drive depression. The <strong>adjusted estimate (β = 0.3)</strong> is the more accurate estimate of screen time's independent effect. The small remaining effect may or may not be clinically meaningful.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 9: cRCT DESIGN VARIANTS                                -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m9">
+    <span>Module 9: cRCT Design Variants <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m9" data-type="mcq" data-id="34">
+    <div class="q-header">
+      <span class="q-num">Question 34</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>In a <strong>stepped-wedge cluster RCT</strong>, when do clusters transition from control to intervention?</p>
+      <div class="options">
+        <label><input type="radio" name="q34" value="a"> All clusters start and end at the same time</label>
+        <label><input type="radio" name="q34" value="b"> At randomly assigned time points until all clusters have received the intervention</label>
+        <label><input type="radio" name="q34" value="c"> Clusters are paired, and one in each pair gets the intervention</label>
+        <label><input type="radio" name="q34" value="d"> Clusters receive both intervention and control in random order</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a34')">Check Answer</button>
+      <div class="answer-box" id="a34">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          In a stepped-wedge design, all clusters <strong>start in control</strong>. At regular intervals, a randomly selected subset crosses over to intervention. By the end, <strong>all clusters</strong> have received the intervention. This is ethically appealing when you cannot withhold an effective intervention.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m9" data-type="mcq" data-id="35">
+    <div class="q-header">
+      <span class="q-num">Question 35</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>A researcher has 8 villages to test a water sanitation intervention. The villages vary widely in size and baseline sanitation levels. Which cRCT variant would be BEST to ensure balance?</p>
+      <div class="options">
+        <label><input type="radio" name="q35" value="a"> Parallel cRCT</label>
+        <label><input type="radio" name="q35" value="b"> Stepped-wedge cRCT</label>
+        <label><input type="radio" name="q35" value="c"> Pair-matched cRCT</label>
+        <label><input type="radio" name="q35" value="d"> Cluster crossover cRCT</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a35')">Check Answer</button>
+      <div class="answer-box" id="a35">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          <strong>Pair-matched (stratified) cRCT</strong> pairs villages on key characteristics (size, baseline sanitation). Within each pair, one is randomized to intervention and one to control. This <strong>improves balance</strong> on important covariates and reduces variability from cluster heterogeneity.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m9" data-type="short" data-id="36">
+    <div class="q-header">
+      <span class="q-num">Question 36</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>List <strong>one advantage</strong> and <strong>one disadvantage</strong> of the <strong>stepped-wedge cRCT</strong> design compared to a parallel cRCT.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a36')">Check Answer</button>
+      <div class="answer-box" id="a36">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Advantage:</strong> Ethical appeal — every cluster eventually receives the intervention, making it suitable when it would be unethical to permanently withhold a potentially beneficial intervention from control clusters.</p>
+          <p><strong>Disadvantage:</strong> More complex design and analysis; potential confounding by <strong>secular trends</strong> (e.g., seasonal disease patterns or concurrent policy changes); longer overall study duration.</p>
+          <p><strong>Additional disadvantage:</strong> Requires adjustment for time effects in analysis, making statistical modelling more complex.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m9" data-type="case" data-id="37">
+    <div class="q-header">
+      <span class="q-num">Question 37</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A global health NGO wants to evaluate a new community health worker training programme. The intervention must be rolled out in 15 districts over 3 years due to budget constraints. It would be ethically problematic to withhold training from any district permanently.
+      </div>
+      <p>Which cRCT variant should they use? Explain why.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a37')">Check Answer</button>
+      <div class="answer-box" id="a37">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Best choice: Stepped-wedge cRCT</strong></p>
+          <ul>
+            <li><strong>Ethical fit:</strong> All districts will eventually receive the training — no permanent control group that never benefits.</li>
+            <li><strong>Practical fit:</strong> The staggered rollout over 3 years matches the stepped-wedge structure naturally — each step, a new set of districts starts the programme.</li>
+            <li><strong>Analytical considerations:</strong> The analysis must account for <strong>time trends</strong> (improvements over time independent of the intervention).</li>
+            <li><strong>Alternative:</strong> If baseline data for matching were available and there were no ethical concerns, a pair-matched design could also work — but the stepped-wedge is more appropriate here.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m9" data-type="tf" data-id="38">
+    <div class="q-header">
+      <span class="q-num">Question 38</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>In a factorial cluster RCT, you can test two interventions simultaneously and also assess whether they interact.</p>
+      <div class="options">
+        <label><input type="radio" name="q38" value="true"> True</label>
+        <label><input type="radio" name="q38" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a38')">Check Answer</button>
+      <div class="answer-box" id="a38">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          In a 2×2 factorial cRCT, clusters are randomised to: A only, B only, A+B, or neither. This allows testing of <strong>main effects</strong> (does A work? does B work?) and <strong>interaction</strong> (does A work differently when B is also present?). This is efficient but requires a larger sample size for interaction detection.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m9" data-type="short" data-id="88">
+    <div class="q-header">
+      <span class="q-num">Question 47</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>When would a researcher choose a <strong>cluster RCT</strong> over an individual RCT? Give at least two reasons.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a88')">Check Answer</button>
+      <div class="answer-box" id="a88">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <strong>Reasons to choose a cRCT:</strong><br>
+          (1) <strong>Risk of contamination</strong> — when the intervention is delivered at the group level (e.g., community health education, water sanitation) and individual randomisation would lead to control participants being exposed to the intervention.<br>
+          (2) <strong>Logistical or ethical reasons</strong> — when randomising individuals within the same community or clinic is impractical or could create resentment (e.g., giving different insecticide-treated nets to neighbours in the same village).<br>
+          (3) <strong>Intervention naturally operates at cluster level</strong> — e.g., policy changes, school-based programmes, or healthcare system interventions where the unit of delivery is the institution, not the individual.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m9" data-type="mcq" data-id="89">
+    <div class="q-header">
+      <span class="q-num">Question 48</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Which of the following is a <strong>disadvantage</strong> of cluster RCTs compared to individual RCTs?</p>
+      <div class="options">
+        <label><input type="radio" name="q89" value="a"> They require fewer participants overall</label>
+        <label><input type="radio" name="q89" value="b"> They eliminate contamination between treatment groups</label>
+        <label><input type="radio" name="q89" value="c"> They require more complex statistical analysis and larger sample sizes due to clustering</label>
+        <label><input type="radio" name="q89" value="d"> They are always more ethically acceptable</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a89')">Check Answer</button>
+      <div class="answer-box" id="a89">
+        <div class="correct-label">Correct Answer: C</div>
+        <div class="explanation">
+          cRCTs require <strong>more complex analysis</strong> that accounts for the clustering (using multi-level models or generalised estimating equations). They also require <strong>larger total sample sizes</strong> than individual RCTs because individuals within clusters are correlated, reducing the effective sample size. The analysis must account for both within-cluster and between-cluster variability. Options A and D are incorrect — cRCTs need more participants and are not inherently more ethical.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m9" data-type="short" data-id="90">
+    <div class="q-header">
+      <span class="q-num">Question 49</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Explain what a <strong>stepped-wedge cRCT</strong> is and when it is particularly useful.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a90')">Check Answer</button>
+      <div class="answer-box" id="a90">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          In a stepped-wedge cRCT, all clusters <strong>start in the control condition</strong>. At randomly assigned time points, clusters <strong>cross over</strong> to the intervention, one by one or in groups. By the end of the study, all clusters have received the intervention.<br>
+          This design is particularly useful when: (1) It would be <strong>ethically problematic</strong> to withhold the intervention from some clusters permanently (e.g., an effective HIV prevention programme); (2) The intervention <strong>must be rolled out gradually</strong> due to logistical or budget constraints (e.g., training community health workers in 15 districts over 3 years). A key analytical challenge is separating the intervention effect from secular time trends.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m9" data-type="tf" data-id="91">
+    <div class="q-header">
+      <span class="q-num">Question 50</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>In a pair-matched cRCT, clusters are matched on key characteristics before randomisation to improve balance between arms.</p>
+      <div class="options">
+        <label><input type="radio" name="q91" value="true"> True</label>
+        <label><input type="radio" name="q91" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a91')">Check Answer</button>
+      <div class="answer-box" id="a91">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          In pair-matched (stratified) cRCTs, clusters are paired based on similar characteristics (e.g., size, baseline outcomes, socioeconomic profile). Within each pair, one cluster is randomised to intervention and one to control. This <strong>improves baseline comparability</strong> and reduces between-cluster variability, which increases statistical efficiency. However, the analysis must account for the matching (e.g., using paired analysis), and the degrees of freedom are based on the number of pairs, not clusters.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m9" data-type="mcq" data-id="92">
+    <div class="q-header">
+      <span class="q-num">Question 51</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>In the analysis of a cRCT, what is the primary concern if clustering is <strong>ignored</strong>?</p>
+      <div class="options">
+        <label><input type="radio" name="q92" value="a"> The effect estimate will be biased</label>
+        <label><input type="radio" name="q92" value="b"> The p-values will be too small (inflated Type I error) and the CIs too narrow</label>
+        <label><input type="radio" name="q92" value="c"> The sample size will be too large</label>
+        <label><input type="radio" name="q92" value="d"> Confounding will be introduced</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a92')">Check Answer</button>
+      <div class="answer-box" id="a92">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Ignoring clustering treats all individuals as independent observations when they are actually correlated. This <strong>underestimates the standard errors</strong>, producing p-values that are too small (more false positives) and CIs that are too narrow (overly precise). The effect estimate (e.g., RR) may still be correct, but the <strong>precision is overestimated</strong>. This is why cRCTs must always use appropriate analytical methods (multi-level models, GEE, or cluster-robust standard errors).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 10: ICC & DESIGN EFFECT                                -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m10">
+    <span>Module 10: ICC &amp; Design Effect</span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m10" data-type="mcq" data-id="39">
+    <div class="q-header">
+      <span class="q-num">Question 39</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>The <strong>Intra-Cluster Correlation Coefficient (ICC)</strong> ranges from 0 to 1. What does ICC = 0 mean?</p>
+      <div class="options">
+        <label><input type="radio" name="q39" value="a"> All individuals within a cluster have the same outcome</label>
+        <label><input type="radio" name="q39" value="b"> There is no clustering effect — individuals are independent</label>
+        <label><input type="radio" name="q39" value="c"> The design effect is infinite</label>
+        <label><input type="radio" name="q39" value="d"> The effective sample size is zero</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a39')">Check Answer</button>
+      <div class="answer-box" id="a39">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>ICC = 0</strong> means all variability is <strong>within clusters</strong> — individuals are independent of their cluster membership. No clustering adjustment is needed. The effective sample size equals the total participants. ICC = 0 is ideal but rarely occurs in cluster-based studies because people within the same cluster tend to be similar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m10" data-type="mcq" data-id="40">
+    <div class="q-header">
+      <span class="q-num">Question 40</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>The <strong>Design Effect (DE)</strong> tells you:</p>
+      <div class="options">
+        <label><input type="radio" name="q40" value="a"> How many clusters you need</label>
+        <label><input type="radio" name="q40" value="b"> The factor by which you must multiply the individual RCT sample size to achieve the same power in a cRCT</label>
+        <label><input type="radio" name="q40" value="c"> The effect size of the intervention</label>
+        <label><input type="radio" name="q40" value="d"> The correlation between exposure and outcome</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a40')">Check Answer</button>
+      <div class="answer-box" id="a40">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The <strong>Design Effect</strong> quantifies how much larger your sample needs to be due to clustering. The DE depends on the cluster size and the ICC — larger clusters and higher ICC mean more inflation. For example, DE = 2 means you need <strong>twice as many participants</strong> as an individually randomized trial to maintain the same statistical power.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m10" data-type="short" data-id="41">
+    <div class="q-header">
+      <span class="q-num">Question 41</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>A cRCT has 20 clusters with 30 individuals each (total 600 participants). The ICC is estimated at 0.03.</p>
+      <p>Explain <strong>conceptually</strong> why the effective sample size is less than the total number of participants in a cRCT. What factors influence how much information is lost due to clustering?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a41')">Check Answer</button>
+      <div class="answer-box" id="a41">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>Why effective sample size is smaller:</strong> Individuals within a cluster (e.g., same village, school, clinic) are more similar to each other than to people in other clusters — they share environments, resources, and exposures. This similarity means each additional person in the same cluster adds <strong>less new information</strong> than a person from a different cluster. Statistically, the "independent observations" are fewer than the total participant count.</li>
+            <li><strong>Factors that increase information loss (larger Design Effect):</strong>
+              <ul>
+                <li><strong>Higher ICC:</strong> More similarity within clusters means less independent information per participant.</li>
+                <li><strong>Larger cluster size:</strong> Beyond a certain point, adding more participants to an existing cluster yields diminishing new information.</li>
+              </ul>
+            </li>
+            <li><strong>Implication:</strong> When designing a cRCT, you need to enrol more participants than an individual RCT to achieve the same statistical power. This is why cRCTs are typically larger and more expensive.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m10" data-type="short" data-id="42">
+    <div class="q-header">
+      <span class="q-num">Question 42</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Why does clustering <strong>reduce statistical power</strong> in cRCTs? Explain conceptually.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a42')">Check Answer</button>
+      <div class="answer-box" id="a42">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li>Individuals within a cluster are more <strong>similar</strong> (share environment, resources, behaviours) than individuals from different clusters.</li>
+            <li>This similarity means each new participant within the same cluster adds <strong>less new information</strong> than a participant from a different cluster.</li>
+            <li>Statistically, the <strong>effective sample size</strong> is less than the total number of participants — the "independent observations" are fewer.</li>
+            <li>Standard sample size formulas assume independence; applying them to clustered data would <strong>overestimate power</strong>.</li>
+            <li>            The Design Effect (DE) quantifies the inflation needed — larger clusters and higher ICC mean greater loss of power.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m10" data-type="short" data-id="93">
+    <div class="q-header">
+      <span class="q-num">Question 52</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>What does the <strong>Intra-Cluster Correlation Coefficient (ICC)</strong> measure? What does a high ICC tell you about the data?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a93')">Check Answer</button>
+      <div class="answer-box" id="a93">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The ICC measures the <strong>degree of similarity</strong> of outcomes within the same cluster — how much individuals in the same group resemble each other compared to individuals in different groups. It ranges from 0 to 1.<br>
+          A <strong>high ICC</strong> (close to 1) means outcomes are very similar within clusters — most of the variability is between clusters, not within them. This implies that adding more participants to an existing cluster adds little new information, making the Design Effect larger. A <strong>low ICC</strong> (close to 0) means individuals are nearly independent — clustering has minimal impact. Typical ICC values in public health range from 0.01 to 0.05.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m10" data-type="mcq" data-id="94">
+    <div class="q-header">
+      <span class="q-num">Question 53</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Why does clustering <strong>reduce statistical power</strong> in cRCTs?</p>
+      <div class="options">
+        <label><input type="radio" name="q94" value="a"> Because clusters are always small</label>
+        <label><input type="radio" name="q94" value="b"> Because individuals within a cluster are correlated, so each additional participant provides less than one unit of independent information</label>
+        <label><input type="radio" name="q94" value="c"> Because cRCTs cannot be blinded</label>
+        <label><input type="radio" name="q94" value="d"> Because clustering introduces selection bias</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a94')">Check Answer</button>
+      <div class="answer-box" id="a94">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Individuals within a cluster share environments, resources, and exposures, making their outcomes more similar than individuals from different clusters. This <strong>correlation</strong> means each new participant in the same cluster adds less new statistical information than an independent observation. The <strong>effective sample size</strong> — the number of independent units of information — is therefore smaller than the total number of participants. This is why cRCTs need larger total sample sizes than individual RCTs to achieve the same power.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card sg" data-module="m10" data-type="short" data-id="95">
+    <div class="q-header">
+      <span class="q-num">Question 54</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>When designing a cRCT, is it better to increase the <strong>number of clusters</strong> or the <strong>size of each cluster</strong> to improve statistical power? Explain.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a95')">Check Answer</button>
+      <div class="answer-box" id="a95">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          It is almost always <strong>better to increase the number of clusters</strong> rather than the size of each cluster. Adding more clusters adds independent units of observation, which directly increases power. Adding more participants to existing clusters yields diminishing returns because those individuals are correlated with existing cluster members — beyond a certain cluster size, the information gained per additional participant is very small.<br>
+          In practice, however, adding clusters is often more expensive (more training sites, more logistics, more communities to engage). The researcher must find the optimal balance: enough clusters to achieve adequate power while keeping cluster sizes reasonable. This trade-off is an important part of cRCT planning.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m10" data-type="tf" data-id="96">
+    <div class="q-header">
+      <span class="q-num">Question 55</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>The Design Effect (DE) is larger when the ICC is higher and when the cluster size is larger.</p>
+      <div class="options">
+        <label><input type="radio" name="q96" value="true"> True</label>
+        <label><input type="radio" name="q96" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a96')">Check Answer</button>
+      <div class="answer-box" id="a96">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          A higher ICC means greater similarity within clusters, so each additional participant provides less new information — inflating the sample size needed. Larger clusters also increase the DE because more participants share the same cluster environment. Both factors mean you need to enrol more participants in a cRCT to achieve the same statistical power as an individual RCT. The DE tells you the factor by which the individual RCT sample size must be multiplied.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m10" data-type="case" data-id="97">
+    <div class="q-header">
+      <span class="q-num">Question 56</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A researcher is designing a cRCT with 10 schools per arm, 50 students per school. Previous studies of similar outcomes in schools report ICC values between 0.01 and 0.10.
+      </div>
+      <p>Why is it important for the researcher to have a good estimate of the ICC before starting the study? What happens if the true ICC is higher than assumed?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a97')">Check Answer</button>
+      <div class="answer-box" id="a97">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The ICC is a key parameter for sample size planning in a cRCT. If the researcher assumes ICC = 0.01 but the true ICC is 0.10, the study will be <strong>underpowered</strong> — it will have fewer participants than needed to detect the expected effect. This is because a higher ICC means greater information loss due to clustering, requiring a larger sample to compensate.<br>
+          Getting the ICC estimate right is important because an underpowered study wastes resources and may miss a real effect. Researchers should use ICC estimates from similar studies or pilot data, and ideally perform sensitivity analyses assuming different ICC values to ensure their sample size is adequate across plausible scenarios.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m10" data-type="mcq" data-id="98">
+    <div class="q-header">
+      <span class="q-num">Question 57</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which of the following best explains why cRCTs are generally <strong>less efficient</strong> than individual RCTs?</p>
+      <div class="options">
+        <label><input type="radio" name="q98" value="a"> They require ethical approval</label>
+        <label><input type="radio" name="q98" value="b"> The correlation of outcomes within clusters reduces the effective sample size</label>
+        <label><input type="radio" name="q98" value="c"> Cluster randomisation is always less reliable than individual randomisation</label>
+        <label><input type="radio" name="q98" value="d"> cRCTs cannot use blinding</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a98')">Check Answer</button>
+      <div class="answer-box" id="a98">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          cRCTs are less efficient because individuals within the same cluster are <strong>correlated</strong> — they share similar outcomes due to shared environments, resources, and exposures. This correlation means that each additional participant within an existing cluster provides less new statistical information than an independent observation. As a result, the <strong>effective sample size</strong> is smaller than the total number of participants, meaning the study needs more participants to achieve the same statistical precision as an individually randomised trial. This reduced efficiency is the main statistical cost of cluster randomisation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 11: SURVIVAL ANALYSIS                                  -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m11">
+    <span>Module 11: Survival Analysis <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m11" data-type="mcq" data-id="43">
+    <div class="q-header">
+      <span class="q-num">Question 43</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>What is <strong>right-censoring</strong> in survival analysis?</p>
+      <div class="options">
+        <label><input type="radio" name="q43" value="a"> The participant died before the study ended</label>
+        <label><input type="radio" name="q43" value="b"> The participant did not experience the event during the observation period (e.g., left study, study ended, lost to follow-up)</label>
+        <label><input type="radio" name="q43" value="c"> The participant experienced the event at exactly the start of the study</label>
+        <label><input type="radio" name="q43" value="d"> The participant was excluded from the analysis</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a43')">Check Answer</button>
+      <div class="answer-box" id="a43">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>Right-censoring</strong> occurs when we know a participant survived up to time t but do not observe the event — because the study ended, they withdrew, or were lost to follow-up. Crucially, <strong>censored observations are still informative</strong> and are included in the analysis up to their censoring time.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m11" data-type="mcq" data-id="44">
+    <div class="q-header">
+      <span class="q-num">Question 44</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>What happens to the Kaplan-Meier survival estimate when a patient is <strong>censored</strong> at time t?</p>
+      <div class="options">
+        <label><input type="radio" name="q44" value="a"> The survival estimate drops at time t</label>
+        <label><input type="radio" name="q44" value="b"> The survival estimate stays the same, but the risk set shrinks for future events</label>
+        <label><input type="radio" name="q44" value="c"> The survival estimate increases at time t</label>
+        <label><input type="radio" name="q44" value="d"> The patient is removed from the analysis entirely</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a44')">Check Answer</button>
+      <div class="answer-box" id="a44">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Censoring <strong>does not</strong> cause a drop in the survival function. The censored individual is included in the risk set up until their censoring time, then removed from subsequent calculations. The survival probability stays flat — the step only drops when an <strong>event</strong> (death) occurs.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m11" data-type="short" data-id="45">
+    <div class="q-header">
+      <span class="q-num">Question 45</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>What does the <strong>log-rank test</strong> compare? What is its null hypothesis?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a45')">Check Answer</button>
+      <div class="answer-box" id="a45">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li>The <strong>log-rank test</strong> compares the <strong>survival distributions</strong> (the entire survival curves) of two or more groups.</li>
+            <li><strong>Null hypothesis:</strong> The survival functions are equal across groups — S(t)₁ = S(t)₂ (there is no difference in survival between groups).</li>
+            <li>It is a non-parametric test (does not assume a specific survival distribution).</li>
+            <li>It works by comparing <strong>observed vs. expected events</strong> at each time point across groups.</li>
+            <li>If p &lt; 0.05, we reject the null and conclude the survival curves are significantly different.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m11" data-type="case" data-id="46">
+    <div class="q-header">
+      <span class="q-num">Question 46</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A study follows 200 patients with a rare cancer. 120 receive a new treatment, 80 receive standard care. After 5 years:<br>
+        - Treatment group: 60 deaths (60 censored)<br>
+        - Control group: 60 deaths (20 censored)<br>
+        A Kaplan-Meier curve is plotted and the log-rank test gives p = 0.002.
+      </div>
+      <p>What can you conclude? Interpret the survival curves and the p-value together.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a46')">Check Answer</button>
+      <div class="answer-box" id="a46">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li>The <strong>log-rank test (p = 0.002)</strong> tells us there is a statistically significant difference between the two survival curves.</li>
+            <li>The <strong>survival curves</strong> would show that the treatment group has a higher probability of surviving at each time point (the treatment curve stays above the control curve).</li>
+            <li>The <strong>median survival time</strong> would likely be longer in the treatment group.</li>
+            <li><strong>Censoring pattern note:</strong> More censoring in the treatment group (60 vs. 20) could mean treatment patients were more likely to be alive at study end — which is consistent with better outcomes.</li>
+            <li><strong>Conclusion:</strong> The new treatment is associated with significantly better survival compared to standard care in this patient population.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m11" data-type="short" data-id="99">
+    <div class="q-header">
+      <span class="q-num">Question 58</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>What types of research questions require <strong>survival analysis</strong> rather than standard regression? Give two examples.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a99')">Check Answer</button>
+      <div class="answer-box" id="a99">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          Survival analysis is needed when the outcome is <strong>time until an event occurs</strong>, especially when <strong>censoring</strong> is present — i.e., not all participants experience the event during the study period. Standard regression cannot handle censored observations appropriately.<br>
+          <strong>Examples:</strong><br>
+          (1) <strong>Clinical trial:</strong> Time from treatment initiation until death or disease recurrence. Patients who are still alive at study end are censored.<br>
+          (2) <strong>Public health:</strong> Time from HIV diagnosis until development of AIDS. Patients lost to follow-up are censored at their last visit.<br>
+          In both cases, survival analysis uses information from censored individuals up to their censoring time, which standard regression would waste.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m11" data-type="mcq" data-id="100">
+    <div class="q-header">
+      <span class="q-num">Question 59</span>
+      <span class="q-type mcq">Multiple Choice</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>A <strong>Hazard Ratio (HR)</strong> of 0.6 from a Cox regression model means:</p>
+      <div class="options">
+        <label><input type="radio" name="q100" value="a"> The treatment group has 60% longer survival time</label>
+        <label><input type="radio" name="q100" value="b"> At any given time point, the treated group has 0.6 times the instantaneous risk (hazard) of the event compared to the control group</label>
+        <label><input type="radio" name="q100" value="c"> 60% of the treatment group survived</label>
+        <label><input type="radio" name="q100" value="d"> The treatment caused a 60% reduction in events</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a100')">Check Answer</button>
+      <div class="answer-box" id="a100">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          A Hazard Ratio compares the <strong>instantaneous risk</strong> (hazard) of the event between two groups at any point in time. HR = 0.6 means the treated group has 40% lower hazard of the event (e.g., death) compared to controls, assuming proportional hazards. It does NOT directly tell you about median survival (A) or the proportion surviving (C). The HR is the survival analysis equivalent of the RR — it measures the relative rate of events over time.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m11" data-type="short" data-id="101">
+    <div class="q-header">
+      <span class="q-num">Question 60</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>What is the <strong>Kaplan-Meier estimator</strong> and how would you interpret a Kaplan-Meier survival curve?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a101')">Check Answer</button>
+      <div class="answer-box" id="a101">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The Kaplan-Meier estimator is a <strong>non-parametric method</strong> for estimating the survival function from time-to-event data. It calculates the probability of surviving past each time point, accounting for censoring. The survival curve is a step function that drops at each event time and stays flat between events.<br>
+          <strong>Interpreting a KM curve:</strong> The y-axis shows the survival probability (from 1.0 downwards), the x-axis shows time. A curve that stays higher and declines more slowly indicates better survival. The median survival time (where S(t) = 0.5) can be read off the graph. The log-rank test compares whether two or more KM curves are statistically different. KM curves should always include a table of the number at risk at each time point to show how much data supports each segment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m11" data-type="tf" data-id="102">
+    <div class="q-header">
+      <span class="q-num">Question 61</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>In survival analysis, censored observations are excluded from the analysis entirely because their outcome is unknown.</p>
+      <div class="options">
+        <label><input type="radio" name="q102" value="true"> True</label>
+        <label><input type="radio" name="q102" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a102')">Check Answer</button>
+      <div class="answer-box" id="a102">
+        <div class="correct-label">Correct Answer: False</div>
+        <div class="explanation">
+          Censored observations are <strong>not excluded</strong> — they contribute valuable information. A censored individual is included in the risk set and contributes to the survival estimate up until their censoring time. They are simply removed from subsequent risk sets. This is one of the key advantages of survival analysis: it uses all available information from every participant, even those who don't experience the event. Excluding censored participants would bias the results by only analysing those who had the event.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m11" data-type="mcq" data-id="103">
+    <div class="q-header">
+      <span class="q-num">Question 62</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>The <strong>proportional hazards assumption</strong> of Cox regression requires that:</p>
+      <div class="options">
+        <label><input type="radio" name="q103" value="a"> The hazard ratio is constant over time</label>
+        <label><input type="radio" name="q103" value="b"> The baseline hazard is the same in both groups</label>
+        <label><input type="radio" name="q103" value="c"> The survival curves must cross</label>
+        <label><input type="radio" name="q103" value="d"> There is no censoring in the data</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a103')">Check Answer</button>
+      <div class="answer-box" id="a103">
+        <div class="correct-label">Correct Answer: A</div>
+        <div class="explanation">
+          The proportional hazards assumption states that the <strong>hazard ratio is constant over time</strong> — i.e., the relative risk of the event between groups does not change during follow-up. This does not require the baseline hazards to be the same (they can differ). If survival curves cross, the PH assumption is violated because the HR changes over time. PH should be tested (e.g., using Schoenfeld residuals) before interpreting Cox model results.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m11" data-type="case" data-id="104">
+    <div class="q-header">
+      <span class="q-num">Question 63</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A 5-year study of a new cancer drug reports a Kaplan-Meier curve where the treatment group's survival curve stays consistently above the control group's curve. The median survival in the treatment group is 4.2 years vs 2.8 years in controls.
+      </div>
+      <p>What can you conclude about the treatment's effectiveness? What additional information would you want before recommending this treatment to a patient?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a104')">Check Answer</button>
+      <div class="answer-box" id="a104">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The treatment appears effective — patients live longer on average (median survival 4.2 vs 2.8 years), and the separation of KM curves suggests a sustained benefit over 5 years. <strong>Additional information needed:</strong><br>
+          (1) <strong>Hazard Ratio and 95% CI</strong> — to quantify the effect size and precision.<br>
+          (2) <strong>Log-rank test p-value</strong> — to confirm the difference is statistically significant.<br>
+          (3) <strong>Number at risk table</strong> — to see if the curves are still reliable at later time points (few patients left at risk means estimates are uncertain).<br>
+          (4) <strong>Side effects and quality of life</strong> — survival benefit may come with significant toxicity.<br>
+          (5) <strong>Generalizability</strong> — were the study patients similar to this specific patient?<br>
+          Survival benefit must be weighed against treatment burden in shared decision-making.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODULE 12: SAMPLE SIZE PLANNING                               -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="m12">
+    <span>Module 12: Sample Size Planning <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">10 questions</span>
+  </div>
+
+  <div class="question-card mcq" data-module="m12" data-type="mcq" data-id="47">
+    <div class="q-header">
+      <span class="q-num">Question 47</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>Which of the following would require a <strong>larger</strong> sample size?</p>
+      <div class="options">
+        <label><input type="radio" name="q47" value="a"> A larger expected effect size</label>
+        <label><input type="radio" name="q47" value="b"> A higher desired statistical power (90% vs. 80%)</label>
+        <label><input type="radio" name="q47" value="c"> Lower variability in the outcome</label>
+        <label><input type="radio" name="q47" value="d"> A less stringent significance level (α = 0.10 vs. 0.05)</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a47')">Check Answer</button>
+      <div class="answer-box" id="a47">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>Higher power</strong> means a greater ability to detect a true effect, which requires <strong>more participants</strong>. Larger effect sizes (A) need fewer participants; lower variability (C) makes effects easier to detect (fewer participants); less stringent α (D = 0.10) means you accept more false positives, which needs fewer participants.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m12" data-type="mcq" data-id="48">
+    <div class="q-header">
+      <span class="q-num">Question 48</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p><strong>Statistical power</strong> is defined as:</p>
+      <div class="options">
+        <label><input type="radio" name="q48" value="a"> The probability of rejecting the null hypothesis when it is true</label>
+        <label><input type="radio" name="q48" value="b"> The probability of detecting a true effect when it exists</label>
+        <label><input type="radio" name="q48" value="c"> The probability of a Type I error</label>
+        <label><input type="radio" name="q48" value="d"> The minimum sample size needed</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a48')">Check Answer</button>
+      <div class="answer-box" id="a48">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          <strong>Power = 1 − β</strong>, where β is the probability of a Type II error (false negative). Power is the probability of correctly rejecting the null when the alternative is true. Conventionally set at 80% — meaning there's a 20% chance of missing a true effect. Option A describes α (Type I error rate).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m12" data-type="short" data-id="49">
+    <div class="q-header">
+      <span class="q-num">Question 49</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>Explain <strong>why</strong> sample size planning is important in research. Mention at least two consequences of having a sample that is <strong>too small</strong> and two for one that is <strong>too large</strong>.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a49')">Check Answer</button>
+      <div class="answer-box" id="a49">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Too small a sample:</strong></p>
+          <ul>
+            <li>May fail to detect a real effect (<strong>false negative</strong> / Type II error) — the study was underpowered</li>
+            <li>Wastes time and resources on an inconclusive study</li>
+            <li><strong>Ethical issue:</strong> Participants were exposed to research burdens without generating meaningful knowledge</li>
+          </ul>
+          <p><strong>Too large a sample:</strong></p>
+          <ul>
+            <li>Wastes resources (money, personnel, time) that could be used for other research</li>
+            <li>May detect <strong>trivially small effects</strong> that are statistically significant but clinically meaningless</li>
+            <li><strong>Ethical issue:</strong> More participants than necessary are exposed to potential harms/inconvenience</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m12" data-type="case" data-id="50">
+    <div class="q-header">
+      <span class="q-num">Question 50</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A researcher plans a cRCT testing a community-based diabetes prevention programme. An individual RCT would need 200 participants per arm (80% power, α = 0.05). The researcher expects 10 clusters per arm with an average cluster size of 25, and estimates ICC = 0.02 from the literature.
+      </div>
+      <p>Why will this cRCT require <strong>more</strong> participants than the individual RCT? Explain conceptually how the ICC and cluster size affect the required sample size. What would the researcher need to consider when deciding how many clusters and participants to recruit?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a50')">Check Answer</button>
+      <div class="answer-box" id="a50">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <ul>
+            <li><strong>Why more participants are needed:</strong> In a cRCT, individuals within the same cluster are more similar than individuals from different clusters, meaning they provide <strong>less independent information</strong>. The effective sample size is smaller than the total number of participants, so you need to enrol more people to compensate for this information loss.</li>
+            <li><strong>How ICC affects the requirement:</strong> A higher ICC means greater similarity within clusters, which means more information loss per participant and consequently a larger inflation of the required sample size.</li>
+            <li><strong>How cluster size affects the requirement:</strong> Larger clusters mean more participants sharing the same cluster environment. Beyond a certain point, adding more people to an existing cluster yields diminishing returns in new information, so the sample size inflation grows with cluster size.</li>
+            <li><strong>Design trade-offs:</strong> The researcher must balance statistical requirements with practical constraints. Increasing the number of clusters is more efficient than increasing cluster size (more clusters = more independent units). However, adding clusters costs more in terms of logistics, training, and implementation. The researcher needs to find the optimal combination of clusters and cluster size that meets power requirements within budget.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m12" data-type="short" data-id="105">
+    <div class="q-header">
+      <span class="q-num">Question 64</span>
+      <span class="q-type short">Short Answer</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <p>What are the four main components of a <strong>sample size calculation</strong> for a study comparing two groups?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a105')">Check Answer</button>
+      <div class="answer-box" id="a105">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The four components are:<br>
+          (1) <strong>Significance level (α)</strong> — typically 0.05, the acceptable risk of a Type I error (false positive).<br>
+          (2) <strong>Power (1 − β)</strong> — typically 80%, the probability of detecting a true effect if it exists. Higher power needs larger samples.<br>
+          (3) <strong>Effect size</strong> — the expected magnitude of the difference between groups. A smaller effect requires a larger sample to detect.<br>
+          (4) <strong>Variability</strong> — the expected variation in the outcome (e.g., SD for continuous outcomes, baseline risk for binary outcomes). More variability requires larger samples.<br>
+          All four must be specified before the study begins. Sample size planning ensures the study is neither underpowered (wasteful, unethical) nor excessively large (wasteful).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m12" data-type="mcq" data-id="106">
+    <div class="q-header">
+      <span class="q-num">Question 65</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>If a researcher wants to detect a <strong>smaller effect size</strong> with the same power and α, the required sample size will:</p>
+      <div class="options">
+        <label><input type="radio" name="q106" value="a"> Decrease</label>
+        <label><input type="radio" name="q106" value="b"> Increase</label>
+        <label><input type="radio" name="q106" value="c"> Stay the same</label>
+        <label><input type="radio" name="q106" value="d"> Be impossible to determine</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a106')">Check Answer</button>
+      <div class="answer-box" id="a106">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          Detecting a <strong>smaller effect</strong> requires a <strong>larger sample size</strong> — the difference you want to detect is more subtle, so you need more participants to distinguish it from random variation. This is intuitive: a very large effect (e.g., a treatment that cures 90% of patients) can be detected with a small study, while a small effect (e.g., 5% risk reduction) requires a much larger study to achieve the same statistical power.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card tf" data-module="m12" data-type="tf" data-id="107">
+    <div class="q-header">
+      <span class="q-num">Question 66</span>
+      <span class="q-type tf">True / False</span>
+    </div>
+    <div class="q-body">
+      <p>A study with 80% power has a 20% chance of missing a true effect (Type II error). Increasing power to 90% would require a larger sample size.</p>
+      <div class="options">
+        <label><input type="radio" name="q107" value="true"> True</label>
+        <label><input type="radio" name="q107" value="false"> False</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a107')">Check Answer</button>
+      <div class="answer-box" id="a107">
+        <div class="correct-label">Correct Answer: True</div>
+        <div class="explanation">
+          Power = 80% means β = 0.20 — there is a 20% chance of failing to detect a true effect (Type II error). To reduce this to 10% (power = 90%, β = 0.10), you need a <strong>larger sample</strong>. The relationship between power and sample size is non-linear — increasing power from 80% to 90% requires a substantial increase in participants. Researchers typically accept 80% power as a reasonable balance between the risk of missing a true effect and the practical constraints of recruiting participants.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card short" data-module="m12" data-type="short" data-id="108">
+    <div class="q-header">
+      <span class="q-num">Question 67</span>
+      <span class="q-type short">Short Answer</span>
+    </div>
+    <div class="q-body">
+      <p>Why is it <strong>unethical</strong> to conduct a study that is too small (underpowered) OR too large? Explain both sides.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a108')">Check Answer</button>
+      <div class="answer-box" id="a108">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <strong>Underpowered study (too small):</strong> Unethical because participants are exposed to the risks and burdens of research (invasive tests, time, inconvenience, potential side effects) without a reasonable chance of producing meaningful results. The study may fail to detect a real effect, wasting resources and potentially leading to abandonment of a useful intervention. It also violates the principle that research should contribute to generalisable knowledge.<br>
+          <strong>Overpowered study (too large):</strong> Unethical because more participants than necessary are exposed to potential harms and burdens. Large studies can detect <strong>trivially small effects</strong> that are statistically significant but clinically meaningless, potentially leading to adoption of ineffective or harmful interventions based on statistical significance alone. Oversized studies also waste limited research resources that could be used for other studies.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card mcq" data-module="m12" data-type="mcq" data-id="109">
+    <div class="q-header">
+      <span class="q-num">Question 68</span>
+      <span class="q-type mcq">Multiple Choice</span>
+    </div>
+    <div class="q-body">
+      <p>In a cRCT, the required sample size must be inflated compared to an individual RCT. This inflation is primarily due to:</p>
+      <div class="options">
+        <label><input type="radio" name="q109" value="a"> Higher dropout rates in cRCTs</label>
+        <label><input type="radio" name="q109" value="b"> Within-cluster correlation reducing the effective sample size</label>
+        <label><input type="radio" name="q109" value="c"> cRCTs always needing more clusters than individual RCTs need individuals</label>
+        <label><input type="radio" name="q109" value="d"> The need to adjust for more confounders in cRCTs</label>
+      </div>
+      <button class="show-answer-btn" onclick="toggleAnswer('a109')">Check Answer</button>
+      <div class="answer-box" id="a109">
+        <div class="correct-label">Correct Answer: B</div>
+        <div class="explanation">
+          The sample size inflation in cRCTs is due to the <strong>Design Effect (DE)</strong>, which accounts for the loss of statistical information caused by <strong>within-cluster correlation</strong>. Individuals in the same cluster are more similar than individuals in different clusters, meaning each additional participant provides less than one unit of independent information. The DE depends on the ICC and the average cluster size. The inflation is not primarily about dropout rates, number of clusters, or confounding — it is fundamentally about information loss due to clustering.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m12" data-type="case" data-id="110">
+    <div class="q-header">
+      <span class="q-num">Question 69</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Case:</strong> A researcher submits a grant proposal for a study with 30 participants per arm to detect a 50% reduction in disease risk. The reviewer notes the study is underpowered and the necessary sample size would be 200 per arm.
+      </div>
+      <p>Why might the researcher have underestimated the required sample size? What are the consequences of proceeding with the smaller study?</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a110')">Check Answer</button>
+      <div class="answer-box" id="a110">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          The researcher may have underestimated the required sample size by: (1) overestimating the expected <strong>effect size</strong> (50% reduction may be too optimistic; the true effect may be smaller); (2) underestimating the <strong>variability</strong> in the outcome; (3) using too low <strong>power</strong>; or (4) ignoring the <strong>Design Effect</strong> if it is a cRCT.<br>
+          <strong>Consequences of proceeding with 30 per arm:</strong> The study will almost certainly be <strong>underpowered</strong> — unable to detect a statistically significant effect even if the intervention truly works. The result will likely be "non-significant" (inconclusive), wasting the resources invested and potentially causing a useful intervention to be abandoned. Ethically, participants were exposed to research burdens without a reasonable chance of producing meaningful knowledge. Proper sample size planning in advance is essential to avoid these problems.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MOCK EXAM STYLE QUESTIONS                                     -->
+  <!-- ============================================================ -->
+  <div class="section-header" data-module="all">
+    <span>Mock Exam Style Questions <span class="exam-tag">Exam Focus</span></span>
+    <span class="badge">4 multi-part questions</span>
+  </div>
+
+  <div class="question-card case" data-module="m1" data-type="case" data-id="111">
+    <div class="q-header">
+      <span class="q-num">Question 70 — Mock Exam Style</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>As a project member of a team of experts</strong> you are supposed to report existing registry data on incidence of dengue fever infections in four rural regions (A, B, C, and D) at the next team meeting. Since resources are scarce, only one of the four regions will receive funding for improving health care infrastructure. (14 points)
+      </div>
+      <p><strong>(a)</strong> Which commonly used strategies would be helpful to investigate which of the four regions has the highest disease burden and should therefore be selected for implementing the preventive intervention? (2 points)</p>
+      <p><strong>(b)</strong> What is the most important reason for applying one of the strategies from question (a) for the purpose of selecting the region to implement the preventive intervention? (4 points)</p>
+      <p><strong>(c)</strong> Describe the two different approaches of the commonly used strategy from task (a) to identify priority settings for an intervention (no formulas needed). (4 points)</p>
+      <p><strong>(d)</strong> What is the problem when interpreting the numbers resulting from using one of the two approaches on the dengue incidences in the four aforementioned rural regions? (4 points)</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a111')">Check Answer</button>
+      <div class="answer-box" id="a111">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>(a)</strong> <strong>Standardisation</strong> (age-standardisation or direct/indirect standardisation) of the incidence rates. Also: calculating comparable incidence rates per 1,000 or 100,000 population. Crude rates alone may be misleading if the regions have different age structures.</p>
+          <p><strong>(b)</strong> The most important reason: the four regions likely have <strong>different age structures</strong> (e.g., Region A may have a younger population, Region D an older one). Since dengue incidence varies by age, comparing crude rates would confound age structure differences with true disease burden differences. Standardisation removes the effect of age differences, allowing a fair comparison of disease burden across regions.</p>
+          <p><strong>(c)</strong> <strong>Direct standardisation:</strong> Apply region-specific age-specific rates to a <strong>standard population</strong> (e.g., the WHO world standard population) to calculate what the rate would be if all regions had the same age structure. <strong>Indirect standardisation:</strong> Apply standard (reference) age-specific rates to each region's population to calculate <strong>expected cases</strong>, then compare observed to expected (Standardised Incidence Ratio, SIR). Direct is used when region-specific age-specific rates are available; indirect when only the total number of cases and the population age distribution are known.</p>
+          <p><strong>(d)</strong> The <strong>choice of standard population</strong> affects the resulting standardised rates. Different standard populations (e.g., world standard vs. European standard) can produce different absolute rates and even change the ranking of regions. The standardised rates are <strong>relative</strong> — they only have meaning in comparison with each other using the same standard. Additionally, standardisation removes real age differences, which may themselves be relevant for public health planning (a region with many young people may need different interventions).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m2" data-type="case" data-id="112">
+    <div class="q-header">
+      <span class="q-num">Question 71 — Mock Exam Style</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>We can use a variety of strategies</strong> to statistically describe distribution and dynamics of disease as well as exposure and outcome relationships or intervention effects in a population. (12 points)
+      </div>
+      <p><strong>(1)</strong> Report which of the different study types we discussed in class would be appropriate for the following four scenarios. (8 points)</p>
+      <p><strong>(2)</strong> Also, report which statistical measure(s) of an exposure/outcome relationship or intervention effect you could use in the different scenarios. (4 points)</p>
+      <p><strong>Justify your answers to (1) and (2)!</strong></p>
+
+      <p><strong>Scenario 1:</strong> A team of researchers is interested in investigating factors associated with newly occurring diarrhoea episodes in children under 5 years of age in a rural population of a low-income country. Their focus is on sanitation.</p>
+      <p><strong>Scenario 2:</strong> A team of global health experts is supposed to investigate the association between pesticide exposure in field workers and the occurrence of Glioblastoma, a rare neoplasm of the brain.</p>
+      <p><strong>Scenario 3:</strong> The health authorities in the capital city of a low-income country are interested in investigating the distribution of cardiovascular diseases, and the factors that explain differences in the distribution of those diseases in the general population.</p>
+      <p><strong>Scenario 4:</strong> A team of global health experts is going to investigate the impact of a newly developed system of solar water disinfection compared to the standard system for a rural area with insufficient access to safe drinking water on the frequency of E. coli associated diseases.</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a112')">Check Answer</button>
+      <div class="answer-box" id="a112">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>Scenario 1 — Cohort study:</strong> The research question is about <strong>newly occurring</strong> diarrhoea (incidence) and its association with sanitation. A cohort study follows disease-free children forward, tracking who develops diarrhoea based on sanitation level. <strong>Effect measure: Relative Risk (RR)</strong> or <strong>Risk Difference (AR)</strong>. The cohort design allows direct calculation of incidence and risk ratios.</p>
+          <p><strong>Scenario 2 — Case-control study:</strong> Glioblastoma is a <strong>rare disease</strong>. A cohort study would need an enormous sample followed for many years to obtain enough cases. Selecting cases (with Glioblastoma) and controls (without) and looking back at pesticide exposure is efficient. <strong>Effect measure: Odds Ratio (OR).</strong> Case-control studies cannot measure incidence, so RR is not directly calculable. For rare diseases, OR approximates RR.</p>
+          <p><strong>Scenario 3 — Cross-sectional study:</strong> The aim is to investigate the <strong>distribution</strong> of CVD and associated factors in the general population at one point in time. No follow-up is needed. <strong>Effect measure: Prevalence Odds Ratio (POR)</strong> or <strong>Prevalence Ratio (PR).</strong> Cross-sectional studies measure prevalence, not incidence, so effect measures are based on prevalence comparisons.</p>
+          <p><strong>Scenario 4 — Randomised Controlled Trial (RCT) / cluster RCT:</strong> The research question is about the <strong>impact</strong> (effectiveness) of a new intervention. Solar water disinfection is naturally delivered at the community level, so a <strong>cluster RCT</strong> randomising villages to new vs. standard system would be appropriate to avoid contamination. <strong>Effect measure: Relative Risk (RR)</strong> or <strong>Risk Difference (AR)</strong>, possibly <strong>NNT</strong> if reporting in absolute terms. For a cRCT, analysis must account for clustering (ICC, design effect).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m3" data-type="case" data-id="113">
+    <div class="q-header">
+      <span class="q-num">Question 72 — Mock Exam Style</span>
+      <span class="q-type case">Case Study</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>Your team is evaluating</strong> a community health worker (CHW) programme aimed at reducing maternal mortality in three districts of rural Zambia (Districts X, Y, Z). District X has been running the programme for 5 years, District Y for 2 years, and District Z has not yet implemented it. Your team has access to registry data on maternal deaths and population demographics. (12 points)
+      </div>
+      <p><strong>(a)</strong> What is the main challenge when comparing maternal mortality across these three districts? (3 points)</p>
+      <p><strong>(b)</strong> Which epidemiological strategy would you use to address this challenge? Describe the two approaches (no formulas needed). (5 points)</p>
+      <p><strong>(c)</strong> After applying the strategy, you find that District X has the lowest rate, followed by Y, then Z. The Minister claims this proves the CHW programme works. Is this conclusion justified? What alternative explanations must be considered? (4 points)</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a113')">Check Answer</button>
+      <div class="answer-box" id="a113">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>(a)</strong> The main challenge is that the three districts likely have <strong>different population structures</strong> (age distribution, fertility rates, socioeconomic composition). Maternal mortality is strongly age-dependent (higher risk in very young and older mothers). Comparing crude maternal mortality rates would confound population differences with programme effects. Additionally, the districts may differ in completeness of death registration.</p>
+          <p><strong>(b)</strong> <strong>Standardisation:</strong> <strong>(1) Direct standardisation:</strong> Apply each district's age-specific maternal mortality rates to a standard population (e.g., Zambia national population or WHO standard) to calculate what the rate would be if all districts had the same age structure. <strong>(2) Indirect standardisation:</strong> Apply standard (national) age-specific rates to each district's population to calculate expected deaths, then compute the Standardised Mortality Ratio (SMR = observed/expected). Direct is preferable when district-specific age-stratified data are available; indirect when only total deaths and population age distribution are known.</p>
+          <p><strong>(c)</strong> The Minister's conclusion is <strong>not fully justified</strong>. Alternative explanations: <strong>(1) Confounding by secular trends</strong> — maternal mortality may have been declining nationally over the 5-year period independent of the programme. <strong>(2) Selection bias</strong> — District X may have been chosen to pilot the programme because it already had stronger health infrastructure or higher literacy rates. <strong>(3) Confounding by other interventions</strong> — District X may have also received other health investments during the same period. <strong>(4) Differences in reporting</strong> — better death registration in some districts could bias comparisons. A more rigorous evaluation would require a controlled design (e.g., difference-in-differences, or a stepped-wedge cRCT).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card case" data-module="m4" data-type="case" data-id="114">
+    <div class="q-header">
+      <span class="q-num">Question 73 — Mock Exam Style</span>
+      <span class="q-type case">Case Study</span>
+      <span class="exam-tag">Exam Focus</span>
+    </div>
+    <div class="q-body">
+      <div class="scenario">
+        <strong>A research team</strong> publishes a study claiming that a new mobile health (mHealth) app reduces postpartum depression. The study compared 500 women who used the app with 500 who did not, finding a statistically significant reduction in depression scores. However, women who chose to use the app were more likely to be university-educated and to have private health insurance. The study did not randomly assign the app. (10 points)
+      </div>
+      <p><strong>(a)</strong> Identify the main threat to validity in this study and name the type of bias. (3 points)</p>
+      <p><strong>(b)</strong> The authors argue they "adjusted for education and insurance in a regression model and the effect remained significant." Explain what this means and whether it fully resolves the problem. (4 points)</p>
+      <p><strong>(c)</strong> What study design would you recommend for a definitive evaluation of the app's effectiveness? Justify your choice with at least two reasons. (3 points)</p>
+      <button class="show-answer-btn" onclick="toggleAnswer('a114')">Check Answer</button>
+      <div class="answer-box" id="a114">
+        <div class="correct-label">Model Answer</div>
+        <div class="explanation">
+          <p><strong>(a)</strong> <strong>Confounding by indication (selection bias).</strong> Women who chose to use the app are systematically different from those who did not — they are more educated, have better insurance, and likely have better health literacy and social support. Any of these factors could independently reduce postpartum depression, regardless of the app. The lack of randomisation means the groups are not exchangeable.</p>
+          <p><strong>(b)</strong> Adjusting means the authors included education and insurance as covariates in a regression model to estimate the app's effect <strong>"holding these variables constant."</strong> This <strong>partially</strong> addresses confounding — but it <strong>does not fully resolve</strong> the problem because: (1) there may be <strong>unmeasured confounders</strong> (e.g., motivation, social support, prenatal mental health) that differ between groups but were not adjusted for; (2) adjustment assumes the confounders are measured <strong>without error</strong>, which is rarely true; (3) the groups may differ on characteristics that cannot be quantified. Only randomisation can balance <strong>both measured and unmeasured confounders.</strong></p>
+          <p><strong>(c)</strong> <strong>Randomised Controlled Trial (RCT)</strong> — ideally a <strong>pragmatic RCT</strong> recruiting pregnant women and randomly assigning them to app vs. standard care. Reasons: (1) Randomisation balances confounders (known and unknown) between groups, providing the strongest evidence for causality. (2) Blinding of outcome assessment reduces information bias. (3) An intention-to-treat analysis preserves the benefits of randomisation. If contamination between app users and controls is a concern, a <strong>cluster RCT</strong> (randomising clinics or communities) would be an alternative.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-card" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 10px; padding: 25px; margin: 25px 0;">
+    <h2 style="color: var(--primary); margin-bottom: 10px;">Good luck!</h2>
+    <p>Work through these questions module by module. Try to answer each question <strong>before</strong> clicking "Check Answer". For short answer and case questions, write out your full answer first, then compare with the model answer.</p>
+    <p style="margin-top: 10px;"><strong>Remember:</strong> The exam is 2 hours, written, with NO multiple choice. You must be able to <strong>explain and interpret</strong> concepts in your own words. Practice writing out full answers!</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  GH 9b Quantitative Research Methods — Exercise Bank
+</div>
+
+<script>
+let state = {};
+
+function toggleAnswer(id) {
+  const box = document.getElementById(id);
+  const btn = box.previousElementSibling;
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.textContent = 'Check Answer';
+  } else {
+    box.style.display = 'block';
+    btn.textContent = 'Hide Answer';
+    const qCard = box.closest('.question-card');
+    const qId = qCard.dataset.id;
+    if (qId && !state[qId]) {
+      state[qId] = { revealed: true };
+      updateStats();
+    }
+  }
+}
+
+function revealAll() {
+  document.querySelectorAll('.answer-box').forEach(box => {
+    box.style.display = 'block';
+    const btn = box.previousElementSibling;
+    if (btn && btn.classList.contains('show-answer-btn')) {
+      btn.textContent = 'Hide Answer';
+    }
+    const qCard = box.closest('.question-card');
+    const qId = qCard.dataset.id;
+    if (qId) state[qId] = state[qId] || {};
+    if (qId) state[qId].revealed = true;
+  });
+  updateStats();
+}
+
+function resetAll() {
+  document.querySelectorAll('.answer-box').forEach(box => {
+    box.style.display = 'none';
+    const btn = box.previousElementSibling;
+    if (btn && btn.classList.contains('show-answer-btn')) {
+      btn.textContent = 'Check Answer';
+    }
+  });
+  document.querySelectorAll('.options input[type="radio"]').forEach(r => r.checked = false);
+  state = {};
+  updateStats();
+  filterQuestions();
+}
+
+function filterQuestions() {
+  const module = document.getElementById('moduleFilter').value;
+  const type = document.getElementById('typeFilter').value;
+  document.querySelectorAll('.question-card').forEach(card => {
+    const showModule = module === 'all' || card.dataset.module === module;
+    const showType = type === 'all' || card.dataset.type === type;
+    card.style.display = showModule && showType ? 'block' : 'none';
+  });
+  updateStats();
+}
+
+function updateStats() {
+  const total = document.querySelectorAll('.question-card').length;
+  const visible = document.querySelectorAll('.question-card[style*="display: block"], .question-card:not([style*="display"])').length;
+  const answered = Object.keys(state).length;
+  document.getElementById('totalQ').textContent = visible;
+  document.getElementById('answeredQ').textContent = answered;
+  document.getElementById('correctQ').textContent = '—';
+  // Progress info shown but we don't track correctness automatically for open-ended
+}
+</script>
+
+</body>
+</html>
