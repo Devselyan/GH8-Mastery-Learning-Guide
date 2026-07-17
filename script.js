@@ -39,10 +39,22 @@ function checkAnswer(el, correct, questionId) {
 function updateProgress() {}
 function toggleSidebar() {
   var sb = document.getElementById('sidebar');
-  sb.classList.toggle('open');
-  sb.classList.toggle('collapsed');
-  document.getElementById('sidebarOverlay').classList.toggle('show');
-  document.body.classList.toggle('sidebar-hidden');
+  var overlay = document.getElementById('sidebarOverlay');
+  var isOpen = sb.classList.contains('open');
+
+  if (isOpen) {
+    sb.classList.remove('open');
+    sb.classList.add('collapsed');
+    overlay.classList.remove('show');
+    document.body.classList.remove('sidebar-hidden');
+  } else {
+    sb.classList.add('open');
+    sb.classList.remove('collapsed');
+    if (window.innerWidth <= 768) {
+      overlay.classList.add('show');
+    }
+    document.body.classList.add('sidebar-hidden');
+  }
 }
 
 function focusModule(id) {

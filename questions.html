@@ -73,7 +73,7 @@
 <div class="container">
 <div class="question-bank-hero">
   <h1>📝 Question Bank</h1>
-  <p>All 39 quizzes extracted from the GH8 Mastery Learning Guide. Click any question to reveal the correct answer. Use the sidebar to jump to a module, or search for specific topics.</p>
+  <p>All 64 quizzes extracted quizzes extracted from the GH8 Mastery Learning Guide. Click any question to reveal the correct answer. Use the sidebar to jump to a module, or search for specific topics.</p>
   <p style="margin-top:10px;"><a href="index.html" class="back-link">← Back to Guide</a></p>
 </div>
 <div id="searchResultsPanel" class="search-results-panel"></div>
@@ -107,6 +107,48 @@
           <strong>✓ Correct!</strong> Electoral accountability is not one of the six WHO Building Blocks. The six are: Service Delivery, Health Workforce, Health Information Systems, Medical Products & Technologies, Financing, and Leadership & Governance.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 1</h4>
+        <div class="question">Which of the following is NOT one of the six WHO Building Blocks?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q1-3')">Service Delivery</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-3')">Health Workforce</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q1-3')">Pharmaceutical Pricing</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-3')">Financing</div>
+        </div>
+        <div class="feedback" id="q1-3-feedback">
+          <strong>✓ Correct!</strong> Pharmaceutical Pricing is not a WHO Building Block. The six are: Service Delivery, Health Workforce, Health Information Systems, Medical Products/Vaccines/Technologies, Financing, and Leadership/Governance.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 1</h4>
+        <div class="question">According to Rosenbrock, which three levels of health policy can be distinguished?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q1-4')">Federal, State, Local</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q1-4')">Health System, Health Services, Health Policy</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-4')">Primary, Secondary, Tertiary</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-4')">Prevention, Treatment, Rehabilitation</div>
+        </div>
+        <div class="feedback" id="q1-4-feedback">
+          <strong>✓ Correct!</strong> Rosenbrock distinguishes three levels: the health system (macro), health services (meso), and health policy (the policy process itself). This helps analyse problems at the right level.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 1</h4>
+        <div class="question">The WHO defines a health system as including all activities whose primary purpose is to:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q1-5')">Treat diseases in hospitals</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q1-5')">Promote, restore or maintain health</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-5')">Provide health insurance coverage</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q1-5')">Regulate pharmaceutical prices</div>
+        </div>
+        <div class="feedback" id="q1-5-feedback">
+          <strong>✓ Correct!</strong> The WHO definition is intentionally broad: "all activities whose primary purpose is to promote, restore or maintain health." This includes traditional healers, home care, and self-medication — not just formal medical care.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m2">
   <div class="module-header" onclick="toggleModule('m2')"><h2>📜 Module 2 — History</h2></div>
@@ -137,6 +179,48 @@
           <strong> Correct!</strong> Subsidiarity means organising social protection at the lowest feasible level. This is why Germany has corporatist self-governance, non-profit hospitals, and federalism.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 2</h4>
+        <div class="question">In which year did Bismarck introduce the first health insurance law?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q2-3')">1871</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q2-3')">1883</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-3')">1911</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-3')">1927</div>
+        </div>
+        <div class="feedback" id="q2-3-feedback">
+          <strong>✓ Correct!</strong> The Health Insurance Act (Krankenversicherungsgesetz) was introduced in 1883 under Chancellor Otto von Bismarck. It was the world's first national social health insurance system.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 2</h4>
+        <div class="question">What was Bismarck's primary political motivation for introducing social insurance?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q2-4')">Improving population health</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-4')">Industrialisation demanded it</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q2-4')">Undercutting the socialist movement (SPD)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-4')">Following the British example</div>
+        </div>
+        <div class="feedback" id="q2-4-feedback">
+          <strong>✓ Correct!</strong> Bismarck introduced social insurance primarily to undercut the appeal of the rising SPD. The Anti-Socialist Laws (1878) tried repression; social insurance was a strategic concession to win worker loyalty to the state.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 2</h4>
+        <div class="question">When was the dual GKV/PKV system established in its modern form?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q2-5')">1883</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-5')">1933</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q2-5')">1955</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q2-5')">1990</div>
+        </div>
+        <div class="feedback" id="q2-5-feedback">
+          <strong>✓ Correct!</strong> The modern dual system was established in 1955 when the CDU government under Adenauer allowed higher-income employees and civil servants to opt out of GKV into private insurance. This reflected middle-class political power after WWII.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m3">
   <div class="module-header" onclick="toggleModule('m3')"><h2>🏛️ Module 3 — Frameworks</h2></div>
@@ -167,6 +251,48 @@
           <strong> Correct!</strong> Germany is SHI type: corporatist regulation, social insurance financing, private provision.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 3</h4>
+        <div class="question">In the Bismarck model, how are health services primarily financed?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q3-3')">General taxation</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q3-3')">Social insurance contributions from employers and employees</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-3')">Out-of-pocket payments</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-3')">Private insurance premiums</div>
+        </div>
+        <div class="feedback" id="q3-3-feedback">
+          <strong>✓ Correct!</strong> The Bismarck model is funded through social insurance contributions shared by employers and employees, linked to earnings. The Beveridge model (UK, Scandinavia) uses general taxation.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 3</h4>
+        <div class="question">Rothgang/Wendt/Böhm distinguish health systems along which three dimensions?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q3-4')">Public, Private, Mixed</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q3-4')">Regulation, Financing, Service Provision</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-4')">Prevention, Treatment, Rehabilitation</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-4')">Federal, Centralised, Decentralised</div>
+        </div>
+        <div class="feedback" id="q3-4-feedback">
+          <strong>✓ Correct!</strong> Rothgang/Wendt/Böhm classify health systems by three dimensions: regulation (who sets rules), financing (who pays), and service provision (who delivers care). This produces richer typologies than simple Bismarck/Beveridge labels.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 3</h4>
+        <div class="question">Which type of health system does Germany belong to according to the Rothgang/Wendt/Böhm typology?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q3-5')">National Health Service (Beveridge)</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q3-5')">Social Health Insurance (SHI) with corporatist regulation</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-5')">Private health insurance system</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q3-5')">Transitional post-socialist system</div>
+        </div>
+        <div class="feedback" id="q3-5-feedback">
+          <strong>✓ Correct!</strong> Germany is classified as an SHI system with corporatist regulation — self-governing bodies (G-BA, KVen) have significant regulatory authority, financing is through social contributions, and service provision is mixed public/private.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m4">
   <div class="module-header" onclick="toggleModule('m4')"><h2>🩺 Module 4 — Service Delivery</h2></div>
@@ -197,6 +323,48 @@
           <strong> Correct!</strong> The three types are public, non-profit, and private for-profit.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 4</h4>
+        <div class="question">What does KV (Kassenärztliche Vereinigung) refer to in the German system?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q4-3')">The national health insurance fund</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q4-3')">The association of statutory health insurance physicians</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-3')">The hospital planning authority</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-3')">The pharmaceutical regulation body</div>
+        </div>
+        <div class="feedback" id="q4-3-feedback">
+          <strong>✓ Correct!</strong> KVen (Kassenärztliche Vereinigungen) are regional associations of SHI-accredited physicians. They are corporate self-governing bodies responsible for ambulatory care delivery and have a monopoly on outpatient SHI services.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 4</h4>
+        <div class="question">What percentage of German hospitals are publicly owned (~2024)?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q4-4')">~55%</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q4-4')">~38%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-4')">~25%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-4')">~70%</div>
+        </div>
+        <div class="feedback" id="q4-4-feedback">
+          <strong>✓ Correct!</strong> About 38% of German hospitals are publicly owned. About 33% are non-profit (often church-affiliated) and ~29% are for-profit. Since the 1990s, privatisation has increased significantly.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 4</h4>
+        <div class="question">The principle of "ambulatory before inpatient" (ambulant vor stationär) means:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q4-5')">Patients must always see a specialist first</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q4-5')">Outpatient care should be preferred over hospital admission when appropriate</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-5')">Hospitals cannot provide outpatient services</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q4-5')">Only GPs can refer to hospitals</div>
+        </div>
+        <div class="feedback" id="q4-5-feedback">
+          <strong>✓ Correct!</strong> Germany follows the principle that outpatient/ambulatory care should be preferred when medically appropriate. However, in practice the sectoral separation between ambulatory and inpatient care creates coordination problems.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m5">
   <div class="module-header" onclick="toggleModule('m5')"><h2>🏥 Module 5 — Prevention</h2></div>
@@ -227,6 +395,48 @@
           <strong> Correct!</strong> Core problems: fragmentation (16 state laws, 375 offices), weak coordination, curative dominance.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 5</h4>
+        <div class="question">What percentage of GKV expenditure is spent on primary prevention?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q5-3')">~3%</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q5-3')">~0.3%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-3')">~10%</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-3')">~15%</div>
+        </div>
+        <div class="feedback" id="q5-3-feedback">
+          <strong>✓ Correct!</strong> Only about 0.3% of GKV expenditure (~€700M out of €280B) goes to primary prevention. This is far below the OECD average of ~3% and illustrates Germany's curative bias.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 5</h4>
+        <div class="question">The Prevention Law (PrävG) of 2015 was an example of:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q5-4')">Fundamental restructuring of the prevention system</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q5-4')">Institutional layering — adding resources without restructuring</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-4')">Abolishing the ÖGD</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-4')">Merging prevention and curative budgets</div>
+        </div>
+        <div class="feedback" id="q5-4-feedback">
+          <strong>✓ Correct!</strong> The Prevention Law 2015 added resources for prevention but did not restructure the fragmented system (16 state laws, 375 local ÖGD offices). It is a classic example of institutional layering.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 5</h4>
+        <div class="question">What is the ÖGD (Öffentlicher Gesundheitsdienst)?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q5-5')">The private health insurance association</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q5-5')">The public health service at state and local level</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-5')">The federal drug regulation agency</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q5-5')">The hospital accreditation body</div>
+        </div>
+        <div class="feedback" id="q5-5-feedback">
+          <strong>✓ Correct!</strong> The ÖGD is Germany's public health service, organised at state and local level. It is responsible for infection control, health monitoring, and health promotion. It is fragmented across 375 local offices with weak coordination.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m6">
   <div class="module-header" onclick="toggleModule('m6')"><h2>📊 Module 6 — Performance</h2></div>
@@ -270,6 +480,34 @@
           <strong> Correct!</strong> Standard frameworks rate Germany highly on aggregate coverage while obscuring two-tier access and curative bias.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 6</h4>
+        <div class="question">The Donabedian model evaluates health care quality along which three dimensions?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q6-4')">Cost, Access, Quality</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q6-4')">Structure, Process, Outcome</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-4')">Primary, Secondary, Tertiary</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-4')">Input, Output, Impact</div>
+        </div>
+        <div class="feedback" id="q6-4-feedback">
+          <strong>✓ Correct!</strong> Donabedian's triad: Structure (resources, facilities, staff), Process (how care is delivered), and Outcome (health results). Germany scores well on Structure but shows gaps in Process coordination and Outcome equity.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 6</h4>
+        <div class="question">Germany's health spending is ~12.7% of GDP, yet life expectancy (81.1) is below France (82.3) and Sweden (83.1). This is called:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q6-5')">The Baumol effect</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q6-5')">The performance paradox</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-5')">Moral hazard</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q6-5')">Adverse selection</div>
+        </div>
+        <div class="feedback" id="q6-5-feedback">
+          <strong>✓ Correct!</strong> The "performance paradox" or "German paradox" describes high spending without commensurate health outcomes. Explanations include curative bias, sectoral fragmentation, and dual-system inequalities.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m7">
   <div class="module-header" onclick="toggleModule('m7')"><h2>⚖️ Module 7 — Governing</h2></div>
@@ -300,6 +538,48 @@
           <strong> Correct!</strong> G-BA members are not elected, patient organisations have advisory-only status, and parliamentary override is rare.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 7</h4>
+        <div class="question">What is the G-BA (Gemeinsamer Bundesausschuss)?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q7-3')">The federal health ministry</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q7-3')">The highest decision-making body in the self-governing system</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-3')">The private insurance regulatory authority</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-3')">The hospital association</div>
+        </div>
+        <div class="feedback" id="q7-3-feedback">
+          <strong>✓ Correct!</strong> The G-BA (Federal Joint Committee) is the highest decision-making body in Germany's corporatist self-governance. It decides which services are covered by SHI. Members include payers, providers, and patient representatives (advisory only).
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 7</h4>
+        <div class="question">Which ministry oversees the German health system at the federal level?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q7-4')">Federal Ministry of Finance</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q7-4')">Federal Ministry of Health (BMG)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-4')">Federal Ministry of Labour</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-4')">Federal Ministry of Economic Affairs</div>
+        </div>
+        <div class="feedback" id="q7-4-feedback">
+          <strong>✓ Correct!</strong> The Federal Ministry of Health (BMG — Bundesministerium für Gesundheit) is responsible for health policy at the federal level. However, many decisions are delegated to self-governing bodies like the G-BA.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 7</h4>
+        <div class="question">A criticism of Germany's corporatist governance is that it lacks:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q7-5')">Efficiency</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q7-5')">Democratic legitimacy — key bodies are not directly elected</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-5')">Funding</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q7-5')">Physician participation</div>
+        </div>
+        <div class="feedback" id="q7-5-feedback">
+          <strong>✓ Correct!</strong> A key criticism is the democratic deficit: G-BA members are appointed by corporatist organisations, not elected. Patient organisations have advisory-only status. Parliamentary oversight is limited, raising questions about democratic legitimacy.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m8">
   <div class="module-header" onclick="toggleModule('m8')"><h2>🔄 Module 8 — Path Dependency</h2></div>
@@ -330,6 +610,48 @@
           <strong> Correct!</strong> The joint decision trap describes how federal systems requiring state consent produce lowest-common-denominator outcomes.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 8</h4>
+        <div class="question">Path dependency in health policy means:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q8-3')">All countries eventually adopt the same system</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q8-3')">Past institutional choices constrain future reform options</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-3')">Reform is always linear and predictable</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-3')">Only economic factors determine policy</div>
+        </div>
+        <div class="feedback" id="q8-3-feedback">
+          <strong>✓ Correct!</strong> Path dependency means that once a country chooses a particular institutional path (e.g., social insurance in 1883), switching costs increase over time and fundamental reform becomes difficult. Germany's GKV system is a classic example.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 8</h4>
+        <div class="question">What does ACI stand for in political science?</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q8-4')">Agency, Coordination, Implementation</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q8-4')">Actors, Orientations, Constellation, Interaction rules</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-4')">Analysis, Comparison, Interpretation</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-4')">Administration, Control, Inspection</div>
+        </div>
+        <div class="feedback" id="q8-4-feedback">
+          <strong>✓ Correct!</strong> ACI stands for Actors (who participates), Orientations (their goals/beliefs), Constellation (power relationships), and Interaction Rules (institutional procedures). It is a framework for analysing policy processes.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 8</h4>
+        <div class="question">"Layering" as a concept in institutional theory refers to:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q8-5')">Abolishing old institutions and creating new ones</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q8-5')">Adding new rules on top of existing ones without removing them</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-5')">Merging two institutions into one</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q8-5')">Returning to a previous institutional arrangement</div>
+        </div>
+        <div class="feedback" id="q8-5-feedback">
+          <strong>✓ Correct!</strong> Layering adds new rules or institutions on top of existing structures without abolishing them. Examples in Germany: Morbi-RSA (risk adjustment) added to the GKV system, and the Prevention Law (2015) added resources without restructuring.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m9">
   <div class="module-header" onclick="toggleModule('m9')"><h2>💰 Module 9 — Political Economy</h2></div>
@@ -373,6 +695,34 @@
           <strong> Correct!</strong> VoC theory predicts CMEs resist both radical marketisation (LME direction) and universalist expansion (social democratic direction) because of institutional complementarities.
         </div>
       </div>
+      <div class="quiz">
+        <h4>Quick Check — Module 9</h4>
+        <div class="question">Varieties of Capitalism (VoC) theory classifies Germany as a:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q9-4')">Liberal Market Economy (LME)</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q9-4')">Coordinated Market Economy (CME)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-4')">Mixed Market Economy (MME)</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-4')">State-led Market Economy (SME)</div>
+        </div>
+        <div class="feedback" id="q9-4-feedback">
+          <strong>✓ Correct!</strong> Germany is the paradigmatic Coordinated Market Economy (CME): non-market coordination, strong employer associations, vocational training, and patient capital. This affects health policy — CMEs resist both radical marketisation and universalist expansion.
+        </div>
+      </div>
+
+      <div class="quiz">
+        <h4>Quick Check — Module 9</h4>
+        <div class="question">Power Resources Theory argues that welfare state design reflects:</div>
+        <div class="options">
+          <div class="option" onclick="checkAnswer(this, false, 'q9-5')">The most efficient economic arrangement</div>
+          <div class="option" onclick="checkAnswer(this, true, 'q9-5')">The relative power of labour vs. capital in political struggles</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-5')">Cultural values and historical traditions only</div>
+          <div class="option" onclick="checkAnswer(this, false, 'q9-5')">International pressure and EU directives</div>
+        </div>
+        <div class="feedback" id="q9-5-feedback">
+          <strong>✓ Correct!</strong> Power Resources Theory (Korpi) argues welfare states reflect the balance of power between labour and capital. The GKV's creation in 1883 was shaped by Bismarck's need to counter the socialist movement, and the 1955 dual system reflected middle-class power.
+        </div>
+      </div>
+
 </div></div>
 <div class="module" id="m11">
   <div class="module-header" onclick="toggleModule('m11')"><h2>🧩 Module 10 — Systems Theory</h2></div>
