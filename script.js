@@ -101,6 +101,7 @@ function showAllModules() {
 var _searchMatches = [];
 var _searchCurrent = -1;
 var _searchQuery = '';
+var _searchTimer = null;
 
 function _sameSentence(text, terms) {
   var sentences = text.split(/[.!?]\s+/);
@@ -115,6 +116,12 @@ function _sameSentence(text, terms) {
 }
 
 function searchModules() {
+  if (_searchTimer) clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(_doSearch, 200);
+}
+
+function _doSearch() {
+  _searchTimer = null;
   var q = document.getElementById('searchInput').value.toLowerCase().trim();
   var terms = q ? q.split(/\s+/).filter(function(t) { return t.length > 0; }) : [];
   var clearBtn = document.getElementById('clearBtn');

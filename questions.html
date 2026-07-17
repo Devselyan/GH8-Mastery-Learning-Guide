@@ -59,7 +59,7 @@
   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   <h1>📝 Question Bank</h1>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Search questions..." oninput="searchModules()">
+    <input type="text" id="searchInput" placeholder="🔍 Search questions..." oninput="searchModules()" onkeydown="if(event.key==='Enter'){if(_searchTimer)clearTimeout(_searchTimer);_doSearch();}">
     <span class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</span>
   </div>
   <div class="search-nav" id="searchNav">

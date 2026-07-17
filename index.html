@@ -56,7 +56,7 @@
   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
   <h1>📚 GH 8 Guide</h1>
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Search..." oninput="searchModules()">
+    <input type="text" id="searchInput" placeholder="🔍 Search..." oninput="searchModules()" onkeydown="if(event.key==='Enter'){if(_searchTimer)clearTimeout(_searchTimer);_doSearch();}">
     <span class="clear-btn" id="clearBtn" onclick="clearSearch()">✕</span>
   </div>
   <div class="search-nav" id="searchNav">
