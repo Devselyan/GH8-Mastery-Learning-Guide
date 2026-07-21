@@ -382,6 +382,188 @@ function updateSidebarActive() {
   }
 }
 
+// ─── Study Mode ──────────────────────────────────────────────────────────
+var _studyCards = [];
+var _studyIdx = 0;
+var _studyGotIt = [];
+var _studyReview = [];
+
+function startStudy(modId) {
+  var mod = document.getElementById(modId);
+  if (!mod) return;
+  _studyCards = [];
+  _studyGotIt = [];
+  _studyReview = [];
+  _studyIdx = 0;
+
+  var content = mod.querySelector('.module-content');
+  if (!content) return;
+
+  // Extract concept boxes
+  var boxes = content.querySelectorAll('.concept-box');
+  for (var i = 0; i < boxes.length; i++) {
+    var h3 = boxes[i].querySelector('h3');
+    var title = h3 ? h3.textContent.replace(/^\d+\.\s*/, '') : '';
+    var text = boxes[i].textContent.replace(title, '').trim();
+    if (title && text) {
+      _studyCards.push({ front: 'Explain: ' + title, back: text });
+    }
+  }
+
+  // Extract term definitions
+  var terms = content.querySelectorAll('.term');
+  for (var i = 0; i < terms.length; i++) {
+    var term = terms[i].textContent.replace(/[:\s]+$/, '');
+    var parent = terms[i].parentNode;
+    var def = parent.textContent.replace(terms[i].textContent, '').trim();
+    if (term && def && def.length > 5) {
+      _studyCards.push({ front: 'What does ' + term + ' mean?', back: def });
+    }
+  }
+
+  // Extract example boxes
+  var examples = content.querySelectorAll('.example');
+  for (var i = 0; i < examples.length; i++) {
+    var h4 = examples[i].querySelector('h4');
+    var title = h4 ? h4.textContent : '';
+    var text = examples[i].textContent.replace(title, '').trim();
+    if (title && text) {
+      _studyCards.push({ front: 'Example: ' + title, back: text });
+    }
+  }
+
+  // Extract table rows (comparison tables)
+  var tables = content.querySelectorAll('.comparison-table');
+  for (var t = 0; t < tables.length; t++) {
+    var rows = tables[t].querySelectorAll('tr');
+    var headers = [];
+    var firstRow = rows[0];
+    if (firstRow) {
+      var ths = firstRow.querySelectorAll('th');
+      for (var h = 0; h < ths.length; h++) headers.push(ths[h].textContent.trim());
+    }
+    for (var r = 0; r < rows.length; r++) {
+      var cells = rows[r].querySelectorAll('td');
+      if (cells.length >= 2) {
+        var label = cells[0].textContent.replace(/<[^>]+>/g, '').replace(/^\d+\.\s*/, '').trim();
+        var detail = '';
+        for (var c = 1; c < cells.length; c++) {
+          var prefix = (headers.length > c) ? headers[c] + ': ' : '';
+          detail += prefix + cells[c].textContent.trim() + ' ';
+        }
+        detail = detail.trim();
+        if (label && detail && label.length < 100 && detail.length < 300) {
+          _studyCards.push({ front: label, back: detail });
+        }
+      }
+    }
+  }
+
+  // Extract mnemonics
+  var mnemonics = content.querySelectorAll('.mnemonic');
+  for (var i = 0; i < mnemonics.length; i++) {
+    var labelEl = mnemonics[i].querySelector('.label');
+    var contentEl = mnemonics[i].querySelector('.content');
+    if (labelEl && contentEl) {
+      _studyCards.push({ front: 'Memory aid: ' + labelEl.textContent, back: contentEl.textContent });
+    }
+  }
+
+  // Extract definition boxes
+  var defs = content.querySelectorAll('.definition');
+  for (var i = 0; i < defs.length; i++) {
+    var t = defs[i].querySelector('.term');
+    var term = t ? t.textContent : '';
+    var text = defs[i].textContent.replace(term, '').trim();
+    if (term && text) {
+      _studyCards.push({ front: 'Define: ' + term.replace(/[:\s]+$/, ''), back: text });
+    }
+  }
+
+  // Extract summary cards
+  var summaries = content.querySelectorAll('.summary-card');
+  for (var i = 0; i < summaries.length; i++) {
+    var h2 = summaries[i].querySelector('h2');
+    var title = h2 ? h2.textContent : '';
+    var text = summaries[i].textContent.replace(title, '').trim();
+    if (title && text) {
+      _studyCards.push({ front: 'Summary: ' + title, back: text });
+    }
+  }
+
+  if (_studyCards.length === 0) {
+    alert('No study cards found for this module.');
+    return;
+  }
+
+  // Shuffle
+  for (var i = _studyCards.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = _studyCards[i]; _studyCards[i] = _studyCards[j]; _studyCards[j] = tmp;
+  }
+
+  showStudyCard();
+}
+
+function showStudyCard() {
+  var existing = document.getElementById('studyOverlay');
+  if (!existing) {
+    var overlay = document.createElement('div');
+    overlay.id = 'studyOverlay';
+    overlay.className = 'study-overlay';
+    overlay.innerHTML =
+      '<div class="study-card" id="studyCard">' +
+        '<div class="study-card-front" id="studyFront"></div>' +
+        '<div class="study-card-back" id="studyBack"></div>' +
+      '</div>' +
+      '<div class="study-controls">' +
+        '<button class="study-btn study-btn-review" onclick="studyReview()">Review Later</button>' +
+        '<span class="study-progress" id="studyProgress"></span>' +
+        '<button class="study-btn study-btn-gotit" onclick="studyGotIt()">Got It</button>' +
+      '</div>' +
+      '<button class="study-close" onclick="closeStudy()">✕</button>';
+    document.body.appendChild(overlay);
+  }
+
+  if (_studyIdx >= _studyCards.length) {
+    document.getElementById('studyFront').textContent = 'Done! 🎉';
+    document.getElementById('studyBack').textContent =
+      'Got it: ' + _studyGotIt.length + ' | Review later: ' + _studyReview.length;
+    document.getElementById('studyCard').classList.remove('flipped');
+    document.getElementById('studyProgress').textContent = _studyCards.length + '/' + _studyCards.length;
+    return;
+  }
+
+  var card = _studyCards[_studyIdx];
+  document.getElementById('studyFront').textContent = card.front;
+  document.getElementById('studyBack').textContent = card.back;
+  document.getElementById('studyCard').classList.remove('flipped');
+  document.getElementById('studyProgress').textContent =
+    (_studyIdx + 1) + '/' + _studyCards.length;
+
+  // Click to flip
+  document.getElementById('studyCard').onclick = function() {
+    this.classList.toggle('flipped');
+  };
+}
+
+function studyGotIt() {
+  _studyGotIt.push(_studyCards[_studyIdx]);
+  _studyIdx++;
+  showStudyCard();
+}
+
+function studyReview() {
+  _studyReview.push(_studyCards[_studyIdx]);
+  _studyIdx++;
+  showStudyCard();
+}
+
+function closeStudy() {
+  var el = document.getElementById('studyOverlay');
+  if (el) el.remove();
+}
+
 window.onload = function() {
   // Restore dark mode
   if (localStorage.getItem('darkMode') === '1') {
@@ -413,13 +595,23 @@ window.onload = function() {
     return;
   }
 
-  // Guide: collapse all modules except first
+  // Guide: collapse all modules except first, add study buttons
   for (var i = 0; i < modules.length; i++) {
     var content = modules[i].querySelector('.module-content');
     if (i === 0) {
       content.classList.remove('collapsed');
     } else {
       content.classList.add('collapsed');
+    }
+    var header = modules[i].querySelector('.module-header');
+    if (header) {
+      var btn = document.createElement('button');
+      btn.className = 'study-mode-btn';
+      btn.textContent = '\uD83D\uDCD6 Study';
+      btn.onclick = function(id) {
+        return function(e) { e.stopPropagation(); startStudy(id); };
+      }(modules[i].id);
+      header.appendChild(btn);
     }
   }
 
